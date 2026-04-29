@@ -38,6 +38,11 @@ The platform aims to present this information in a simple, modern, and user-frie
 - Python
 
 ---
+## 📸 Website Preview
+
+![Website Screenshot](homepage.png)
+
+---
 
 ## 👥 Project Developers
 
