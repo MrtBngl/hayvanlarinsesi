@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="tr" class="scroll-smooth">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<meta name="description" content="Hayvanların Sesi web sitesi kullanım şartları ve ziyaretçi yükümlülükleri hakkında yasal bilgilendirme."/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link rel="icon" type="image/svg+xml" href="static/img/favicon.svg" />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#2c5926",
+                        "secondary": "#1e40af",
+                        "background-light": "#f6f7f6",
+                        "background-dark": "#161d15",
+                    },
+                    fontFamily: {
+                        "display": ["Inter", "sans-serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+    <style>
+        .reveal {
+            opacity: 0;
+            transform: translateY(10px);
+            transition: opacity 0.5s ease-out, transform 0.5s ease-out;
+        }
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        .dropdown-content { display: none; }    
+        .group:hover .dropdown-content { display: block; }
+        html { scroll-behavior: smooth; }
+        
+        .scroll-mt-safe {
+            scroll-margin-top: 6rem;
+        }
+        @media (min-width: 768px) {
+            .scroll-mt-safe {
+                scroll-margin-top: 7rem;
+            }
+        }
+        
+        .break-words-safe {
+            overflow-wrap: break-word;
+            word-wrap: break-word;
+            hyphens: auto;
+        }
+    </style>
+<title>Kullanım Şartları | Hayvanların Sesi</title>
+</head>
+<body class="bg-background-light dark:bg-background-dark font-display text-slate-900 dark:text-slate-100">
+<div class="relative flex min-h-screen flex-col">
+
+<!-- Header -->
+<header class="sticky top-0 z-50 w-full border-b border-primary/10 bg-white/80 dark:bg-background-dark/80 backdrop-blur-md">
+    <div class="mx-auto flex max-w-7xl items-center justify-between px-6 py-4">
+        <div class="flex items-center gap-2">
+            <span class="material-symbols-outlined text-primary text-3xl"> <a href="{{ url_for('index') }}">pets</a></span>
+            <h1 class="text-xl font-extrabold tracking-tight text-primary"><a href="{{ url_for('index') }}">Hayvanların Sesi</a></h1>
+        </div>
+
+        <nav class="hidden md:flex items-center gap-8">
+            <a class="text-sm font-semibold hover:text-primary transition-colors border-b-2" href="{{ url_for('index') }}">Ana Sayfa</a>
+            <a class="text-sm font-semibold hover:text-primary transition-colors" href="{{ url_for('haberler') }}">Haberler</a>
+
+            <div class="group relative">
+                <button id="dropdown-button" class="flex items-center gap-1 text-sm font-semibold hover:text-primary transition-colors text-slate-900 dark:text-slate-100">
+                    Bilgi Merkezi
+                    <span class="material-symbols-outlined text-sm">expand_more</span>
+                </button>
+                <div id="dropdown-menu" class="dropdown-content absolute top-full left-0 pt-4 w-64 hidden">
+                    <div class="bg-white dark:bg-slate-800 border rounded-xl shadow-xl overflow-hidden p-2 text-slate-900 dark:text-slate-100">
+                        <a href="{{ url_for('kanun') }}" class="flex items-center gap-2 px-4 py-3 text-sm hover:bg-slate-50 dark:hover:bg-slate-700 rounded-lg transition-colors">
+                            <span class="material-symbols-outlined text-lg">gavel</span> 5199 Sayılı Kanun
+                        </a>
+                        <a href="{{ url_for('mevzuat') }}" class="flex items-center gap-2 px-4 py-3 text-sm hover:bg-slate-50 dark:hover:bg-slate-700 rounded-lg transition-colors">
+                            <span class="material-symbols-outlined text-lg">description</span> Mevzuat Rehberi
+                        </a>
+                        <a href="{{ url_for('sss') }}" class="flex items-center gap-2 px-4 py-3 text-sm hover:bg-slate-50 dark:hover:bg-slate-700 rounded-lg transition-colors">
+                            <span class="material-symbols-outlined text-lg">help_center</span> Sıkça Sorulan Sorular
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <a class="text-sm font-semibold hover:text-primary transition-colors" href="{{ url_for('iletisim') }}">İletişim</a>
+        </nav>
+
+        <div class="flex items-center gap-4">
+        <a href="{{ url_for('ihbar') }}" 
+            class="hidden md:flex items-center gap-2 bg-red-600 text-white px-4 py-1.5 rounded-xl text-sm font-bold shadow-lg shadow-red-900/20 hover:bg-red-700 hover:shadow-red-900/30 transition-all active:scale-95 group">
+              
+              <span class="material-symbols-outlined text-lg group-hover:rotate-12 transition-transform">report</span>
+              <span>İhbar Rehberi</span>
+        </a>
+
+        </div>
+    </div>
+
+
+</header>
+
+<main class="flex-grow">
+    <!-- Hero -->
+    <section class="relative bg-gradient-to-br from-primary to-blue-900 py-12 sm:py-16 md:py-20">
+        <div class="absolute inset-0 opacity-10">
+            <div class="absolute inset-0" style="background-image: radial-gradient(circle at 2px 2px, white 1px, transparent 0); background-size: 20px 20px;"></div>
+        </div>
+        <div class="relative mx-auto max-w-7xl px-4 sm:px-6 text-center">
+            <span class="mb-3 inline-block rounded-full bg-white/20 px-3 py-1 text-xs font-bold uppercase tracking-widest text-white backdrop-blur-sm border border-white/20">
+                Yasal Bilgilendirme
+            </span>
+            <h1 class="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-black text-white mb-3 leading-tight">
+                Kullanım Şartları
+            </h1>
+            <p class="text-base sm:text-lg text-white/90 max-w-2xl mx-auto px-2">
+                Platform kullanımına ilişkin kurallar ve sorumluluklar
+            </p>
+        </div>
+    </section>
+
+    <!-- Content -->
+    <section class="py-8 sm:py-12 bg-background-light dark:bg-background-dark">
+        <div class="mx-auto max-w-4xl px-4 sm:px-6">
+            
+            <!-- Intro -->
+            <div class="reveal bg-white dark:bg-slate-800 rounded-xl sm:rounded-2xl p-4 sm:p-6 lg:p-8 shadow-lg border-l-4 border-primary mb-6">
+                <p class="text-slate-600 dark:text-slate-300 text-sm sm:text-base leading-relaxed break-words-safe">
+                    İşbu Kullanım Şartları, <strong>Hayvanların Sesi</strong> platformuna erişim ve kullanımınızı düzenleyen koşulları içermektedir. Siteyi kullanarak bu şartları kabul etmiş sayılırsınız.
+                </p>
+            </div>
+
+            <!-- Şartlar Listesi -->
+            <div class="space-y-6">
+                
+                <!-- Madde 1 -->
+                <div class="reveal bg-white dark:bg-slate-800 rounded-xl sm:rounded-2xl p-4 sm:p-6 shadow-lg">
+                    <div class="flex items-center gap-2 sm:gap-3 mb-3">
+                        <div class="bg-primary/10 p-2 rounded-lg">
+                            <span class="material-symbols-outlined text-primary text-xl">info</span>
+                        </div>
+                        <h2 class="text-lg sm:text-xl font-bold text-slate-900 dark:text-white">1. Genel Hükümler</h2>
+                    </div>
+                    <p class="text-sm sm:text-base text-slate-600 dark:text-slate-300 leading-relaxed break-words-safe">
+                        Bu platform, hayvan hakları konusunda bilgilendirme amacıyla kurulmuş bağımsız bir girişimdir. Resmi bir devlet kurumu değildir. Sunulan içerikler genel bilgilendirme amaçlıdır ve yasal tavsiye niteliği taşımaz.
+                    </p>
+                </div>
+
+                <!-- Madde 2 -->
+                <div class="reveal bg-white dark:bg-slate-800 rounded-xl sm:rounded-2xl p-4 sm:p-6 shadow-lg">
+                    <div class="flex items-center gap-2 sm:gap-3 mb-3">
+                        <div class="bg-primary/10 p-2 rounded-lg">
+                            <span class="material-symbols-outlined text-primary text-xl">copyright</span>
+                        </div>
+                        <h2 class="text-lg sm:text-xl font-bold text-slate-900 dark:text-white">2. Fikri Mülkiyet</h2>
+                    </div>
+                    <p class="text-sm sm:text-base text-slate-600 dark:text-slate-300 leading-relaxed break-words-safe">
+                        Sitedeki tüm içerikler (metin, görsel, logo, tasarım) Hayvanların Sesi'ne aittir. İzinsiz kopyalama, dağıtım veya ticari kullanım yasaktır. Alıntı yapılması durumunda kaynak gösterilmesi zorunludur.
+                    </p>
+                </div>
+
+                <!-- Madde 3 -->
+                <div class="reveal bg-white dark:bg-slate-800 rounded-xl sm:rounded-2xl p-4 sm:p-6 shadow-lg">
+                    <div class="flex items-center gap-2 sm:gap-3 mb-3">
+                        <div class="bg-primary/10 p-2 rounded-lg">
+                            <span class="material-symbols-outlined text-primary text-xl">gavel</span>
+                        </div>
+                        <h2 class="text-lg sm:text-xl font-bold text-slate-900 dark:text-white">3. Doğru Bilgi ve Sorumluluk</h2>
+                    </div>
+                    <p class="text-sm sm:text-base text-slate-600 dark:text-slate-300 leading-relaxed break-words-safe">
+                        İletişim formları aracılığıyla sağladığınız bilgilerin doğru ve güncel olması sizin sorumluluğunuzdadır. Yanıltıcı veya sahte bilgi verilmesi durumunda platform yönetimi gerekli yasal işlemleri başlatma hakkını saklı tutar.
+                    </p>
+                </div>
+
+                <!-- Madde 4 -->
+                <div class="reveal bg-white dark:bg-slate-800 rounded-xl sm:rounded-2xl p-4 sm:p-6 shadow-lg">
+                    <div class="flex items-center gap-2 sm:gap-3 mb-3">
+                        <div class="bg-primary/10 p-2 rounded-lg">
+                            <span class="material-symbols-outlined text-primary text-xl">block</span>
+                        </div>
+                        <h2 class="text-lg sm:text-xl font-bold text-slate-900 dark:text-white">4. Yasaklı Faaliyetler</h2>
+                    </div>
+                    <ul class="space-y-2 text-sm sm:text-base text-slate-600 dark:text-slate-300">
+                        <li class="flex items-start gap-2">
+                            <span class="material-symbols-outlined text-primary text-sm mt-1">cancel</span>
+                            <span class="break-words-safe">Platformu spam, virüs veya zararlı içerik yaymak için kullanmak</span>
+                        </li>
+                        <li class="flex items-start gap-2">
+                            <span class="material-symbols-outlined text-primary text-sm mt-1">cancel</span>
+                            <span class="break-words-safe">Başkalarının haklarını ihlal eden içerikler paylaşmak</span>
+                        </li>
+                        <li class="flex items-start gap-2">
+                            <span class="material-symbols-outlined text-primary text-sm mt-1">cancel</span>
+                            <span class="break-words-safe">Sisteme yetkisiz erişim sağlamaya çalışmak</span>
+                        </li>
+                        <li class="flex items-start gap-2">
+                            <span class="material-symbols-outlined text-primary text-sm mt-1">cancel</span>
+                            <span class="break-words-safe">Ticari reklam veya promosyon yapmak</span>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Madde 5 -->
+                <div class="reveal bg-white dark:bg-slate-800 rounded-xl sm:rounded-2xl p-4 sm:p-6 shadow-lg">
+                    <div class="flex items-center gap-2 sm:gap-3 mb-3">
+                        <div class="bg-primary/10 p-2 rounded-lg">
+                            <span class="material-symbols-outlined text-primary text-xl">description</span>
+                        </div>
+                        <h2 class="text-lg sm:text-xl font-bold text-slate-900 dark:text-white">5. İçerik ve Bağlantılar</h2>
+                    </div>
+                    <p class="text-sm sm:text-base text-slate-600 dark:text-slate-300 leading-relaxed break-words-safe">
+                        Sitedeki üçüncü taraf bağlantılar (linkler) referans amaçlıdır. Bu sitelerin içeriklerinden ve gizlilik uygulamalarından platformumuz sorumlu değildir. Dış bağlantıların kullanımı kullanıcının kendi sorumluluğundadır.
+                    </p>
+                </div>
+
+                <!-- Madde 6 -->
+                <div class="reveal bg-white dark:bg-slate-800 rounded-xl sm:rounded-2xl p-4 sm:p-6 shadow-lg">
+                    <div class="flex items-center gap-2 sm:gap-3 mb-3">
+                        <div class="bg-primary/10 p-2 rounded-lg">
+                            <span class="material-symbols-outlined text-primary text-xl">security</span>
+                        </div>
+                        <h2 class="text-lg sm:text-xl font-bold text-slate-900 dark:text-white">6. Garanti Reddi</h2>
+                    </div>
+                    <p class="text-sm sm:text-base text-slate-600 dark:text-slate-300 leading-relaxed break-words-safe">
+                        Platform "olduğu gibi" sunulmaktadır. İçeriklerin doğruluğu, eksiksizliği veya güncelliği konusunda garanti verilmez. Platform kullanımından doğabilecek doğrudan veya dolaylı zararlardan sorumluluk kabul edilmez.
+                    </p>
+                </div>
+
+                <!-- Madde 7 -->
+                <div class="reveal bg-white dark:bg-slate-800 rounded-xl sm:rounded-2xl p-4 sm:p-6 shadow-lg">
+                    <div class="flex items-center gap-2 sm:gap-3 mb-3">
+                        <div class="bg-primary/10 p-2 rounded-lg">
+                            <span class="material-symbols-outlined text-primary text-xl">update</span>
+                        </div>
+                        <h2 class="text-lg sm:text-xl font-bold text-slate-900 dark:text-white">7. Değişiklikler</h2>
+                    </div>
+                    <p class="text-sm sm:text-base text-slate-600 dark:text-slate-300 leading-relaxed break-words-safe">
+                        Bu kullanım şartları önceden bildirimde bulunmaksızın değiştirilebilir. Güncel versiyon bu sayfada yayınlanır. Değişikliklerin yayınlanmasıyla birlikte kullanımınız güncel şartları kabul ettiğiniz anlamına gelir.
+                    </p>
+                </div>
+
+                <!-- Madde 8 -->
+                <div class="reveal bg-white dark:bg-slate-800 rounded-xl sm:rounded-2xl p-4 sm:p-6 shadow-lg">
+                    <div class="flex items-center gap-2 sm:gap-3 mb-3">
+                        <div class="bg-primary/10 p-2 rounded-lg">
+                            <span class="material-symbols-outlined text-primary text-xl">balance</span>
+                        </div>
+                        <h2 class="text-lg sm:text-xl font-bold text-slate-900 dark:text-white">8. Uygulanacak Hukuk</h2>
+                    </div>
+                    <p class="text-sm sm:text-base text-slate-600 dark:text-slate-300 leading-relaxed break-words-safe">
+                        Bu şartlardan doğan uyuşmazlıklarda Türkiye Cumhuriyeti kanunları uygulanır. İstanbul mahkemeleri yetkilidir.
+                    </p>
+                </div>
+
+
+            </div>
+        </div>
+    </section>
+</main>
+
+<!-- Footer -->
+<footer class="bg-slate-900 text-slate-400 py-14">
+  <div class="mx-auto max-w-7xl px-6 grid grid-cols-1 md:grid-cols-4 gap-10">
+
+    <!-- Site Tanıtımı -->
+    <div>
+      <div class="flex items-center gap-2 mb-4">
+        <span class="material-symbols-outlined text-primary text-3xl">pets</span>
+        <span class="text-xl font-black text-white">Hayvanların Sesi</span>
+      </div>
+
+      <p class="text-sm leading-relaxed">
+        Türkiye'de hayvan hakları konusunda güncel bilgiler,
+        yasal rehberler ve ihbar yollarını sunan bağımsız
+        bir bilgilendirme platformudur.
+      </p>
+    </div>
+
+    <!-- Hızlı Linkler -->
+    <div>
+      <h4 class="text-white font-semibold mb-4">Site Haritası</h4>
+      <ul class="space-y-2 text-sm">
+        <li><a href="{{ url_for('index') }}" class="hover:text-white transition">Ana Sayfa</a></li>
+        <li><a href="{{ url_for('haberler') }}" class="hover:text-white transition">Haberler</a></li>
+        <li><a href="{{ url_for('iletisim') }}" class="hover:text-white transition">İletişim</a></li>
+      </ul>
+    </div>
+
+    <!-- Bilgi Merkezi -->
+    <div>
+      <h4 class="text-white font-semibold mb-4">Bilgi Merkezi</h4>
+      <ul class="space-y-2 text-sm">
+        <li><a href="{{ url_for('kanun') }}" class="hover:text-white transition">5199 Sayılı Kanun</a></li>
+        <li><a href="{{ url_for('mevzuat') }}" class="hover:text-white transition">Mevzuat Rehberi</a></li>
+        <li><a href="{{ url_for('sss') }}" class="hover:text-white transition">Sık Sorulan Sorular</a></li>
+      </ul>
+    </div>
+
+    <!-- Yasal -->
+    <div>
+      <h4 class="text-white font-semibold mb-4">Yasal</h4>
+      <ul class="space-y-2 text-sm">
+        <li><a href="{{ url_for('kvkk') }}" class="hover:text-white transition">KVKK</a></li>
+        <li><a href="{{ url_for('gizlilik') }}" class="hover:text-white transition">Gizlilik Politikası</a></li>
+        <li><a href="{{ url_for('kullanim') }}" class="hover:text-white transition">Kullanım Şartları</a></li>
+      </ul>
+
+    
+    </div>
+
+  </div>
+
+  <!-- Alt Bilgi -->
+  <div class="border-t border-slate-800 mt-12 pt-6 text-center text-xs text-slate-500 px-6">
+
+    <p class="mb-2">
+      © 2026 Hayvanların Sesi. Tüm hakları saklıdır.
+    </p>
+
+    <p>
+      Bu site resmi bir devlet kurumu değildir. İçerikler bilgilendirme amacıyla hazırlanmıştır ve
+      5199 Sayılı Hayvanları Koruma Kanunu ile resmi kurum kaynakları baz alınmıştır.
+    </p>
+
+  </div>
+</footer>
+</div>
+
+<script>
+// Reveal animation
+let scrolling = false;
+function reveal() {
+  const reveals = document.querySelectorAll(".reveal");
+  for (let i = 0; i < reveals.length; i++) {
+    const windowHeight = window.innerHeight;
+    const elementTop = reveals[i].getBoundingClientRect().top;
+    const elementVisible = 100;
+    if (elementTop < windowHeight - elementVisible) {
+      reveals[i].classList.add("active");
+    }
+  }
+}
+window.addEventListener("scroll", () => {
+  if (!scrolling) {
+    scrolling = true;
+    requestAnimationFrame(() => {
+      reveal();
+      scrolling = false;
+    });
+  }
+});
+window.addEventListener("DOMContentLoaded", reveal);
+
+// Dropdown
+const button = document.getElementById("dropdown-button");
+const menu = document.getElementById("dropdown-menu");
+button.addEventListener("click", (e) => {
+  e.stopPropagation();
+  menu.classList.toggle("hidden");
+});
+document.addEventListener("click", (e) => {
+  if (!menu.contains(e.target) && !button.contains(e.target)) {
+    menu.classList.add("hidden");
+  }
+});
+
+// Mobile menu
+const menuBtn = document.getElementById("mobile-menu-button");
+const mobileMenu = document.getElementById("mobile-menu");
+menuBtn.addEventListener("click", () => {
+  mobileMenu.classList.toggle("hidden");
+  mobileMenu.classList.toggle("flex");
+});
+</script>
+</body>
+</html>

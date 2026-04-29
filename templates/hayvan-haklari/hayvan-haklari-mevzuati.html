@@ -1,0 +1,756 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <meta name="description" content="Hayvan hakları ve koruma mevzuatı: Türkiye'deki güncel yasalar, yönetmelikler ve hayvanların hukuki statüsü hakkında detaylı rehber."/>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="icon" type="image/svg+xml" href="static/img/favicon.svg" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+    <script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        secondary: "#fff",
+                        primary: {
+                            DEFAULT: "#2c5926",
+                            50: '#f0fdf4',
+                            100: '#dcfce7',
+                            200: '#bbf7d0',
+                            300: '#86efac',
+                            400: '#4ade80',
+                            500: '#2c5926',
+                            600: '#245a1f',
+                            700: '#1e4d1a',
+                            800: '#164016',
+                            900: '#0f2e0d',
+                        },
+                        accent: {
+                            light: '#fef3c7',
+                            DEFAULT: '#f59e0b',
+                            dark: '#b45309',
+                        },
+                        background: {
+                            light: "#f6f7f6",
+                            dark: "#161d15",
+                        }
+                    },
+                    fontFamily: {
+                        display: ["Inter", "sans-serif"]
+                    },
+                    borderRadius: {
+                        DEFAULT: "0.25rem", 
+                        lg: "0.5rem", 
+                        xl: "0.75rem", 
+                        "2xl": "1rem",
+                        "3xl": "1.5rem",
+                        full: "9999px"
+                    },
+                    animation: {
+                        'fade-up': 'fadeUp 0.8s ease-out forwards',
+                        'float': 'float 6s ease-in-out infinite',
+                    },
+                    keyframes: {
+                        fadeUp: {
+                            '0%': { opacity: '0', transform: 'translateY(30px)' },
+                            '100%': { opacity: '1', transform: 'translateY(0)' },
+                        },
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0px)' },
+                            '50%': { transform: 'translateY(-20px)' },
+                        }
+                    }
+                },
+            },
+        }
+    </script>
+    <style>
+        .reveal {
+            opacity: 0;
+            transform: translateY(5px);
+            transition: all 1.4s ease;
+        }
+
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        .stagger-children > * {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.6s ease-out;
+        }
+        
+        .stagger-children.active > *:nth-child(1) { transition-delay: 0.1s; opacity: 1; transform: translateY(0); }
+        .stagger-children.active > *:nth-child(2) { transition-delay: 0.2s; opacity: 1; transform: translateY(0); }
+        .stagger-children.active > *:nth-child(3) { transition-delay: 0.3s; opacity: 1; transform: translateY(0); }
+        .stagger-children.active > *:nth-child(4) { transition-delay: 0.4s; opacity: 1; transform: translateY(0); }
+        .stagger-children.active > *:nth-child(5) { transition-delay: 0.5s; opacity: 1; transform: translateY(0); }
+        .stagger-children.active > *:nth-child(6) { transition-delay: 0.6s; opacity: 1; transform: translateY(0); }
+        
+        .hover-lift {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .hover-lift:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 24px -8px rgba(44, 89, 38, 0.15);
+        }
+        
+        .glass {
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+        }
+        
+        .glass-dark {
+            background: rgba(22, 29, 21, 0.9);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+        }
+        
+        html { scroll-behavior: smooth; }
+        
+        .dropdown-content { display: none; }    
+        .group:hover .dropdown-content { display: block; }
+        
+        body { font-family: 'Inter', sans-serif; }
+        
+        *:focus-visible {
+            outline: 2px solid #2c5926;
+            outline-offset: 2px;
+        }
+    </style>
+    <title>Hayvan Hakları Mevzuatı | Kanun ve Yönetmelikler</title>
+</head>
+<body class="bg-background-light dark:bg-background-dark font-display text-slate-900 dark:text-slate-100">
+
+    <a href="#main-content" class="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-50 focus:bg-primary focus:text-white focus:px-4 focus:py-2 focus:rounded">
+        Ana içeriğe atla
+    </a>
+
+<header class="sticky top-0 z-50 w-full border-b border-primary/10 bg-white/80 dark:bg-background-dark/80 backdrop-blur-md">
+    <div class="mx-auto flex max-w-7xl items-center justify-between px-6 py-4">
+        <div class="flex items-center gap-2">
+            <span class="material-symbols-outlined text-primary text-3xl"> <a href="{{ url_for('index') }}">pets</a></span>
+            <h1 class="text-xl font-extrabold tracking-tight text-primary"><a href="{{ url_for('index') }}">Hayvanların Sesi</a></h1>
+        </div>
+
+        <nav class="hidden md:flex items-center gap-8">
+            <a class="text-sm font-semibold hover:text-primary transition-colors " href="{{ url_for('index') }}">Ana Sayfa</a>
+            <a class="text-sm font-semibold hover:text-primary transition-colors" href="{{ url_for('haberler') }}">Haberler</a>
+
+            <div class="group relative">
+                <button id="dropdown-button" class="flex items-center gap-1 text-sm font-semibold hover:text-primary transition-colors text-slate-900 dark:text-slate-100">
+                    Bilgi Merkezi
+                    <span class="material-symbols-outlined text-sm">expand_more</span>
+                </button>
+                <div id="dropdown-menu" class="dropdown-content absolute top-full left-0 pt-4 w-64 hidden">
+                    <div class="bg-white dark:bg-slate-800 border rounded-xl shadow-xl overflow-hidden p-2 text-slate-900 dark:text-slate-100">
+                        <a href="{{ url_for('kanun') }}" class="flex items-center gap-2 px-4 py-3 text-sm hover:bg-slate-50 dark:hover:bg-slate-700 rounded-lg transition-colors">
+                            <span class="material-symbols-outlined text-lg">gavel</span> 5199 Sayılı Kanun
+                        </a>
+                        <a href="{{ url_for('mevzuat') }}" class="flex items-center gap-2 px-4 py-3 text-sm text-primary font-bold dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-700 rounded-lg transition-colors">
+                            <span class="material-symbols-outlined text-lg">description</span> Mevzuat Rehberi
+                        </a>
+                        <a href="{{ url_for('sss') }}" class="flex items-center gap-2 px-4 py-3 text-sm hover:bg-slate-50 dark:hover:bg-slate-700 rounded-lg transition-colors">
+                            <span class="material-symbols-outlined text-lg">help_center</span> Sıkça Sorulan Sorular
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <a class="text-sm font-semibold hover:text-primary transition-colors" href="{{ url_for('iletisim') }}">İletişim</a>
+        </nav>
+
+        <div class="flex items-center gap-4">
+        <a href="{{ url_for('ihbar') }}" 
+            class="hidden md:flex items-center gap-2 bg-red-600 text-white px-4 py-1.5 rounded-xl text-sm font-bold shadow-lg shadow-red-900/20 hover:bg-red-700 hover:shadow-red-900/30 transition-all active:scale-95 group">
+              
+              <span class="material-symbols-outlined text-lg group-hover:rotate-12 transition-transform">report</span>
+              <span>İhbar Rehberi</span>
+        </a>
+
+            <button id="mobile-menu-button" class="md:hidden text-slate-900 dark:text-slate-100 p-1">
+                <span class="material-symbols-outlined text-3xl">menu</span>
+            </button>
+        </div>
+    </div>
+
+<div class="md:hidden px-6 pb-4 -mt-1">
+    <a href="{{ url_for('ihbar') }}" 
+       class="flex items-center justify-between w-full bg-red-50 dark:bg-red-950/20 text-red-600 dark:text-red-400 px-4 py-3 rounded-xl border border-red-100 dark:border-red-900/30 active:bg-red-100 transition-all shadow-sm">
+        <div class="flex items-center gap-3">
+            <span class="material-symbols-outlined font-bold">report</span>
+            <div class="flex flex-col">
+                <span class="text-xs uppercase font-black tracking-wider opacity-80">Acil Durum</span>
+                <span class="text-sm font-bold">İhbar Rehberi & Yasal Haklar</span>
+            </div>
+        </div>
+        <span class="material-symbols-outlined text-red-400">chevron_right</span>
+    </a>
+</div>
+    
+     <nav id="mobile-menu" class="hidden md:hidden flex flex-col items-start gap-4 px-4 pb-4 pt-4 bg-white dark:bg-slate-900 border-t">
+        <a href="{{ url_for('index') }}" class="text-base font-semibold hover:text-primary">Ana Sayfa</a>
+        <a href="{{ url_for('haberler') }}" class="text-base font-semibold hover:text-primary">Haberler</a>
+        <div class="flex flex-col items-start w-full">
+            <button id="mobile-info-button" class="flex items-center justify-between w-full text-base font-semibold hover:text-primary">
+                Bilgi Merkezi
+                <span class="material-symbols-outlined">expand_more</span>
+            </button>
+            <div id="mobile-info-dropdown" class="hidden flex flex-col items-start mt-2 gap-2 pl-2">
+                <a href="{{ url_for('kanun') }}" class="flex items-center text-sm hover:text-primary"><span class="material-symbols-outlined text-lg">gavel </span> 5199 Sayılı Kanun</a>
+                <a href="{{ url_for('mevzuat') }}" class="flex items-center text-sm hover:text-primary"><span class="material-symbols-outlined text-lg">description </span> Mevzuat Rehberi</a>
+                <a href="{{ url_for('sss') }}" class="flex items-center text-sm hover:text-primary"><span class="material-symbols-outlined text-lg">help_center </span> Sıkça Sorulan Sorular</a>
+            </div>
+        </div>
+        <a href="{{ url_for('iletisim') }}" class="text-base font-semibold hover:text-primary">İletişim</a>
+    </nav>
+</header>
+
+    <main id="main-content" class="flex-grow">
+        <section class="reveal active relative rounded-xl overflow-hidden mb-12 min-h-[400px] flex items-end mx-4 lg:mx-20 mt-8">
+            <div class="absolute inset-0 bg-cover bg-center" style='background-image: linear-gradient(to top, rgba(0, 0, 0, 0.85) 0%, rgba(0, 0, 0, 0.4) 50%, rgba(0, 0, 0, 0.2) 100%), url("https://lh3.googleusercontent.com/aida-public/AB6AXuBaX-N8poHFRzhEA_CfNmTWniHk9n8dcpkgxkxOhAPB3ePLgyDz6gd5DsVeL04voiNtLaiz5CNlW6JHWkfAsd0B650ryWeKIs1-DVJgw6ZdyWjeUbPloe27zqeFbbzW7dU_imTfb7_AafprBQFX9rWtf5FnYTCu_v3clAlXy3EDf_PFpR5yFLS31KwZDkX--E8OZrKgc_XLxV6ml4hNQ6UrVG4xGJMTTPhLM6Og2tXgWqRfjz-TTyUp4ry2n6gvJ5EZL3Fy-FHn3tM");'></div>
+            
+            <div class="relative p-8 md:p-12 w-full max-w-3xl">
+                <span class="inline-block bg-primary text-white px-4 py-1.5 rounded-full text-xs font-bold mb-4 tracking-wide uppercase">Mevzuat Rehberi</span>
+                <h1 class="text-white text-4xl md:text-5xl font-black leading-tight mb-4">Sokak Hayvanları Yasası ve Güncel Mevzuat</h1>
+                <p class="text-slate-200 text-lg leading-relaxed">Türkiye'deki hayvan hakları mevzuatı, 5199 sayılı kanun kapsamında vatandaş hakları, belediye sorumlulukları ve hayvan koruma düzenlemeleri hakkında kapsamlı rehber.</p>
+            </div>
+        </section>
+
+        <!-- Ana Grid Yapısı - items-start ile üsten hizalama -->
+        <div class="max-w-7xl mx-auto px-4 lg:px-20 pb-20">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
+                
+                <!-- Sol İçerik Alanı -->
+                <div class="lg:col-span-8 space-y-16">
+                    
+                    <!-- Yasal Çerçeve -->
+                    <article class="reveal w-full">
+                        <div class="flex items-center gap-2 mb-6">
+                            <span class="material-symbols-outlined text-primary text-2xl">account_balance</span>
+                            <h3 class="text-2xl font-bold text-slate-900 dark:text-slate-100">Yasal Çerçeve ve Tarihsel Gelişim</h3>
+                        </div>
+                        
+                        <div class="text-slate-700 dark:text-slate-300 space-y-4">
+                            <p class="text-lg leading-relaxed">
+                                Türkiye'de hayvan haklarına ilişkin ilk ciddi düzenleme <strong class="text-slate-900 dark:text-slate-100">2004 yılında kabul edilen 5199 sayılı Hayvanları Koruma Kanunu</strong> ile başlamıştır. Bu kanun, hayvanların "mal" statüsünden çıkarılarak "canlı" olarak tanımlanmasını sağlamış ve temel bir çerçeve oluşturmuştur.
+                            </p>
+                            <p class="leading-relaxed">
+                                2021 yılında yapılan kapsamlı değişiklikle hayvanlara karşı işlenen suçlar "kabahat" kapsamından çıkarılarak <strong class="text-primary">ceza hukuku</strong> kapsamına alınmıştır. Bu düzenleme, hayvanlara şiddet uygulayan kişilere para cezası yerine hapis cezası öngörmektedir. Ayrıca, 2024 yılında yürürlüğe giren son düzenlemelerle yerel yönetimlerin sorumlulukları netleştirilmiş ve hayvan refahı standartları yükseltilmiştir.
+                            </p>
+                            <div class="bg-primary/5 dark:bg-primary/10 p-6 rounded-xl border-l-4 border-primary my-6">
+                                <h4 class="font-bold text-slate-900 dark:text-slate-100 mb-3">Temel İlkeler</h4>
+                                <ul class="space-y-2 text-sm list-disc list-inside">
+                                    <li>Hayvanların yaşama hakkı dokunulmazdır</li>
+                                    <li>Kısırlaştırma popülasyon kontrolünün temel yöntemidir</li>
+                                    <li>Belediyeler barınak ve rehabilitasyon merkezi kurmakla yükümlüdür</li>
+                                    <li>Vatandaşlar hayvan besleme hakkına sahiptir</li>
+                                    <li>Şiddet ve istismar cezai yaptırıma tabidir</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </article>
+
+                    <!-- 2024 Değişiklikleri -->
+                    <article class="reveal w-full">
+                        <div class="flex items-center gap-2 mb-6">
+                            <span class="material-symbols-outlined text-primary text-2xl">gavel</span>
+                            <h3 class="text-2xl font-bold text-slate-900 dark:text-slate-100">2024 Yılı Yasal Düzenlemeleri</h3>
+                        </div>
+                        
+                        <p class="text-lg text-slate-700 dark:text-slate-300 mb-6 leading-relaxed">
+                            2024 yılında Resmi Gazete'de yayımlanan yönetmelik değişiklikleri, yerel yönetimlerin sorumluluklarını ve sokak hayvanlarının refahı konusundaki yasal çerçeveyi kökten değiştirmiştir.
+                        </p>
+
+                        <div class="space-y-4 stagger-children">
+                            <div class="group p-6 bg-white dark:bg-slate-800 rounded-xl border border-slate-200 dark:border-slate-700 hover-lift w-full">
+                                <div class="flex gap-4 items-start">
+                                    <div class="bg-primary/10 p-3 rounded-full mt-0.5 group-hover:bg-primary/20 transition-colors flex-shrink-0">
+                                        <span class="material-symbols-outlined text-primary text-xl">vaccines</span>
+                                    </div>
+                                    <div class="flex-1 min-w-0">
+                                        <h4 class="font-bold text-slate-900 dark:text-slate-100 mb-2 group-hover:text-primary transition-colors">Kısırlaştırma Seferberliği ve Bütçe Artışı</h4>
+                                        <p class="text-slate-600 dark:text-slate-400 text-sm leading-relaxed mb-3">
+                                            Belediyelerin yıllık bütçelerinden sokak hayvanları için ayırması gereken pay <span class="text-primary font-semibold bg-primary/10 px-2 py-0.5 rounded">%0.5'ten %0.8'e</span> yükseltilmiştir. Bu artış, 2024-2028 döneminde kapsamlı kısırlaştırma programlarının finansmanını sağlamayı hedeflemektedir.
+                                        </p>
+                                        <div class="text-xs text-slate-500 bg-slate-50 dark:bg-slate-700/50 p-3 rounded-lg">
+                                            <strong>Uygulama:</strong> Her belediye, nüfusuna göre yılda en az 500-5000 hayvanı kısırlaştırmakla yükümlüdür.
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="group p-6 bg-white dark:bg-slate-800 rounded-xl border border-slate-200 dark:border-slate-700 hover-lift w-full">
+                                <div class="flex gap-4 items-start">
+                                    <div class="bg-accent/10 p-3 rounded-full mt-0.5 group-hover:bg-accent/20 transition-colors flex-shrink-0">
+                                        <span class="material-symbols-outlined text-accent-dark text-xl">home_work</span>
+                                    </div>
+                                    <div class="flex-1 min-w-0">
+                                        <h4 class="font-bold text-slate-900 dark:text-slate-100 mb-2 group-hover:text-accent transition-colors">Geçici Hayvan Bakımevi Standartları</h4>
+                                        <p class="text-slate-600 dark:text-slate-400 text-sm leading-relaxed mb-3">
+                                            Hayvan bakımevlerinin fiziki şartları, personel yeterliliği ve işletme standartları konusunda yeni <span class="text-accent-dark font-semibold bg-accent/10 px-2 py-0.5 rounded">"Geçici Hayvan Bakımevi Yönetmeliği"</span> yürürlüğe girmiştir.
+                                        </p>
+                                        <div class="text-xs text-slate-500 bg-slate-50 dark:bg-slate-700/50 p-3 rounded-lg">
+                                            <strong>Zorunlu Şartlar:</strong> Her hayvan için minimum 3m² kapalı, 10m² açık alan; 24 saat veteriner hekim bulundurma.
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="group p-6 bg-white dark:bg-slate-800 rounded-xl border border-slate-200 dark:border-slate-700 hover-lift w-full">
+                                <div class="flex gap-4 items-start">
+                                    <div class="bg-blue-100 dark:bg-blue-900/30 p-3 rounded-full mt-0.5 group-hover:bg-blue-200 dark:group-hover:bg-blue-800 transition-colors flex-shrink-0">
+                                        <span class="material-symbols-outlined text-blue-600 dark:text-blue-400 text-xl">qr_code_scanner</span>
+                                    </div>
+                                    <div class="flex-1 min-w-0">
+                                        <h4 class="font-bold text-slate-900 dark:text-slate-100 mb-2 group-hover:text-blue-600 transition-colors">PETVET Ulusal Hayvan Veri Tabanı</h4>
+                                        <p class="text-slate-600 dark:text-slate-400 text-sm leading-relaxed mb-3">
+                                            Sokaktaki küpeli hayvanların dijital kimliklendirilmesi ve takibi zorunlu hale getirilmiştir. <span class="text-blue-600 font-semibold bg-blue-50 dark:bg-blue-900/30 px-2 py-0.5 rounded">PETVET sistemi</span>, her hayvanın sağlık geçmişini içerir.
+                                        </p>
+                                        <div class="text-xs text-slate-500 bg-slate-50 dark:bg-slate-700/50 p-3 rounded-lg">
+                                            <strong>Vatandaş Erişimi:</strong> PETVET mobil uygulaması üzerinden kayıp hayvan bildirimi yapılabilir.
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="group p-6 bg-white dark:bg-slate-800 rounded-xl border border-slate-200 dark:border-slate-700 hover-lift w-full">
+                                <div class="flex gap-4 items-start">
+                                    <div class="bg-purple-100 dark:bg-purple-900/30 p-3 rounded-full mt-0.5 group-hover:bg-purple-200 dark:group-hover:bg-purple-800 transition-colors flex-shrink-0">
+                                        <span class="material-symbols-outlined text-purple-600 dark:text-purple-400 text-xl">groups</span>
+                                    </div>
+                                    <div class="flex-1 min-w-0">
+                                        <h4 class="font-bold text-slate-900 dark:text-slate-100 mb-2 group-hover:text-purple-600 transition-colors">Hayvan Koruma Görevlisi Statüsü</h4>
+                                        <p class="text-slate-600 dark:text-slate-400 text-sm leading-relaxed mb-3">
+                                            Gönüllüler için yeni bir statü oluşturulmuştur. <span class="text-purple-600 font-semibold bg-purple-50 dark:bg-purple-900/30 px-2 py-0.5 rounded">"Hayvan Koruma Görevlisi"</span> kartı alan vatandaşlar, resmi yetkiyle besleme yapabilir.
+                                        </p>
+                                        <div class="text-xs text-slate-500 bg-slate-50 dark:bg-slate-700/50 p-3 rounded-lg">
+                                            <strong>Başvuru:</strong> İl/İlçe Tarım Müdürlüklerine dilekçe ile başvuru yapılır. 16 yaş üstü her vatandaş başvurabilir.
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </article>
+
+                    <!-- Ceza Hükümleri -->
+                    <article class="reveal w-full">
+                        <div class="flex items-center gap-2 mb-6">
+                            <span class="material-symbols-outlined text-primary text-2xl">policy</span>
+                            <h3 class="text-2xl font-bold text-slate-900 dark:text-slate-100">Ceza Hükümleri ve Yaptırımlar</h3>
+                        </div>
+                        
+                        <div class="bg-red-50 dark:bg-red-900/10 border border-red-200 dark:border-red-800 rounded-xl p-6 mb-6 w-full">
+                            <h4 class="font-bold text-red-800 dark:text-red-400 mb-4 flex items-center gap-2">
+                                <span class="material-symbols-outlined">warning</span>
+                                Hayvanlara Şiddet ve Cezai Yaptırımlar (2024 Güncel)
+                            </h4>
+                            <div class="space-y-4 text-sm text-slate-700 dark:text-slate-300">
+                                <div class="flex gap-3 items-start">
+                                    <span class="bg-red-200 dark:bg-red-800 text-red-800 dark:text-red-200 px-2 py-1 rounded text-xs font-bold mt-0.5 flex-shrink-0">6 AY - 4 YIL</span>
+                                    <p><strong>Öldürme ve Yaralama:</strong> Hayvanı kasıtlı olarak öldüren, yaralayan veya işkence eden kişiye hapis cezası verilir.</p>
+                                </div>
+                                <div class="flex gap-3 items-start">
+                                    <span class="bg-orange-200 dark:bg-orange-800 text-orange-800 dark:text-orange-200 px-2 py-1 rounded text-xs font-bold mt-0.5 flex-shrink-0">3 AY - 2 YIL</span>
+                                    <p><strong>İhmalkarlık:</strong> Sahip olduğu hayvanı açlık, susuzluk, soğuk veya hastalığa maruz bırakan kişi hakkında işlem yapılır.</p>
+                                </div>
+                                <div class="flex gap-3 items-start">
+                                    <span class="bg-yellow-200 dark:bg-yellow-800 text-yellow-800 dark:text-yellow-200 px-2 py-1 rounded text-xs font-bold mt-0.5 flex-shrink-0">1 AY - 1 YIL</span>
+                                    <p><strong>Engelleme:</strong> Hayvan beslemesini yasaklayan, engelleyen veya besleyiciye şiddet uygulayan kişiler hakkında adli işlem başlatılır.</p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <p class="text-slate-600 dark:text-slate-400 text-sm leading-relaxed w-full">
+                            <strong>Önemli:</strong> Hayvan hakları ihlalleri artık "şikayete tabi suç" değil, "kamu davası" kapsamındadır. Yani şikayetçi olmasanız bile savcılık resen soruşturma başlatabilir.
+                        </p>
+                    </article>
+
+                    <!-- Uzman Görüşleri -->
+                    <article class="reveal bg-primary/5 dark:bg-primary/10 rounded-2xl p-8 border border-primary/10 w-full">
+                        <div class="flex items-center gap-2 mb-8">
+                            <span class="material-symbols-outlined text-primary text-2xl">format_quote</span>
+                            <h3 class="text-2xl font-bold">Uzman Görüşleri ve Değerlendirmeler</h3>
+                        </div>
+                        
+                        <div class="space-y-8">
+                            <div class="flex flex-col md:flex-row gap-6 p-6 bg-white dark:bg-slate-800 rounded-xl border border-slate-200 dark:border-slate-700 hover-lift w-full">
+                                <div class="w-16 h-16 rounded-full bg-gradient-to-br from-primary/30 to-primary/50 flex items-center justify-center text-primary font-bold text-xl flex-shrink-0">
+                                    SA
+                                </div>
+                                <div class="flex-1 min-w-0">
+                                    <p class="italic text-slate-700 dark:text-slate-300 mb-3 leading-relaxed">"2024 düzenlemeleri, özellikle bütçe artışı ve barınak standartları açısından çok olumlu. Ancak kritik nokta uygulama. Belediyelerin bu kaynakları etkili kullanması ve kısırlaştırma odaklı bir yaklaşım benimsemesi gerekiyor."</p>
+                                    <div class="flex items-center gap-2 text-sm">
+                                        <span class="font-bold text-primary">Dr. Selen Aksoy</span>
+                                        <span class="text-slate-400">|</span>
+                                        <span class="text-slate-600 dark:text-slate-400">Veteriner Hekim</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="h-px bg-primary/20 w-full"></div>
+
+                            <div class="flex flex-col md:flex-row gap-6 p-6 bg-white dark:bg-slate-800 rounded-xl border border-slate-200 dark:border-slate-700 hover-lift w-full">
+                                <div class="w-16 h-16 rounded-full bg-gradient-to-br from-accent/30 to-accent/50 flex items-center justify-center text-accent-dark font-bold text-xl flex-shrink-0">
+                                    MY
+                                </div>
+                                <div class="flex-1 min-w-0">
+                                    <p class="italic text-slate-700 dark:text-slate-300 mb-3 leading-relaxed">"Vatandaşların 5199 sayılı kanunu ve 2024 değişikliklerini çok iyi bilmesi gerekiyor. Özellikle besleme odak noktaları ve hayvanların yaşam alanlarına müdahale konusunda hukuki sınırları öğrenmek çok önemli."</p>
+                                    <div class="flex items-center gap-2 text-sm">
+                                        <span class="font-bold text-accent-dark">Av. Murat Yılmaz</span>
+                                        <span class="text-slate-400">|</span>
+                                        <span class="text-slate-600 dark:text-slate-400">Hayvan Hakları Savunucusu</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </article>
+
+                    <!-- Vatandaş Hakları -->
+                    <article class="reveal w-full">
+                        <div class="flex items-center gap-2 mb-6">
+                            <span class="material-symbols-outlined text-primary text-2xl">shield</span>
+                            <h3 class="text-2xl font-bold text-slate-900 dark:text-slate-100">Vatandaşların Bilmesi Gerekenler</h3>
+                        </div>
+                        
+                        <p class="text-slate-700 dark:text-slate-300 mb-6 leading-relaxed w-full">
+                            5199 sayılı kanun ve ilgili yönetmelikler kapsamında vatandaşlar çeşitli haklara sahiptir. Bu hakların bilinmesi ve doğru kullanılması kritik öneme sahiptir.
+                        </p>
+                        
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 stagger-children w-full">
+                            <div class="group p-5 bg-white dark:bg-slate-800 rounded-xl border border-slate-200 dark:border-slate-700 hover-lift w-full">
+                                <span class="material-symbols-outlined text-primary mb-3 group-hover:scale-110 transition-transform block text-3xl">volunteer_activism</span>
+                                <h4 class="font-bold mb-2 text-slate-900 dark:text-slate-100">Yasal Besleme Hakkı</h4>
+                                <p class="text-slate-600 dark:text-slate-400 text-sm leading-relaxed mb-3">
+                                    Hayvanlara yaşam alanlarında su ve mama verilmesi 5199 sayılı kanunla güvence altına alınmıştır.
+                                </p>
+                                <div class="text-xs text-slate-500 bg-slate-50 dark:bg-slate-700/50 p-2 rounded">
+                                    Besleme, "hijyen kurallarına uygun" yapılmalıdır.
+                                </div>
+                            </div>
+
+                            <div class="group p-5 bg-white dark:bg-slate-800 rounded-xl border border-slate-200 dark:border-slate-700 hover-lift w-full">
+                                <span class="material-symbols-outlined text-red-500 mb-3 group-hover:scale-110 transition-transform block text-3xl">report</span>
+                                <h4 class="font-bold mb-2 text-slate-900 dark:text-slate-100">İhbar ve Şikayet Hakkı</h4>
+                                <p class="text-slate-600 dark:text-slate-400 text-sm leading-relaxed mb-3">
+                                    Kötü muamele durumunda HAYDİ uygulaması veya CİMER üzerinden anonim olarak ihbar hakkınız bulunur.
+                                </p>
+                                <div class="text-xs text-slate-500 bg-slate-50 dark:bg-slate-700/50 p-2 rounded">
+                                    Fotoğraf ve video delil olarak kullanılabilir.
+                                </div>
+                            </div>
+
+                            <div class="group p-5 bg-white dark:bg-slate-800 rounded-xl border border-slate-200 dark:border-slate-700 hover-lift w-full">
+                                <span class="material-symbols-outlined text-blue-500 mb-3 group-hover:scale-110 transition-transform block text-3xl">medical_services</span>
+                                <h4 class="font-bold mb-2 text-slate-900 dark:text-slate-100">Acil Yardım</h4>
+                                <p class="text-slate-600 dark:text-slate-400 text-sm leading-relaxed mb-3">
+                                    Yaralı bir hayvan görüldüğünde ilgili belediyenin rehabilitasyon merkezine bildirim zorunludur.
+                                </p>
+                                <div class="text-xs text-slate-500 bg-slate-50 dark:bg-slate-700/50 p-2 rounded">
+                                    Alo 153 belediye iletişim hattı 7/24 aktiftir.
+                                </div>
+                            </div>
+
+                            <div class="group p-5 bg-white dark:bg-slate-800 rounded-xl border border-slate-200 dark:border-slate-700 hover-lift w-full">
+                                <span class="material-symbols-outlined text-amber-500 mb-3 group-hover:scale-110 transition-transform block text-3xl">badge</span>
+                                <h4 class="font-bold mb-2 text-slate-900 dark:text-slate-100">Gönüllü Kartı</h4>
+                                <p class="text-slate-600 dark:text-slate-400 text-sm leading-relaxed mb-3">
+                                    Yerel hayvan koruma görevlisi kartı alarak yasal statü kazanabilir ve resmi görevlendirme ile besleme yapabilirsiniz.
+                                </p>
+                                <div class="text-xs text-slate-500 bg-slate-50 dark:bg-slate-700/50 p-2 rounded">
+                                    Başvuru için ilçe tarım müdürlüğüne dilekçe verilir.
+                                </div>
+                            </div>
+                        </div>
+                    </article>
+
+                    <!-- SSS Önizleme -->
+                    <article class="reveal bg-gradient-to-r from-primary/10 to-emerald-50 dark:from-primary/20 dark:to-emerald-900/20 rounded-2xl p-8 border border-primary/20 w-full">
+                        <div class="flex flex-col md:flex-row items-center justify-between gap-6 w-full">
+                            <div class="flex-1">
+                                <h3 class="text-xl font-bold text-slate-900 dark:text-white mb-2">Sıkça Sorulan Sorular</h3>
+                                <p class="text-slate-600 dark:text-slate-300 text-sm">En merak edilen soruların yanıtları için detaylı SSS sayfamızı ziyaret edin.</p>
+                            </div>
+                            <a href="{{ url_for('sss') }}" class="inline-flex items-center gap-2 px-6 py-3 bg-primary text-white font-semibold rounded-xl hover:bg-primary-700 transition-all shadow-lg whitespace-nowrap">
+                                Tüm Soruları Gör
+                                <span class="material-symbols-outlined">arrow_forward</span>
+                            </a>
+                        </div>
+                    </article>
+                </div>
+
+                <!-- Sağ Sidebar - sticky ile uzun içerik boyunca sabit -->
+                <aside class="lg:col-span-4 space-y-6 lg:sticky lg:top-28 lg:self-start">
+                    
+                    <!-- Hızlı Başvuru -->
+                    <div class="reveal bg-white dark:bg-slate-800 rounded-xl p-6 shadow-sm border border-slate-200 dark:border-slate-700 w-full">
+                        <div class="flex items-center gap-2 mb-6">
+                            <span class="material-symbols-outlined text-primary text-xl">speed</span>
+                            <h4 class="text-lg font-bold text-slate-900 dark:text-white">Hızlı Başvuru Rehberi</h4>
+                        </div>
+                        
+                        <div class="space-y-4">
+                            <div class="p-4 bg-slate-50 dark:bg-slate-700/50 rounded-lg border-l-4 border-red-500 w-full">
+                                <h5 class="font-bold text-sm text-slate-900 dark:text-white mb-1 flex items-center gap-2">
+                                    <span class="material-symbols-outlined text-red-500 text-sm">emergency</span>
+                                    Acil İhbar
+                                </h5>
+                                <p class="text-xs text-slate-600 dark:text-slate-300">Alo 153 veya HAYDİ App</p>
+                            </div>
+                            
+                            <div class="p-4 bg-slate-50 dark:bg-slate-700/50 rounded-lg border-l-4 border-blue-500 w-full">
+                                <h5 class="font-bold text-sm text-slate-900 dark:text-white mb-1">Görevli Kartı</h5>
+                                <p class="text-xs text-slate-600 dark:text-slate-300">İlçe Tarım Müdürlüğü</p>
+                            </div>
+                            
+                            <div class="p-4 bg-slate-50 dark:bg-slate-700/50 rounded-lg border-l-4 border-green-500 w-full">
+                                <h5 class="font-bold text-sm text-slate-900 dark:text-white mb-1">Sahiplenme</h5>
+                                <p class="text-xs text-slate-600 dark:text-slate-300">Belediye barınağı</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Resmi Belgeler -->
+                    <div class="reveal bg-white dark:bg-slate-800 rounded-xl p-6 shadow-sm border border-slate-200 dark:border-slate-700 w-full">
+                        <div class="flex items-center gap-2 mb-6">
+                            <span class="material-symbols-outlined text-primary text-xl">folder_open</span>
+                            <h4 class="text-lg font-bold text-slate-900 dark:text-white">Resmi Belgeler</h4>
+                        </div>
+                        
+                        <ul class="space-y-3">
+                            <li>
+                                <a class="group flex items-center justify-between p-3 rounded-lg hover:bg-primary/5 transition-colors w-full" href="https://www.mevzuat.gov.tr/MevzuatMetin/1.5.5199.pdf">
+                                    <div class="flex items-center gap-3 min-w-0">
+                                        <span class="material-symbols-outlined text-red-500 flex-shrink-0">picture_as_pdf</span>
+                                        <span class="text-sm font-medium text-slate-900 dark:text-white truncate">5199 Sayılı Kanun</span>
+                                    </div>
+                                    <span class="material-symbols-outlined text-sm opacity-0 group-hover:opacity-100 text-primary flex-shrink-0">download</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a class="group flex items-center justify-between p-3 rounded-lg hover:bg-primary/5 transition-colors w-full" href="https://www.tarimorman.gov.tr/DKMP/Belgeler/MEVZUAT/5199%20Say%C4%B1l%C4%B1%20Hayvanlar%C4%B1%20Koruma%20Kanunu/2)Hayvanlar%C4%B1n%20Korunmas%C4%B1na%20Dair%20Uygulama%20Y%C3%B6netmeli%C4%9Fi.pdf">
+                                    <div class="flex items-center gap-3 min-w-0">
+                                        <span class="material-symbols-outlined text-red-500 flex-shrink-0">picture_as_pdf</span>
+                                        <span class="text-sm font-medium text-slate-900 dark:text-white truncate">Uygulama Yönetmeliği</span>
+                                    </div>
+                                    <span class="material-symbols-outlined text-sm opacity-0 group-hover:opacity-100 text-primary flex-shrink-0">download</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <!-- İletişim -->
+                    <div class="reveal bg-slate-50 dark:bg-slate-800/50 rounded-xl p-6 border border-slate-200 dark:border-slate-700 w-full">
+                        <h4 class="text-sm font-bold text-slate-900 dark:text-white uppercase tracking-wider mb-4">Acil İhbar</h4>
+                        <div class="space-y-3">
+                            <a href="tel:153" class="flex items-center gap-3 p-3 bg-white dark:bg-slate-800 rounded-lg w-full">
+                                <span class="material-symbols-outlined text-green-600">phone</span>
+                                <div>
+                                    <p class="font-bold text-sm text-slate-900 dark:text-white">Alo 153</p>
+                                    <p class="text-xs text-slate-500">Belediye</p>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Son Güncellemeler - Yeni Eklendi -->
+                            <div class="reveal bg-white dark:bg-slate-800 rounded-xl p-6 shadow-sm border border-slate-200 dark:border-slate-700 w-full">
+            
+            <div class="flex items-center gap-2 mb-6">
+                <span class="material-symbols-outlined text-primary text-xl">update</span>
+                <h4 class="text-lg font-bold text-slate-900 dark:text-white">Son Güncellemeler</h4>
+            </div>
+
+            <div class="space-y-6">
+                <div >
+                    <div class="flex-shrink-0 w-28">
+                        <span class="text-xs font-bold text-primary bg-primary/10 px-3 py-1.5 rounded block text-center mb-2">
+                            01.01.2026
+                        </span>
+                    </div>
+                    
+                    <div class="flex-1">
+                        <p class="font-bold text-slate-900 dark:text-white text-base mb-2">Çipsiz Kediler Sahipsiz Sayılacak</p>
+                        <p class="text-sm text-slate-500 leading-relaxed">
+                            Yeni düzenlemeyle 1 Ocak 2026'dan itibaren çipi bulunmayan tüm kediler "sahipsiz" statüsüne geçirilmiştir. Bu hayvanların belediyeler tarafından toplanması ve sahipli olup da bakanlık şartlarına uymayanların sahiplerinden alınması süreci başlamıştır.
+                        </p>
+                    </div>
+                </div>
+                <div class="h-px bg-slate-100 dark:bg-slate-700 w-full"></div>
+
+                <div>
+                    <div class="flex-shrink-0 w-28">
+                        <span class="text-xs font-bold text-primary bg-primary/10 px-3 py-1.5 rounded block text-center mb-2">
+                            Aralık 2026
+                        </span>
+                    </div>
+                    <div class="flex-1">
+                        <p class="font-bold text-slate-900 dark:text-white text-base mb-2">Sokak Hayvanı Tanımı Kaldırıldı</p>
+                        <p class="text-sm text-slate-500 leading-relaxed">
+                            Bu tarih itibarıyla kliniklerin sahipsiz hayvanlara resmi işlem yapması zorlaştırıldı.
+                        </p>
+                    </div>
+            </div>
+
+            <div class="h-px bg-slate-100 dark:bg-slate-700 w-full"></div>
+
+            <div class="">
+                <div class="flex-shrink-0 w-28 mb-2">
+                    <span class="text-xs font-bold text-primary bg-primary/10 px-3 py-1.5 rounded block text-center">
+                        30.07.2024
+                    </span>
+                </div>
+                <div class="flex-1">
+                    <p class="font-bold text-slate-900 dark:text-white text-base mb-2">AYM İptal İstemini Reddetti</p>
+                    <p class="text-sm text-slate-500 leading-relaxed">
+                        "Sahipsiz Hayvanlara Yönelik Düzenleme" (7527 sayılı Kanun) TBMM'de kabul edilerek yasalaştı. Kamuoyunda "uyutma" tartışmalarıyla bilinen bu yasa, belediyelere sokak köpeklerini toplama ve barınaklara alma zorunluluğu getirdi.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+                  
+
+
+                </aside>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+<footer class="bg-slate-900 text-slate-400 py-14">
+  <div class="mx-auto max-w-7xl px-6 grid grid-cols-1 md:grid-cols-4 gap-10">
+
+    <!-- Site Tanıtımı -->
+    <div>
+      <div class="flex items-center gap-2 mb-4">
+        <span class="material-symbols-outlined text-primary text-3xl">pets</span>
+        <span class="text-xl font-black text-white">Hayvanların Sesi</span>
+      </div>
+
+      <p class="text-sm leading-relaxed">
+        Türkiye'de hayvan hakları konusunda güncel bilgiler,
+        yasal rehberler ve ihbar yollarını sunan bağımsız
+        bir bilgilendirme platformudur.
+      </p>
+    </div>
+
+    <!-- Hızlı Linkler -->
+    <div>
+      <h4 class="text-white font-semibold mb-4">Site Haritası</h4>
+      <ul class="space-y-2 text-sm">
+        <li><a href="{{ url_for('index') }}" class="hover:text-white transition">Ana Sayfa</a></li>
+        <li><a href="{{ url_for('haberler') }}" class="hover:text-white transition">Haberler</a></li>
+        <li><a href="{{ url_for('iletisim') }}" class="hover:text-white transition">İletişim</a></li>
+      </ul>
+    </div>
+
+    <!-- Bilgi Merkezi -->
+    <div>
+      <h4 class="text-white font-semibold mb-4">Bilgi Merkezi</h4>
+      <ul class="space-y-2 text-sm">
+        <li><a href="{{ url_for('kanun') }}" class="hover:text-white transition">5199 Sayılı Kanun</a></li>
+        <li><a href="{{ url_for('mevzuat') }}" class="hover:text-white transition">Mevzuat Rehberi</a></li>
+        <li><a href="{{ url_for('sss') }}" class="hover:text-white transition">Sık Sorulan Sorular</a></li>
+      </ul>
+    </div>
+
+    <!-- Yasal -->
+    <div>
+      <h4 class="text-white font-semibold mb-4">Yasal</h4>
+      <ul class="space-y-2 text-sm">
+        <li><a href="{{ url_for('kvkk') }}" class="hover:text-white transition">KVKK</a></li>
+        <li><a href="{{ url_for('gizlilik') }}" class="hover:text-white transition">Gizlilik Politikası</a></li>
+        <li><a href="{{ url_for('kullanim') }}" class="hover:text-white transition">Kullanım Şartları</a></li>
+      </ul>
+
+    </div>
+
+  </div>
+
+  <!-- Alt Bilgi -->
+  <div class="border-t border-slate-800 mt-12 pt-6 text-center text-xs text-slate-500 px-6">
+
+    <p class="mb-2">
+      © 2026 Hayvanların Sesi. Tüm hakları saklıdır.
+    </p>
+
+    <p>
+      Bu site resmi bir devlet kurumu değildir. İçerikler bilgilendirme amacıyla hazırlanmıştır ve
+      5199 Sayılı Hayvanları Koruma Kanunu ile resmi kurum kaynakları baz alınmıştır.
+    </p>
+
+  </div>
+</footer>
+
+    <script>
+        let scrolling = false;
+
+        function reveal() {
+            const reveals = document.querySelectorAll(".reveal");
+            for (let i = 0; i < reveals.length; i++) {
+                const windowHeight = window.innerHeight;
+                const elementTop = reveals[i].getBoundingClientRect().top;
+                const elementVisible = 120;
+                if (elementTop < windowHeight - elementVisible) {
+                    reveals[i].classList.add("active");
+                }
+            }
+        }
+
+        window.addEventListener("scroll", () => {
+            if (!scrolling) {
+                scrolling = true;
+                requestAnimationFrame(() => {
+                    reveal();
+                    scrolling = false;
+                });
+            }
+        });
+
+        window.addEventListener("DOMContentLoaded", reveal);
+
+        const button = document.getElementById("dropdown-button");
+        const menu = document.getElementById("dropdown-menu");
+        button.addEventListener("click", (e) => {
+            e.stopPropagation();
+            menu.classList.toggle("hidden");
+        });
+        document.addEventListener("click", (e) => {
+            if (!menu.contains(e.target) && !button.contains(e.target)) {
+                menu.classList.add("hidden");
+            }
+        });
+
+        const menuBtn = document.getElementById("mobile-menu-button");
+        const mobileMenu = document.getElementById("mobile-menu");
+        menuBtn.addEventListener("click", () => {
+            mobileMenu.classList.toggle("hidden");
+        });
+
+        const infoBtn = document.getElementById("mobile-info-button");
+        const infoDropdown = document.getElementById("mobile-info-dropdown");
+        infoBtn.addEventListener("click", () => {
+            infoDropdown.classList.toggle("hidden");
+        });
+
+        const staggerObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('active');
+                    staggerObserver.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.1 });
+
+        document.querySelectorAll('.stagger-children').forEach(el => {
+            staggerObserver.observe(el);
+        });
+    </script>
+</body>
+</html>

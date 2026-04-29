@@ -1,0 +1,621 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<meta name="description" content="Hayvan hakları hakkında en çok merak edilenler: Besleme yasak mı? Belediye toplama yapabilir mi? Tüm sorularınızın yasal karşılıkları."/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link rel="icon" type="image/svg+xml" href="static/img/favicon.svg" />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+    
+    <!-- Tailwind Config -->
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'system-ui', 'sans-serif'],
+                    },
+                    colors: {
+                        "primary": "#2c5926",
+                        "primary-light": "#4a7c3b",
+                        "secondary": "#1e40af",
+                        "background-light": "#f6f7f6",
+                        "background-dark": "#161d15",
+                        brand: {
+                            light: '#1a5f4a',
+                            DEFAULT: '#0f3d2e',
+                            dark: '#0a2a1f',
+                        },
+                        accent: {
+                            blue: '#2d6a9f',
+                            orange: '#e67e22',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            font-feature-settings: "cv02", "cv03", "cv04", "cv11";
+        }
+        
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        ::-webkit-scrollbar-track {                             
+            background: transparent;
+        }
+        ::-webkit-scrollbar-thumb {
+            background-color: #d6d3d1;
+            border-radius: 4px;
+        }
+        .dark ::-webkit-scrollbar-thumb {
+            background-color: #44403c;
+        }
+        
+        details > summary {
+            list-style: none;
+        }
+        details > summary::-webkit-details-marker {
+            display: none;
+        }
+
+        html { scroll-behavior: smooth; }
+        body { font-family: 'Inter', sans-serif; }
+        .dropdown-content { display: none; }    
+        .group:hover .dropdown-content { display: block; }
+        
+        .animate-fade-in {
+            animation: fadeIn 0.8s ease-out forwards;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        /* Smooth Scroll Reveal Animasyonu - Yeni Eklendi */
+        .reveal {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.8s ease-out;
+        }
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    </style>
+    <title>Hayvan Hakları SSS | Sıkça Sorulan Sorular</title>
+</head>
+<body class="antialiased bg-stone-50 dark:bg-stone-950 text-stone-800 dark:text-stone-100 min-h-screen flex flex-col">
+
+    <!-- Header -->
+<header class="sticky top-0 z-50 w-full border-b border-primary/10 bg-white/80 dark:bg-background-dark/80 backdrop-blur-md">
+    <div class="mx-auto flex max-w-7xl items-center justify-between px-6 py-4">
+        <div class="flex items-center gap-2">
+            <span class="material-symbols-outlined text-primary text-3xl"> <a href="{{ url_for('index') }}">pets</a></span>
+            <h1 class="text-xl font-extrabold tracking-tight text-primary"><a href="{{ url_for('index') }}">Hayvanların Sesi</a></h1>
+        </div>
+
+        <nav class="hidden md:flex items-center gap-8">
+            <a class="text-sm font-semibold hover:text-primary transition-colors" href="{{ url_for('index') }}">Ana Sayfa</a>
+            <a class="text-sm font-semibold hover:text-primary transition-colors" href="{{ url_for('haberler') }}">Haberler</a>
+
+            <div class="group relative">
+                <button id="dropdown-button" class="flex items-center gap-1 text-sm font-semibold hover:text-primary transition-colors text-slate-900 dark:text-slate-100">
+                    Bilgi Merkezi
+                    <span class="material-symbols-outlined text-sm">expand_more</span>
+                </button>
+                <div id="dropdown-menu" class="dropdown-content absolute top-full left-0 pt-4 w-64 hidden">
+                    <div class="bg-white dark:bg-slate-800 border rounded-xl shadow-xl overflow-hidden p-2 text-slate-900 dark:text-slate-100">
+                        <a href="{{ url_for('kanun') }}" class="flex items-center gap-2 px-4 py-3 text-sm hover:bg-slate-50 dark:hover:bg-slate-700 rounded-lg transition-colors">
+                            <span class="material-symbols-outlined text-lg">gavel</span> 5199 Sayılı Kanun
+                        </a>
+                        <a href="{{ url_for('mevzuat') }}" class="flex items-center gap-2 px-4 py-3 text-sm hover:bg-slate-50 dark:hover:bg-slate-700 rounded-lg transition-colors">
+                            <span class="material-symbols-outlined text-lg">description</span> Mevzuat Rehberi
+                        </a>
+                        <a href="{{ url_for('sss') }}" class="flex items-center gap-2 px-4 py-3 text-sm text-primary font-bold dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-700 rounded-lg transition-colors">
+                            <span class="material-symbols-outlined text-lg">help_center</span> Sıkça Sorulan Sorular
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <a class="text-sm font-semibold hover:text-primary transition-colors" href="{{ url_for('iletisim') }}">İletişim</a>
+        </nav>
+
+        <div class="flex items-center gap-4">
+        <a href="{{ url_for('ihbar') }}" 
+            class="hidden md:flex items-center gap-2 bg-red-600 text-white px-4 py-1.5 rounded-xl text-sm font-bold shadow-lg shadow-red-900/20 hover:bg-red-700 hover:shadow-red-900/30 transition-all active:scale-95 group">
+              
+              <span class="material-symbols-outlined text-lg group-hover:rotate-12 transition-transform">report</span>
+              <span>İhbar Rehberi</span>
+        </a>
+
+            <button id="mobile-menu-button" class="md:hidden text-slate-900 dark:text-slate-100 p-1">
+                <span class="material-symbols-outlined text-3xl">menu</span>
+            </button>
+        </div>
+    </div>
+
+<div class="md:hidden px-6 pb-4 -mt-1">
+    <a href="{{ url_for('ihbar') }}" 
+       class="flex items-center justify-between w-full bg-red-50 dark:bg-red-950/20 text-red-600 dark:text-red-400 px-4 py-3 rounded-xl border border-red-100 dark:border-red-900/30 active:bg-red-100 transition-all shadow-sm">
+        <div class="flex items-center gap-3">
+            <span class="material-symbols-outlined font-bold">report</span>
+            <div class="flex flex-col">
+                <span class="text-xs uppercase font-black tracking-wider opacity-80">Acil Durum</span>
+                <span class="text-sm font-bold">İhbar Rehberi & Yasal Haklar</span>
+            </div>
+        </div>
+        <span class="material-symbols-outlined text-red-400">chevron_right</span>
+    </a>
+</div>
+    
+      <nav id="mobile-menu" class="hidden md:hidden flex flex-col items-start gap-4 px-4 pb-4 pt-4 bg-white dark:bg-slate-900 border-t">
+        <a href="{{ url_for('index') }}" class="text-base font-semibold hover:text-primary">Ana Sayfa</a>
+        <a href="{{ url_for('haberler') }}" class="text-base font-semibold hover:text-primary">Haberler</a>
+        <div class="flex flex-col items-start w-full">
+            <button id="mobile-info-button" class="flex items-center justify-between w-full text-base font-semibold hover:text-primary">
+                Bilgi Merkezi
+                <span class="material-symbols-outlined">expand_more</span>
+            </button>
+            <div id="mobile-info-dropdown" class="hidden flex flex-col items-start mt-2 gap-2 pl-2">
+                <a href="{{ url_for('kanun') }}" class="flex items-center text-sm hover:text-primary"><span class="material-symbols-outlined text-lg">gavel </span> 5199 Sayılı Kanun</a>
+                <a href="{{ url_for('mevzuat') }}" class="flex items-center text-sm hover:text-primary"><span class="material-symbols-outlined text-lg">description </span> Mevzuat Rehberi</a>
+                <a href="{{ url_for('sss') }}" class="flex items-center text-sm hover:text-primary"><span class="material-symbols-outlined text-lg">help_center </span> Sıkça Sorulan Sorular</a>
+            </div>
+        </div>
+        <a href="{{ url_for('iletisim') }}" class="text-base font-semibold hover:text-primary">İletişim</a>
+    </nav>
+</header>
+
+    <!-- Main Content -->
+    <main class="flex-1">
+        
+        <!-- Hero Section -->
+        <section class="relative overflow-hidden bg-gradient-to-b from-[#1f3d1f] via-[#2f6b3d] to-[#eaf3ea]">
+    
+    <!-- Üst ışık efekti -->
+    <div class="absolute inset-0">
+        <div class="absolute top-0 left-1/2 -translate-x-1/2 w-[600px] h-[300px] bg-green-400/20 blur-3xl rounded-full"></div>
+    </div>
+
+    <!-- Pattern -->
+    <div class="absolute inset-0 opacity-5">
+        <div class="absolute inset-0" style="background-image: radial-gradient(circle at 2px 2px, rgba(255,255,255,0.2) 1px, transparent 0); background-size: 30px 30px;"></div>
+    </div>
+
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-16 md:py-20 relative">
+        <div class="max-w-2xl mx-auto text-center animate-fade-in">
+
+            <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/10 text-white text-xs font-semibold tracking-wide mb-4 border border-white/20 backdrop-blur-sm">
+                BİLGİ MERKEZİ
+            </div>
+
+            <h1 class="text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-4 tracking-tight">
+                Sıkça Sorulan Sorular
+            </h1>
+
+            <p class="text-white/85 text-base md:text-lg leading-relaxed max-w-xl mx-auto">
+                Sokaktaki canlarımız, yasal haklar ve mevzuatla ilgili tüm merak edilenleri aşağıda bir araya getirdik.
+            </p>
+
+        </div>
+    </div>
+</section>
+        <!-- FAQ Section -->
+  <!-- FAQ Section -->
+<section class="py-12 md:py-16">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="grid lg:grid-cols-12 gap-8 lg:gap-12 items-start">
+            
+            <!-- Sidebar Info Cards - Mobilde Alt Alta, Desktop Sticky -->
+            <div class="lg:col-span-4 space-y-6 lg:sticky lg:top-28 reveal order-2 lg:order-1">
+                
+                <!-- Info 1 -->
+                <div class="bg-accent-blue/5 border border-accent-blue/10 p-6 rounded-2xl">
+                    <svg class="w-8 h-8 text-accent-blue mb-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"/>
+                    </svg>
+                    <h4 class="font-bold text-accent-blue text-sm mb-2">Biliyor muydunuz?</h4>
+                    <p class="text-xs text-stone-600 dark:text-stone-400 leading-relaxed">
+                        5199 sayılı kanun uyarınca hayvanlar artık birer "eşya" değil, "can" olarak kabul edilmektedir.
+                    </p>
+                </div>
+
+                <!-- Info 2 -->
+                <div class="bg-accent-orange/5 border border-accent-orange/10 p-6 rounded-2xl">
+                    <svg class="w-8 h-8 text-accent-orange mb-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/>
+                    </svg>
+                    <h4 class="font-bold text-accent-orange text-sm mb-2">HAYDİ Uygulaması</h4>
+                    <p class="text-xs text-stone-600 dark:text-stone-400 leading-relaxed">
+                        Şiddet ihbarlarınızı İçişleri Bakanlığı'nın HAYDİ uygulamasıyla saniyeler içinde konumuyla bildirebilirsiniz.
+                    </p>
+                </div>
+
+                <!-- Info 3 -->
+                <div class="bg-brand/5 border border-brand/10 p-6 rounded-2xl">
+                    <svg class="w-8 h-8 text-brand mb-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/>
+                    </svg>
+                    <h4 class="font-bold text-brand text-sm mb-2">Sahiplenme</h4>
+                    <p class="text-xs text-stone-600 dark:text-stone-400 leading-relaxed">
+                        Barınaklardan bir can sahiplenmek, sadece bir hayatı kurtarmaz; ticari üretime karşı en büyük duruştur.
+                    </p>
+                </div>
+
+                <!-- Info 4 -->
+                <div class="bg-stone-900 p-6 rounded-2xl text-white">
+                    <svg class="w-8 h-8 text-red-400 mb-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/>
+                    </svg>
+                    <h4 class="font-bold text-sm mb-2 text-red-400">Belediye Görevi</h4>
+                    <p class="text-xs text-stone-400 leading-relaxed">
+                        Belediyeler, sahipsiz hayvanları "Kısırlaştır-Aşılat-Yerine Bırak" metoduyla rehabilite etmek zorundadır.
+                    </p>
+                </div>
+
+                <!-- Info 5 -->
+                <div class="bg-accent-blue/5 border border-accent-blue/10 p-6 rounded-2xl">
+                    <svg class="w-8 h-8 text-accent-blue mb-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z"/>
+                    </svg>
+                    <h4 class="font-bold text-accent-blue text-sm mb-2">Kısırlaştırma</h4>
+                    <p class="text-xs text-stone-600 dark:text-stone-400 leading-relaxed">
+                        Kısırlaştırma, hayvanların kanser riskini azaltır ve sokak popülasyonunun sağlıklı kalmasını sağlar.
+                    </p>
+                </div>
+            </div>
+
+            <!-- FAQ Content - reveal eklendi -->
+            <div class="lg:col-span-8 space-y-10 reveal order-1 lg:order-2">
+                
+                <!-- Category 1: Sokak Hayvanları ve Yardım -->
+                <div class="space-y-4">
+                    <h3 class="flex items-center gap-2 text-brand font-bold text-lg mb-6">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/></svg>
+                        Sokak Hayvanları ve Yardım
+                    </h3>
+                    
+                    <!-- YENİ VE VURGULU: Yaralı Hayvan (Açık ve En Üstte) -->
+                    <details class="group bg-red-50 dark:bg-red-950/20 border-2 border-red-500 rounded-xl overflow-hidden shadow-lg shadow-red-500/10 transition-all" open>
+                        <summary class="flex items-center justify-between p-5 cursor-pointer bg-red-50 dark:bg-red-900/10">
+                            <div class="flex items-center gap-3">
+                                <span class="material-symbols-outlined text-red-600 dark:text-red-400 animate-pulse">emergency</span>
+                                <span class="font-black text-red-700 dark:text-red-400 text-base md:text-lg">Yaralı hayvan gördüm ne yapmalıyım?</span>
+                            </div>
+                            <svg class="w-6 h-6 text-red-600 dark:text-red-400 group-open:rotate-180 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+                        </summary>
+                        <div class="px-5 pb-5 text-stone-700 dark:text-stone-300 border-t border-red-200 dark:border-red-800/50 pt-5 text-sm leading-relaxed">
+                            <ul class="space-y-4">
+                                <li class="flex items-start gap-3">
+                                    <span class="flex-shrink-0 w-6 h-6 rounded-full bg-red-100 dark:bg-red-900/50 text-red-600 dark:text-red-400 flex items-center justify-center font-bold text-xs mt-0.5">1</span>
+                                    <span><strong>Sakin Kalın ve Güvenliği Sağlayın:</strong> Hayvanı daha fazla korkutmamak için ani hareketlerden kaçının. Trafik olan bir yerdeyse, kendinizi tehlikeye atmadan güvenli bir alan oluşturun.</span>
+                                </li>
+                                <li class="flex items-start gap-3">
+                                    <span class="flex-shrink-0 w-6 h-6 rounded-full bg-red-100 dark:bg-red-900/50 text-red-600 dark:text-red-400 flex items-center justify-center font-bold text-xs mt-0.5">2</span>
+                                    <span><strong>153'ü veya Belediyeyi Arayın:</strong> Büyükşehirlerde <strong>153 Beyaz Masa</strong>'yı veya bulunduğunuz ilçe belediyesinin Veteriner İşleri Müdürlüğü'nü arayarak açık adres verin. Kanun gereği tedaviden belediyeler sorumludur.</span>
+                                </li>
+                                <li class="flex items-start gap-3">
+                                    <span class="flex-shrink-0 w-6 h-6 rounded-full bg-red-100 dark:bg-red-900/50 text-red-600 dark:text-red-400 flex items-center justify-center font-bold text-xs mt-0.5">3</span>
+                                    <span><strong>Müdahale Ederken Dikkatli Olun:</strong> Yaralı bir hayvan acı ve korku nedeniyle saldırganlaşabilir. Eğer taşımanız gerekiyorsa kalın bir battaniye, mont veya havlu yardımıyla tutun.</span>
+                                </li>
+                                <li class="flex items-start gap-3">
+                                    <span class="flex-shrink-0 w-6 h-6 rounded-full bg-red-100 dark:bg-red-900/50 text-red-600 dark:text-red-400 flex items-center justify-center font-bold text-xs mt-0.5">4</span>
+                                    <span><strong>Durum Çok Kritikse:</strong> Belediye ekiplerinin gelmesi uzun sürecekse ve hayati tehlike varsa (şiddetli kanama vb.), vakit kaybetmemek adına en yakın açık veteriner kliniğine götürün.</span>
+                                </li>
+                            </ul>
+                        </div>
+                    </details>
+
+                    <details class="group bg-white dark:bg-stone-800 border border-stone-200 dark:border-stone-700 rounded-xl overflow-hidden shadow-sm hover:border-brand/30 transition-all">
+                        <summary class="flex items-center justify-between p-5 cursor-pointer">
+                            <span class="font-semibold text-stone-800 dark:text-stone-200 text-sm">Sokak hayvanları için neler yapabilirim?</span>
+                            <svg class="w-5 h-5 text-brand group-open:rotate-180 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+                        </summary>
+                        <div class="px-5 pb-5 text-stone-600 dark:text-stone-400 border-t border-stone-100 dark:border-stone-700 pt-4 text-sm leading-relaxed">
+                            Mahallenizdeki hayvanlar için düzenli su ve mama kapları bırakabilir, hava şartlarına uygun barınaklar inşa edebilirsiniz. En önemlisi, yaralı veya yardıma muhtaç bir hayvan gördüğünüzde yerel belediye ekiplerine veya ilgili STK'lara bilgi vermelisiniz.
+                        </div>
+                    </details>
+
+                    <details class="group bg-white dark:bg-stone-800 border border-stone-200 dark:border-stone-700 rounded-xl overflow-hidden shadow-sm hover:border-brand/30 transition-all">
+                        <summary class="flex items-center justify-between p-5 cursor-pointer">
+                            <span class="font-semibold text-stone-800 dark:text-stone-200 text-sm">Besleme odakları nasıl kurulur?</span>
+                            <svg class="w-5 h-5 text-brand group-open:rotate-180 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+                        </summary>
+                        <div class="px-5 pb-5 text-stone-600 dark:text-stone-400 border-t border-stone-100 dark:border-stone-700 pt-4 text-sm leading-relaxed">
+                            Yerel belediyeniz ile iletişime geçerek parklarda veya uygun yeşil alanlarda resmi besleme odakları oluşturulmasını talep edebilirsiniz. Bireysel olarak kurduğunuz odakların çevre temizliğini gözetmek mahalle sakinleriyle barışı korumak adına önemlidir.
+                        </div>
+                    </details>
+
+                    <details class="group bg-white dark:bg-stone-800 border border-stone-200 dark:border-stone-700 rounded-xl overflow-hidden shadow-sm hover:border-brand/30 transition-all">
+                        <summary class="flex items-center justify-between p-5 cursor-pointer">
+                            <span class="font-semibold text-stone-800 dark:text-stone-200 text-sm">Hayvanları koruma gönüllüsü kartı nasıl alınır?</span>
+                            <svg class="w-5 h-5 text-brand group-open:rotate-180 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+                        </summary>
+                        <div class="px-5 pb-5 text-stone-600 dark:text-stone-400 border-t border-stone-100 dark:border-stone-700 pt-4 text-sm leading-relaxed">
+                            Yerel hayvan koruma görevlisi eğitimi alarak bu kartı edinebilirsiniz. Eğitimler İl Hayvanları Koruma Kurulları (Valilikler) tarafından düzenlenir. Kart sahipleri, sokak hayvanlarının bakımı ve korunmasında resmi olarak tanınmış olur.
+                        </div>
+                    </details>
+
+                    <!-- YENİ: Sokak hayvanlarını beslemek yasak mı? -->
+                    <details class="group bg-white dark:bg-stone-800 border border-stone-200 dark:border-stone-700 rounded-xl overflow-hidden shadow-sm hover:border-brand/30 transition-all">
+                        <summary class="flex items-center justify-between p-5 cursor-pointer">
+                            <span class="font-semibold text-stone-800 dark:text-stone-200 text-sm">Sokak hayvanlarını beslemek yasak mı?</span>
+                            <svg class="w-5 h-5 text-brand group-open:rotate-180 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+                        </summary>
+                        <div class="px-5 pb-5 text-stone-600 dark:text-stone-400 border-t border-stone-100 dark:border-stone-700 pt-4 text-sm leading-relaxed">
+                            <strong>Hayır, yasak değil.</strong> 5199 Sayılı Hayvanları Koruma Kanunu'na göre sokak hayvanlarını beslemek suç değildir. Ancak besleme yaparken çevre temizliğine dikkat etmek, mahalle sakinlerini rahatsız etmemek ve düzenli olarak besleme yapmak önemlidir. Bazı belediyeler belirli alanlarda besleme noktaları oluşturmuştur.
+                        </div>
+                    </details>
+
+                    <!-- YENİ: Belediye yaralı hayvana bakmak zorunda mı? -->
+                    <details class="group bg-white dark:bg-stone-800 border border-stone-200 dark:border-stone-700 rounded-xl overflow-hidden shadow-sm hover:border-brand/30 transition-all">
+                        <summary class="flex items-center justify-between p-5 cursor-pointer">
+                            <span class="font-semibold text-stone-800 dark:text-stone-200 text-sm">Belediye yaralı hayvana bakmak zorunda mı?</span>
+                            <svg class="w-5 h-5 text-brand group-open:rotate-180 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+                        </summary>
+                        <div class="px-5 pb-5 text-stone-600 dark:text-stone-400 border-t border-stone-100 dark:border-stone-700 pt-4 text-sm leading-relaxed">
+                            <strong>Evet, zorunludur.</strong> 5199 Sayılı Kanun ve ilgili yönetmeliklere göre belediyeler, sahipsiz ve yaralı hayvanların tedavisi, bakımı ve rehabilite edilmesi ile yükümlüdür. Yaralı bir hayvan gördüğünüzde en yakın belediye veteriner işleri müdürlüğünü arayarak durumu bildirebilirsiniz.
+                        </div>
+                    </details>
+                </div>
+
+                <!-- Category 2: İhbar ve Hukuki Süreçler -->
+                <div class="space-y-4">
+                    <h3 class="flex items-center gap-2 text-accent-blue font-bold text-lg mb-6">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/></svg>
+                        İhbar ve Hukuki Süreçler
+                    </h3>
+
+                    <details class="group bg-white dark:bg-stone-800 border border-stone-200 dark:border-stone-700 rounded-xl overflow-hidden shadow-sm hover:border-accent-blue/30 transition-all">
+                        <summary class="flex items-center justify-between p-5 cursor-pointer">
+                            <span class="font-semibold text-stone-800 dark:text-stone-200 text-sm">Hayvan hakları ihlali durumunda nereye başvurulur?</span>
+                            <svg class="w-5 h-5 text-accent-blue group-open:rotate-180 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+                        </summary>
+                        <div class="px-5 pb-5 text-stone-600 dark:text-stone-400 border-t border-stone-100 dark:border-stone-700 pt-4 text-sm leading-relaxed">
+                            Şahit olduğunuz hak ihlallerini İçişleri Bakanlığı'nın <strong>HAYDİ</strong> (Hayvan Durum İzleme) uygulaması üzerinden anında ihbar edebilirsiniz. Ayrıca en yakın emniyet birimine veya Tarım ve Orman İl Müdürlüklerine başvurabilirsiniz.
+                        </div>
+                    </details>
+
+                    <details class="group bg-white dark:bg-stone-800 border border-stone-200 dark:border-stone-700 rounded-xl overflow-hidden shadow-sm hover:border-accent-blue/30 transition-all">
+                        <summary class="flex items-center justify-between p-5 cursor-pointer">
+                            <span class="font-semibold text-stone-800 dark:text-stone-200 text-sm">Bir hayvanın şiddet gördüğüne tanık olursam ne yapmalıyım?</span>
+                            <svg class="w-5 h-5 text-accent-blue group-open:rotate-180 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+                        </summary>
+                        <div class="px-5 pb-5 text-stone-600 dark:text-stone-400 border-t border-stone-100 dark:border-stone-700 pt-4 text-sm leading-relaxed">
+                            Derhal 112 Acil Çağrı Merkezi'ni arayarak durumu bildirmeli veya HAYDİ mobil uygulaması üzerinden fotoğraf/video kanıtlarıyla ihbarda bulunmalısınız. Mümkünse failin eşkalini not edin.
+                        </div>
+                    </details>
+
+                    <details class="group bg-white dark:bg-stone-800 border border-stone-200 dark:border-stone-700 rounded-xl overflow-hidden shadow-sm hover:border-accent-blue/30 transition-all">
+                        <summary class="flex items-center justify-between p-5 cursor-pointer">
+                            <span class="font-semibold text-stone-800 dark:text-stone-200 text-sm">Apartmanda evcil hayvan beslemek yasaklanabilir mi?</span>
+                            <svg class="w-5 h-5 text-accent-blue group-open:rotate-180 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+                        </summary>
+                        <div class="px-5 pb-5 text-stone-600 dark:text-stone-400 border-t border-stone-100 dark:border-stone-700 pt-4 text-sm leading-relaxed">
+                            Yönetim planında aksine bir hüküm yoksa ve hayvan çevreye aşırı rahatsızlık vermiyorsa, apartmanda hayvan beslemek anayasal bir haktır. Tahliye ancak mahkeme kararıyla mümkündür.
+                        </div>
+                    </details>
+
+                    <!-- YENİ: Şiddeti nereye şikayet edebilirim? -->
+                    <details class="group bg-white dark:bg-stone-800 border border-stone-200 dark:border-stone-700 rounded-xl overflow-hidden shadow-sm hover:border-accent-blue/30 transition-all">
+                        <summary class="flex items-center justify-between p-5 cursor-pointer">
+                            <span class="font-semibold text-stone-800 dark:text-stone-200 text-sm">Şiddeti nereye şikayet edebilirim?</span>
+                            <svg class="w-5 h-5 text-accent-blue group-open:rotate-180 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+                        </summary>
+                        <div class="px-5 pb-5 text-stone-600 dark:text-stone-400 border-t border-stone-100 dark:border-stone-700 pt-4 text-sm leading-relaxed">
+                            <p class="mb-3">Hayvanlara yönelik şiddeti şu kanallarla şikayet edebilirsiniz:</p>
+                            <ul class="space-y-2">
+                                <li class="flex items-start gap-2">
+                                    <span class="text-accent-blue font-bold">1.</span>
+                                    <span><strong>HAYDİ Mobil Uygulaması:</strong> En hızlı yöntem. Fotoğraf ve konum ile anında ihbar.</span>
+                                </li>
+                                <li class="flex items-start gap-2">
+                                    <span class="text-accent-blue font-bold">2.</span>
+                                    <span><strong>112 Acil Çağrı:</strong> Hayvanın hayati tehlikesi varsa veya olay devam ediyorsa.</span>
+                                </li>
+                                <li class="flex items-start gap-2">
+                                    <span class="text-accent-blue font-bold">3.</span>
+                                    <span><strong>Cumhuriyet Başsavcılığı:</strong> Resmi suç duyurusu için dilekçe ile başvuru.</span>
+                                </li>
+                                <li class="flex items-start gap-2">
+                                    <span class="text-accent-blue font-bold">4.</span>
+                                    <span><strong>DKMP (Doğa Koruma):</strong> İdari para cezası için bölge müdürlükleri.</span>
+                                </li>
+                                <li class="flex items-start gap-2">
+                                    <span class="text-accent-blue font-bold">5.</span>
+                                    <span><strong>CİMER (150):</strong> Kurumlar görevini yapmıyorsa üst merci başvurusu.</span>
+                                </li>
+                            </ul>
+                        </div>
+                    </details>
+                </div>
+
+                <!-- Category 3: Sağlık ve Popülasyon -->
+                <div class="space-y-4">
+                    <h3 class="flex items-center gap-2 text-accent-orange font-bold text-lg mb-6">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z"/></svg>
+                        Sağlık ve Popülasyon
+                    </h3>
+
+                    <details class="group bg-white dark:bg-stone-800 border border-stone-200 dark:border-stone-700 rounded-xl overflow-hidden shadow-sm hover:border-accent-orange/30 transition-all">
+                        <summary class="flex items-center justify-between p-5 cursor-pointer">
+                            <span class="font-semibold text-stone-800 dark:text-stone-200 text-sm">Kısırlaştırma neden önemlidir ve nerede yapılır?</span>
+                            <svg class="w-5 h-5 text-accent-orange group-open:rotate-180 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+                        </summary>
+                        <div class="px-5 pb-5 text-stone-600 dark:text-stone-400 border-t border-stone-100 dark:border-stone-700 pt-4 text-sm leading-relaxed">
+                            Kısırlaştırma, kontrolsüz üremeyi engeller ve sokak popülasyonunun sağlıklı kalmasına yardımcı olur. Belediyelerin veteriner işleri müdürlükleri ücretsiz kısırlaştırma hizmeti vermektedir.
+                        </div>
+                    </details>
+
+                    <details class="group bg-white dark:bg-stone-800 border border-stone-200 dark:border-stone-700 rounded-xl overflow-hidden shadow-sm hover:border-accent-orange/30 transition-all">
+                        <summary class="flex items-center justify-between p-5 cursor-pointer">
+                            <span class="font-semibold text-stone-800 dark:text-stone-200 text-sm">Yaralı bir yabani hayvan bulduğumda ne yapmalıyım?</span>
+                            <svg class="w-5 h-5 text-accent-orange group-open:rotate-180 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+                        </summary>
+                        <div class="px-5 pb-5 text-stone-600 dark:text-stone-400 border-t border-stone-100 dark:border-stone-700 pt-4 text-sm leading-relaxed">
+                            Yabani hayvanlar için Tarım ve Orman Bakanlığı Doğa Koruma ve Milli Parklar (DKMP) bölge müdürlükleri ile iletişime geçilmelidir. Bu kurumlar yabani canların rehabilitasyonuyla görevlidir.
+                        </div>
+                    </details>
+                </div>
+
+                <!-- CTA - reveal eklendi -->
+                <div class="bg-gradient-to-br from-brand to-accent-blue p-8 rounded-2xl text-white shadow-xl flex flex-col md:flex-row items-center justify-between gap-6 reveal">
+                    <div>
+                        <h3 class="text-xl font-bold mb-1">Hala sorunuz mu var?</h3>
+                        <p class="text-white/80 text-sm">Uzmanlarımız ve gönüllü avukatlarımız size yardımcı olmak için burada.</p>
+                    </div>
+                    <a href="{{ url_for('iletisim') }}" class="bg-white text-brand px-8 py-3 rounded-xl font-bold hover:scale-105 transition-transform shrink-0 text-sm">
+                        Bizimle İletişime Geçin
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+    </main>
+
+    <!-- Footer -->
+<footer class="bg-slate-900 text-slate-400 py-14">
+  <div class="mx-auto max-w-7xl px-6 grid grid-cols-1 md:grid-cols-4 gap-10">
+
+    <!-- Site Tanıtımı -->
+    <div>
+      <div class="flex items-center gap-2 mb-4">
+        <span class="material-symbols-outlined text-primary text-3xl">pets</span>
+        <span class="text-xl font-black text-white">Hayvanların Sesi</span>
+      </div>
+
+      <p class="text-sm leading-relaxed">
+        Türkiye'de hayvan hakları konusunda güncel bilgiler,
+        yasal rehberler ve ihbar yollarını sunan bağımsız
+        bir bilgilendirme platformudur.
+      </p>
+    </div>
+
+    <!-- Hızlı Linkler -->
+    <div>
+      <h4 class="text-white font-semibold mb-4">Site Haritası</h4>
+      <ul class="space-y-2 text-sm">
+        <li><a href="{{ url_for('index') }}" class="hover:text-white transition">Ana Sayfa</a></li>
+        <li><a href="{{ url_for('haberler') }}" class="hover:text-white transition">Haberler</a></li>
+        <li><a href="{{ url_for('iletisim') }}" class="hover:text-white transition">İletişim</a></li>
+      </ul>
+    </div>
+
+    <!-- Bilgi Merkezi -->
+    <div>
+      <h4 class="text-white font-semibold mb-4">Bilgi Merkezi</h4>
+      <ul class="space-y-2 text-sm">
+        <li><a href="{{ url_for('kanun') }}" class="hover:text-white transition">5199 Sayılı Kanun</a></li>
+        <li><a href="{{ url_for('mevzuat') }}" class="hover:text-white transition">Mevzuat Rehberi</a></li>
+        <li><a href="{{ url_for('sss') }}" class="hover:text-white transition">Sık Sorulan Sorular</a></li>
+      </ul>
+    </div>
+
+    <!-- Yasal -->
+    <div>
+      <h4 class="text-white font-semibold mb-4">Yasal</h4>
+      <ul class="space-y-2 text-sm">
+        <li><a href="{{ url_for('kvkk') }}" class="hover:text-white transition">KVKK</a></li>
+        <li><a href="{{ url_for('gizlilik') }}" class="hover:text-white transition">Gizlilik Politikası</a></li>
+        <li><a href="{{ url_for('kullanim') }}" class="hover:text-white transition">Kullanım Şartları</a></li>
+      </ul>
+
+    </div>
+
+  </div>
+
+  <!-- Alt Bilgi -->
+  <div class="border-t border-slate-800 mt-12 pt-6 text-center text-xs text-slate-500 px-6">
+
+    <p class="mb-2">
+      © 2026 Hayvanların Sesi. Tüm hakları saklıdır.
+    </p>
+
+    <p>
+      Bu site resmi bir devlet kurumu değildir. İçerikler bilgilendirme amacıyla hazırlanmıştır ve
+      5199 Sayılı Hayvanları Koruma Kanunu ile resmi kurum kaynakları baz alınmıştır.
+    </p>
+
+  </div>
+</footer>
+
+    <!-- Smooth Scroll Script - Yeni Eklendi -->
+    <script>
+        // Intersection Observer ile reveal animasyonu
+        const observerOptions = {
+            root: null,
+            rootMargin: '0px',
+            threshold: 0.1
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('active');
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.reveal').forEach(el => {
+            observer.observe(el);
+        });
+
+        // Mobile menu toggle
+        const mobileBtn = document.getElementById('mobile-menu-button');
+        const mobileMenu = document.getElementById('mobile-menu');
+        
+        if(mobileBtn && mobileMenu) {
+            mobileBtn.addEventListener('click', () => {
+                mobileMenu.classList.toggle('hidden');
+            });
+
+            // Close mobile menu when clicking outside
+            document.addEventListener('click', (e) => {
+                if (!mobileBtn.contains(e.target) && !mobileMenu.contains(e.target)) {
+                    mobileMenu.classList.add('hidden');
+                }
+            });
+        }
+
+        // Dropdown menü
+        const button = document.getElementById("dropdown-button");
+        const menu = document.getElementById("dropdown-menu");
+        
+        if(button && menu) {
+            button.addEventListener("click", (e) => {
+                e.stopPropagation();
+                menu.classList.toggle("hidden");
+            });
+            document.addEventListener("click", (e) => {
+                if (!menu.contains(e.target) && !button.contains(e.target)) {
+                    menu.classList.add("hidden");
+                }
+            });
+        }
+
+        // Mobile info dropdown
+        const infoBtn = document.getElementById("mobile-info-button");
+        const infoDropdown = document.getElementById("mobile-info-dropdown");
+        
+        if(infoBtn && infoDropdown) {
+            infoBtn.addEventListener("click", () => {
+                infoDropdown.classList.toggle("hidden");
+            });
+        }
+    </script>
+</body>
+</html>

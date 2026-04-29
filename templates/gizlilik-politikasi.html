@@ -1,0 +1,572 @@
+<!DOCTYPE html>
+<html lang="tr" class="scroll-smooth">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<meta name="description" content="Hayvanların Sesi gizlilik politikası: Web sitemizde kullanıcı verilerinin nasıl korunduğuna dair detaylar."/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link rel="icon" type="image/svg+xml" href="static/img/favicon.svg" />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#2c5926",
+                        "secondary": "#1e40af",
+                        "background-light": "#f6f7f6",
+                        "background-dark": "#161d15",
+                    },
+                    fontFamily: {
+                        "display": ["Inter", "sans-serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+    <style>
+        .reveal {
+            opacity: 0;
+            transform: translateY(10px);
+            transition: opacity 0.5s ease-out, transform 0.5s ease-out;
+        }
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        .dropdown-content { display: none; }    
+        .group:hover .dropdown-content { display: block; }
+        html { scroll-behavior: smooth; }
+        
+        .scroll-mt-safe {
+            scroll-margin-top: 6rem;
+        }
+        @media (min-width: 768px) {
+            .scroll-mt-safe {
+                scroll-margin-top: 7rem;
+            }
+        }
+        
+        .break-words-safe {
+            overflow-wrap: break-word;
+            word-wrap: break-word;
+            hyphens: auto;
+        }
+    </style>
+<title>Gizlilik Politikası | Hayvanların Sesi</title>
+</head>
+<body class="bg-background-light dark:bg-background-dark font-display text-slate-900 dark:text-slate-100">
+<div class="relative flex min-h-screen flex-col">
+
+<!-- Header -->
+<header class="sticky top-0 z-50 w-full border-b border-primary/10 bg-white/80 dark:bg-background-dark/80 backdrop-blur-md">
+    <div class="mx-auto flex max-w-7xl items-center justify-between px-6 py-4">
+        <div class="flex items-center gap-2">
+            <span class="material-symbols-outlined text-primary text-3xl"> <a href="{{ url_for('index') }}">pets</a></span>
+            <h1 class="text-xl font-extrabold tracking-tight text-primary"><a href="{{ url_for('index') }}">Hayvanların Sesi</a></h1>
+        </div>
+
+        <nav class="hidden md:flex items-center gap-8">
+            <a class="text-sm font-semibold hover:text-primary transition-colors border-b-2" href="{{ url_for('index') }}">Ana Sayfa</a>
+            <a class="text-sm font-semibold hover:text-primary transition-colors" href="{{ url_for('haberler') }}">Haberler</a>
+
+            <div class="group relative">
+                <button id="dropdown-button" class="flex items-center gap-1 text-sm font-semibold hover:text-primary transition-colors text-slate-900 dark:text-slate-100">
+                    Bilgi Merkezi
+                    <span class="material-symbols-outlined text-sm">expand_more</span>
+                </button>
+                <div id="dropdown-menu" class="dropdown-content absolute top-full left-0 pt-4 w-64 hidden">
+                    <div class="bg-white dark:bg-slate-800 border rounded-xl shadow-xl overflow-hidden p-2 text-slate-900 dark:text-slate-100">
+                        <a href="{{ url_for('kanun') }}" class="flex items-center gap-2 px-4 py-3 text-sm hover:bg-slate-50 dark:hover:bg-slate-700 rounded-lg transition-colors">
+                            <span class="material-symbols-outlined text-lg">gavel</span> 5199 Sayılı Kanun
+                        </a>
+                        <a href="{{ url_for('mevzuat') }}" class="flex items-center gap-2 px-4 py-3 text-sm hover:bg-slate-50 dark:hover:bg-slate-700 rounded-lg transition-colors">
+                            <span class="material-symbols-outlined text-lg">description</span> Mevzuat Rehberi
+                        </a>
+                        <a href="{{ url_for('sss') }}" class="flex items-center gap-2 px-4 py-3 text-sm hover:bg-slate-50 dark:hover:bg-slate-700 rounded-lg transition-colors">
+                            <span class="material-symbols-outlined text-lg">help_center</span> Sıkça Sorulan Sorular
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <a class="text-sm font-semibold hover:text-primary transition-colors" href="{{ url_for('iletisim') }}   ">İletişim</a>
+        </nav>
+
+        <div class="flex items-center gap-4">
+        <a href="{{ url_for('ihbar') }}" 
+            class="hidden md:flex items-center gap-2 bg-red-600 text-white px-4 py-1.5 rounded-xl text-sm font-bold shadow-lg shadow-red-900/20 hover:bg-red-700 hover:shadow-red-900/30 transition-all active:scale-95 group">
+              
+              <span class="material-symbols-outlined text-lg group-hover:rotate-12 transition-transform">report</span>
+              <span>İhbar Rehberi</span>
+        </a>
+
+        </div>
+    </div>
+
+
+</header>
+
+<main class="flex-grow">
+    <!-- Hero -->
+    <section class="relative bg-gradient-to-br from-primary to-blue-900 py-12 sm:py-16 md:py-20">
+        <div class="absolute inset-0 opacity-10">
+            <div class="absolute inset-0" style="background-image: radial-gradient(circle at 2px 2px, white 1px, transparent 0); background-size: 20px 20px;"></div>
+        </div>
+        <div class="relative mx-auto max-w-7xl px-4 sm:px-6 text-center">
+            <span class="mb-3 inline-block rounded-full bg-white/20 px-3 py-1 text-xs font-bold uppercase tracking-widest text-white backdrop-blur-sm border border-white/20">
+                Gizlilik ve Güvenlik
+            </span>
+            <h1 class="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-black text-white mb-3 leading-tight">
+                Gizlilik Politikası
+            </h1>
+            <p class="text-base sm:text-lg text-white/90 max-w-2xl mx-auto px-2">
+                Veri güvenliği ve kullanıcı haklarına ilişkin esaslar
+            </p>
+        </div>
+    </section>
+
+    <!-- Content -->
+    <section class="py-8 sm:py-12 bg-background-light dark:bg-background-dark">
+        <div class="mx-auto max-w-7xl px-4 sm:px-6">
+            
+            <!-- Mobile Navigation (Horizontal Scroll) -->
+            <div class="lg:hidden mb-6 overflow-x-auto pb-2 -mx-4 px-4 scrollbar-hide">
+                <div class="flex gap-2 min-w-max">
+                    <a href="#genel-bilgi" class="px-3 py-1.5 bg-white dark:bg-slate-800 rounded-full text-xs font-medium shadow-sm border border-slate-200 dark:border-slate-700 whitespace-nowrap">Genel Bilgi</a>
+                    <a href="#veri-guvenligi" class="px-3 py-1.5 bg-white dark:bg-slate-800 rounded-full text-xs font-medium shadow-sm border border-slate-200 dark:border-slate-700 whitespace-nowrap">Veri Güvenliği</a>
+                    <a href="#cerezler" class="px-3 py-1.5 bg-white dark:bg-slate-800 rounded-full text-xs font-medium shadow-sm border border-slate-200 dark:border-slate-700 whitespace-nowrap">Çerezler</a>
+                    <a href="#ucuncu-taraf" class="px-3 py-1.5 bg-white dark:bg-slate-800 rounded-full text-xs font-medium shadow-sm border border-slate-200 dark:border-slate-700 whitespace-nowrap">3. Taraf</a>
+                    <a href="#haklar" class="px-3 py-1.5 bg-white dark:bg-slate-800 rounded-full text-xs font-medium shadow-sm border border-slate-200 dark:border-slate-700 whitespace-nowrap">Haklarınız</a>
+                </div>
+            </div>
+
+            <div class="grid lg:grid-cols-4 gap-6 lg:gap-8">
+                <!-- Desktop Sidebar -->
+                <aside class="hidden lg:block lg:col-span-1">
+                    <div class="sticky top-24 bg-white dark:bg-slate-800 rounded-2xl p-4 shadow-lg max-h-[calc(100vh-8rem)] overflow-y-auto">
+                        <h3 class="text-base font-bold mb-3 text-slate-900 dark:text-white flex items-center gap-2">
+                            <span class="material-symbols-outlined text-primary text-lg">toc</span>
+                            İçindekiler
+                        </h3>
+                        <nav class="space-y-1 text-sm">
+                            <a href="#genel-bilgi" class="block py-1.5 px-2 rounded-lg text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-700 hover:text-primary transition-colors">Genel Bilgi</a>
+                            <a href="#toplanan-veriler" class="block py-1.5 px-2 rounded-lg text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-700 hover:text-primary transition-colors">Toplanan Veriler</a>
+                            <a href="#veri-kullanimi" class="block py-1.5 px-2 rounded-lg text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-700 hover:text-primary transition-colors">Veri Kullanımı</a>
+                            <a href="#veri-guvenligi" class="block py-1.5 px-2 rounded-lg text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-700 hover:text-primary transition-colors">Veri Güvenliği</a>
+                            <a href="#cerezler" class="block py-1.5 px-2 rounded-lg text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-700 hover:text-primary transition-colors">Çerezler</a>
+                            <a href="#ucuncu-taraf" class="block py-1.5 px-2 rounded-lg text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-700 hover:text-primary transition-colors">Üçüncü Taraf Hizmetler</a>
+                            <a href="#haklar" class="block py-1.5 px-2 rounded-lg text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-700 hover:text-primary transition-colors">Kullanıcı Hakları</a>
+                            <a href="#degisiklikler" class="block py-1.5 px-2 rounded-lg text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-700 hover:text-primary transition-colors">Politika Değişiklikleri</a>
+                        </nav>
+                    </div>
+                </aside>
+
+                <!-- Main Content -->
+                <div class="lg:col-span-3 space-y-6">
+                    
+                    <!-- Intro -->
+                    <div class="reveal bg-white dark:bg-slate-800 rounded-xl sm:rounded-2xl p-4 sm:p-6 lg:p-8 shadow-lg border-l-4 border-primary">
+                        <p class="text-slate-600 dark:text-slate-300 text-sm sm:text-base leading-relaxed break-words-safe">
+                            İşbu Gizlilik Politikası, <strong>Hayvanların Sesi</strong> platformunun kullanıcı verilerini nasıl topladığını, kullandığını, sakladığını ve koruduğunu açıklamaktadır. Platformumuzu kullanarak bu politikada belirtilen uygulamaları kabul etmiş sayılırsınız.
+                        </p>
+                    </div>
+
+                    <!-- Genel Bilgi -->
+                    <div id="genel-bilgi" class="scroll-mt-safe reveal bg-white dark:bg-slate-800 rounded-xl sm:rounded-2xl p-4 sm:p-6 lg:p-8 shadow-lg">
+                        <div class="flex items-center gap-2 sm:gap-3 mb-3 sm:mb-4">
+                            <div class="bg-primary/10 p-2 rounded-lg">
+                                <span class="material-symbols-outlined text-primary text-xl sm:text-2xl">policy</span>
+                            </div>
+                            <h2 class="text-xl sm:text-2xl font-bold text-slate-900 dark:text-white">Genel Bilgi</h2>
+                        </div>
+                        <div class="space-y-3 text-sm sm:text-base text-slate-600 dark:text-slate-300">
+                            <p class="leading-relaxed break-words-safe">
+                                Hayvanların Sesi, kullanıcı gizliliğine büyük önem vermektedir. Bu politika, platformumuz üzerinden toplanan tüm verilere ilişkin şeffaflık sağlamak amacıyla hazırlanmıştır.
+                            </p>
+                            <div class="bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-xl p-4">
+                                <p class="text-sm text-blue-800 dark:text-blue-200 leading-relaxed">
+                                    <strong>Temel İlkemiz:</strong> Kullanıcı verilerini yalnızca belirtilen amaçlar doğrultusunda, yasal çerçevede ve en yüksek güvenlik standartlarıyla işliyoruz.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Toplanan Veriler -->
+                    <div id="toplanan-veriler" class="scroll-mt-safe reveal bg-white dark:bg-slate-800 rounded-xl sm:rounded-2xl p-4 sm:p-6 lg:p-8 shadow-lg">
+                        <div class="flex items-center gap-2 sm:gap-3 mb-3 sm:mb-4">
+                            <div class="bg-primary/10 p-2 rounded-lg">
+                                <span class="material-symbols-outlined text-primary text-xl sm:text-2xl">database</span>
+                            </div>
+                            <h2 class="text-xl sm:text-2xl font-bold text-slate-900 dark:text-white">Toplanan Veriler</h2>
+                        </div>
+                        <p class="text-sm sm:text-base text-slate-600 dark:text-slate-300 mb-4 leading-relaxed">
+                            Platformumuz üzerinden aşağıdaki veriler toplanmaktadır:
+                        </p>
+                        <div class="grid sm:grid-cols-2 gap-3 sm:gap-4">
+                            <div class="bg-slate-50 dark:bg-slate-700/30 rounded-xl p-4 border border-slate-200 dark:border-slate-600">
+                                <h4 class="font-bold text-slate-900 dark:text-white mb-2 flex items-center gap-2 text-sm sm:text-base">
+                                    <span class="material-symbols-outlined text-primary text-base">person</span>
+                                    Kimlik ve İletişim
+                                </h4>
+                                <ul class="text-sm text-slate-600 dark:text-slate-300 space-y-1 list-disc list-inside">
+                                    <li>Ad ve soyad</li>
+                                    <li>E-posta adresi</li>
+                                    <li>Telefon numarası (isteğe bağlı)</li>
+                                </ul>
+                            </div>
+                            <div class="bg-slate-50 dark:bg-slate-700/30 rounded-xl p-4 border border-slate-200 dark:border-slate-600">
+                                <h4 class="font-bold text-slate-900 dark:text-white mb-2 flex items-center gap-2 text-sm sm:text-base">
+                                    <span class="material-symbols-outlined text-primary text-base">chat</span>
+                                    İletişim İçeriği
+                                </h4>
+                                <ul class="text-sm text-slate-600 dark:text-slate-300 space-y-1 list-disc list-inside">
+                                    <li>Mesaj içeriği</li>
+                                    <li>Şikayet detayları</li>
+                                    <li>Soru ve talepler</li>
+                                </ul>
+                            </div>
+                            <div class="bg-slate-50 dark:bg-slate-700/30 rounded-xl p-4 border border-slate-200 dark:border-slate-600 sm:col-span-2">
+                                <h4 class="font-bold text-slate-900 dark:text-white mb-2 flex items-center gap-2 text-sm sm:text-base">
+                                    <span class="material-symbols-outlined text-primary text-base">devices</span>
+                                    Teknik Veriler
+                                </h4>
+                                <p class="text-sm text-slate-600 dark:text-slate-300 leading-relaxed">
+                                    IP adresi, tarayıcı türü, işletim sistemi, ziyaret tarihi/saati gibi otomatik olarak toplanan teknik veriler. Bu veriler sadece istatistiksel analiz ve güvenlik amaçlarıyla kullanılır.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Veri Kullanımı -->
+                    <div id="veri-kullanimi" class="scroll-mt-safe reveal bg-white dark:bg-slate-800 rounded-xl sm:rounded-2xl p-4 sm:p-6 lg:p-8 shadow-lg">
+                        <div class="flex items-center gap-2 sm:gap-3 mb-3 sm:mb-4">
+                            <div class="bg-primary/10 p-2 rounded-lg">
+                                <span class="material-symbols-outlined text-primary text-xl sm:text-2xl">touch_app</span>
+                            </div>
+                            <h2 class="text-xl sm:text-2xl font-bold text-slate-900 dark:text-white">Veri Kullanım Amaçları</h2>
+                        </div>
+                        <p class="text-sm sm:text-base text-slate-600 dark:text-slate-300 mb-4 leading-relaxed">
+                            Toplanan veriler aşağıdaki amaçlarla kullanılmaktadır:
+                        </p>
+                        <ul class="space-y-2">
+                            <li class="flex items-start gap-2 bg-slate-50 dark:bg-slate-700/30 p-3 rounded-lg">
+                                <span class="material-symbols-outlined text-primary text-sm mt-0.5">support_agent</span>
+                                <span class="text-sm sm:text-base text-slate-600 dark:text-slate-300 break-words-safe">Kullanıcı taleplerinin yanıtlanması ve destek sağlanması</span>
+                            </li>
+                            <li class="flex items-start gap-2 bg-slate-50 dark:bg-slate-700/30 p-3 rounded-lg">
+                                <span class="material-symbols-outlined text-primary text-sm mt-0.5">campaign</span>
+                                <span class="text-sm sm:text-base text-slate-600 dark:text-slate-300 break-words-safe">Hayvan hakları konusunda bilgilendirme yapılması</span>
+                            </li>
+                            <li class="flex items-start gap-2 bg-slate-50 dark:bg-slate-700/30 p-3 rounded-lg">
+                                <span class="material-symbols-outlined text-primary text-sm mt-0.5">trending_up</span>
+                                <span class="text-sm sm:text-base text-slate-600 dark:text-slate-300 break-words-safe">Platform performansının analiz edilmesi ve iyileştirilmesi</span>
+                            </li>
+                            <li class="flex items-start gap-2 bg-slate-50 dark:bg-slate-700/30 p-3 rounded-lg">
+                                <span class="material-symbols-outlined text-primary text-sm mt-0.5">security</span>
+                                <span class="text-sm sm:text-base text-slate-600 dark:text-slate-300 break-words-safe">Güvenlik ihlallerinin önlenmesi ve tespiti</span>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <!-- Veri Güvenliği -->
+                    <div id="veri-guvenligi" class="scroll-mt-safe reveal bg-white dark:bg-slate-800 rounded-xl sm:rounded-2xl p-4 sm:p-6 lg:p-8 shadow-lg">
+                        <div class="flex items-center gap-2 sm:gap-3 mb-3 sm:mb-4">
+                            <div class="bg-primary/10 p-2 rounded-lg">
+                                <span class="material-symbols-outlined text-primary text-xl sm:text-2xl">lock</span>
+                            </div>
+                            <h2 class="text-xl sm:text-2xl font-bold text-slate-900 dark:text-white">Veri Güvenliği</h2>
+                        </div>
+                        <div class="space-y-4">
+                            <p class="text-sm sm:text-base text-slate-600 dark:text-slate-300 leading-relaxed break-words-safe">
+                                Verilerinizin güvenliği için aşağıdaki teknik ve idari tedbirleri uygulamaktayız:
+                            </p>
+                            <div class="grid sm:grid-cols-2 gap-3">
+                                <div class="bg-slate-50 dark:bg-slate-700/30 rounded-lg p-4">
+                                    <div class="flex items-center gap-2 mb-2">
+                                        <span class="material-symbols-outlined text-primary text-lg">encrypted</span>
+                                        <h4 class="font-semibold text-slate-900 dark:text-white text-sm">Şifreleme</h4>
+                                    </div>
+                                    <p class="text-xs text-slate-600 dark:text-slate-300">HTTPS protokolü ile uçtan uca şifreli iletişim</p>
+                                </div>
+                                <div class="bg-slate-50 dark:bg-slate-700/30 rounded-lg p-4">
+                                    <div class="flex items-center gap-2 mb-2">
+                                        <span class="material-symbols-outlined text-primary text-lg">verified</span>
+                                        <h4 class="font-semibold text-slate-900 dark:text-white text-sm">Erişim Kontrolü</h4>
+                                    </div>
+                                    <p class="text-xs text-slate-600 dark:text-slate-300">Yetkisiz erişime karşı katı kontroller</p>
+                                </div>
+                                <div class="bg-slate-50 dark:bg-slate-700/30 rounded-lg p-4">
+                                    <div class="flex items-center gap-2 mb-2">
+                                        <span class="material-symbols-outlined text-primary text-lg">update</span>
+                                        <h4 class="font-semibold text-slate-900 dark:text-white text-sm">Güncellemeler</h4>
+                                    </div>
+                                    <p class="text-xs text-slate-600 dark:text-slate-300">Düzenli güvenlik güncellemeleri ve yama yönetimi</p>
+                                </div>
+                                <div class="bg-slate-50 dark:bg-slate-700/30 rounded-lg p-4">
+                                    <div class="flex items-center gap-2 mb-2">
+                                        <span class="material-symbols-outlined text-primary text-lg">groups</span>
+                                        <h4 class="font-semibold text-slate-900 dark:text-white text-sm">Eğitim</h4>
+                                    </div>
+                                    <p class="text-xs text-slate-600 dark:text-slate-300">Personel veri güvenliği eğitimleri</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Çerezler -->
+                    <div id="cerezler" class="scroll-mt-safe reveal bg-white dark:bg-slate-800 rounded-xl sm:rounded-2xl p-4 sm:p-6 lg:p-8 shadow-lg">
+                        <div class="flex items-center gap-2 sm:gap-3 mb-3 sm:mb-4">
+                            <div class="bg-primary/10 p-2 rounded-lg">
+                                <span class="material-symbols-outlined text-primary text-xl sm:text-2xl">cookie</span>
+                            </div>
+                            <h2 class="text-xl sm:text-2xl font-bold text-slate-900 dark:text-white">Çerezler (Cookies)</h2>
+                        </div>
+                        <div class="space-y-4">
+                            <p class="text-sm sm:text-base text-slate-600 dark:text-slate-300 leading-relaxed break-words-safe">
+                                Platformumuz, kullanıcı deneyimini iyileştirmek amacıyla sınırlı çerezler kullanmaktadır:
+                            </p>
+                            <div class="bg-amber-50 dark:bg-amber-900/20 border border-amber-200 dark:border-amber-800 rounded-xl p-4">
+                                <h4 class="font-semibold text-amber-900 dark:text-amber-200 mb-2 text-sm">Kullanılan Çerez Türleri:</h4>
+                                <ul class="text-sm text-amber-800 dark:text-amber-200 space-y-1 list-disc list-inside">
+                                    <li><strong>Zorunlu Çerezler:</strong> Site güvenliği ve temel işlevler için gerekli</li>
+                                    <li><strong>Tercih Çerezleri:</strong> Dil ve tema tercihlerinizin hatırlanması</li>
+                                    <li><strong>Analitik Çerezler:</strong> Site kullanım istatistikleri (anonim)</li>
+                                </ul>
+                            </div>
+                            <p class="text-sm text-slate-600 dark:text-slate-300">
+                                Tarayıcı ayarlarınızdan çerezleri yönetebilir veya devre dışı bırakabilirsiniz. Ancak bazı çerezlerin devre dışı bırakılması site işlevselliğini etkileyebilir.
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- Üçüncü Taraf -->
+                    <div id="ucuncu-taraf" class="scroll-mt-safe reveal bg-white dark:bg-slate-800 rounded-xl sm:rounded-2xl p-4 sm:p-6 lg:p-8 shadow-lg">
+                        <div class="flex items-center gap-2 sm:gap-3 mb-3 sm:mb-4">
+                            <div class="bg-primary/10 p-2 rounded-lg">
+                                <span class="material-symbols-outlined text-primary text-xl sm:text-2xl">sync_alt</span>
+                            </div>
+                            <h2 class="text-xl sm:text-2xl font-bold text-slate-900 dark:text-white">Üçüncü Taraf Hizmetler</h2>
+                        </div>
+                        <div class="space-y-4">
+                            <p class="text-sm sm:text-base text-slate-600 dark:text-slate-300 leading-relaxed break-words-safe">
+                                Platformumuz aşağıdaki üçüncü taraf hizmet sağlayıcılarıyla entegre çalışmaktadır:
+                            </p>
+                            <div class="space-y-3">
+                                <div class="bg-slate-50 dark:bg-slate-700/30 rounded-xl p-4 border border-slate-200 dark:border-slate-600">
+                                    <div class="flex items-start gap-3">
+                                        <span class="material-symbols-outlined text-primary text-lg mt-0.5">email</span>
+                                        <div class="min-w-0">
+                                            <h4 class="font-semibold text-slate-900 dark:text-white text-sm sm:text-base">EmailJS</h4>
+                                            <p class="text-xs sm:text-sm text-slate-600 dark:text-slate-300 break-words-safe">
+                                                İletişim formu verilerinin e-posta olarak iletilmesi için kullanılır. Veriler şifrelenerek AWS sunucularında (ABD) geçici olarak işlenir. <a href="https://www.emailjs.com/legal/privacy-policy/" target="_blank" class="text-primary hover:underline">EmailJS Gizlilik Politikası</a>
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="bg-slate-50 dark:bg-slate-700/30 rounded-xl p-4 border border-slate-200 dark:border-slate-600">
+                                    <div class="flex items-start gap-3">
+                                        <span class="material-symbols-outlined text-primary text-lg mt-0.5">analytics</span>
+                                        <div class="min-w-0">
+                                            <h4 class="font-semibold text-slate-900 dark:text-white text-sm sm:text-base">Google Analytics</h4>
+                                            <p class="text-xs sm:text-sm text-slate-600 dark:text-slate-300 break-words-safe">
+                                                Site trafiği ve kullanım analizi için anonim veri toplar. Kişisel kimlik bilgisi içermez.
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Kullanıcı Hakları -->
+                    <div id="haklar" class="scroll-mt-safe reveal bg-white dark:bg-slate-800 rounded-xl sm:rounded-2xl p-4 sm:p-6 lg:p-8 shadow-lg">
+                        <div class="flex items-center gap-2 sm:gap-3 mb-3 sm:mb-4">
+                            <div class="bg-primary/10 p-2 rounded-lg">
+                                <span class="material-symbols-outlined text-primary text-xl sm:text-2xl">verified_user</span>
+                            </div>
+                            <h2 class="text-xl sm:text-2xl font-bold text-slate-900 dark:text-white">Kullanıcı Hakları</h2>
+                        </div>
+                        <p class="text-sm sm:text-base text-slate-600 dark:text-slate-300 mb-4 leading-relaxed">
+                            KVKK ve ilgili mevzuat kapsamında aşağıdaki haklara sahipsiniz:
+                        </p>
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                            <div class="bg-slate-50 dark:bg-slate-700/30 p-3 rounded-lg flex items-start gap-2">
+                                <span class="material-symbols-outlined text-primary text-base mt-0.5">visibility</span>
+                                <div class="min-w-0">
+                                    <h4 class="font-semibold text-slate-900 dark:text-white text-sm">Erişim Hakkı</h4>
+                                    <p class="text-xs text-slate-600 dark:text-slate-400">Verilerinize erişim ve kopya talep etme</p>
+                                </div>
+                            </div>
+                            <div class="bg-slate-50 dark:bg-slate-700/30 p-3 rounded-lg flex items-start gap-2">
+                                <span class="material-symbols-outlined text-primary text-base mt-0.5">edit</span>
+                                <div class="min-w-0">
+                                    <h4 class="font-semibold text-slate-900 dark:text-white text-sm">Düzeltme Hakkı</h4>
+                                    <p class="text-xs text-slate-600 dark:text-slate-400">Yanlış veya eksik verilerin düzeltilmesi</p>
+                                </div>
+                            </div>
+                            <div class="bg-slate-50 dark:bg-slate-700/30 p-3 rounded-lg flex items-start gap-2">
+                                <span class="material-symbols-outlined text-primary text-base mt-0.5">delete_forever</span>
+                                <div class="min-w-0">
+                                    <h4 class="font-semibold text-slate-900 dark:text-white text-sm">Silme Hakkı</h4>
+                                    <p class="text-xs text-slate-600 dark:text-slate-400">Verilerinizin silinmesini talep etme</p>
+                                </div>
+                            </div>
+                            <div class="bg-slate-50 dark:bg-slate-700/30 p-3 rounded-lg flex items-start gap-2">
+                                <span class="material-symbols-outlined text-primary text-base mt-0.5">block</span>
+                                <div class="min-w-0">
+                                    <h4 class="font-semibold text-slate-900 dark:text-white text-sm">İtiraz Hakkı</h4>
+                                    <p class="text-xs text-slate-600 dark:text-slate-400">İşlemeye itiraz etme ve kısıtlama talep etme</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="mt-4 bg-primary/5 dark:bg-primary/10 border border-primary/20 rounded-xl p-4">
+                            <p class="text-sm text-slate-700 dark:text-slate-300">
+                                <strong>Başvuru:</strong> Haklarınızı kullanmak için <a href="{{ url_for('kvkk') }}" class="text-primary hover:underline font-semibold">KVKK Aydınlatma Metni</a>'nde belirtilen yöntemlerle başvuruda bulunabilirsiniz.
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- Değişiklikler -->
+                    <div id="degisiklikler" class="scroll-mt-safe reveal bg-white dark:bg-slate-800 rounded-xl sm:rounded-2xl p-4 sm:p-6 lg:p-8 shadow-lg">
+                        <div class="flex items-center gap-2 sm:gap-3 mb-3 sm:mb-4">
+                            <div class="bg-primary/10 p-2 rounded-lg">
+                                <span class="material-symbols-outlined text-primary text-xl sm:text-2xl">update</span>
+                            </div>
+                            <h2 class="text-xl sm:text-2xl font-bold text-slate-900 dark:text-white">Politika Değişiklikleri</h2>
+                        </div>
+                        <p class="text-sm sm:text-base text-slate-600 dark:text-slate-300 leading-relaxed break-words-safe">
+                            Bu gizlilik politikası, yasal düzenlemeler ve platform geliştirmeleri doğrultusunda güncellenebilir. Önemli değişiklikler durumunda kullanıcılarımızı bilgilendireceğiz. Politikanın yürürlükteki versiyonu her zaman bu sayfada yayınlanmaktadır.
+                        </p>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </section>
+</main>
+
+<!-- Footer -->
+<footer class="bg-slate-900 text-slate-400 py-14">
+  <div class="mx-auto max-w-7xl px-6 grid grid-cols-1 md:grid-cols-4 gap-10">
+
+    <!-- Site Tanıtımı -->
+    <div>
+      <div class="flex items-center gap-2 mb-4">
+        <span class="material-symbols-outlined text-primary text-3xl">pets</span>
+        <span class="text-xl font-black text-white">Hayvanların Sesi</span>
+      </div>
+
+      <p class="text-sm leading-relaxed">
+        Türkiye'de hayvan hakları konusunda güncel bilgiler,
+        yasal rehberler ve ihbar yollarını sunan bağımsız
+        bir bilgilendirme platformudur.
+      </p>
+    </div>
+
+    <!-- Hızlı Linkler -->
+    <div>
+      <h4 class="text-white font-semibold mb-4">Site Haritası</h4>
+      <ul class="space-y-2 text-sm">
+        <li><a href="{{ url_for('index') }}" class="hover:text-white transition">Ana Sayfa</a></li>
+        <li><a href="{{ url_for('haberler') }}" class="hover:text-white transition">Haberler</a></li>
+        <li><a href="{{ url_for('iletisim') }}" class="hover:text-white transition">İletişim</a></li>
+      </ul>
+    </div>
+
+    <!-- Bilgi Merkezi -->
+    <div>
+      <h4 class="text-white font-semibold mb-4">Bilgi Merkezi</h4>
+      <ul class="space-y-2 text-sm">
+        <li><a href="{{ url_for('kanun') }}" class="hover:text-white transition">5199 Sayılı Kanun</a></li>
+        <li><a href="{{ url_for('mevzuat') }}" class="hover:text-white transition">Mevzuat Rehberi</a></li>
+        <li><a href="{{ url_for('sss') }}" class="hover:text-white transition">Sık Sorulan Sorular</a></li>
+      </ul>
+    </div>
+
+    <!-- Yasal -->
+    <div>
+      <h4 class="text-white font-semibold mb-4">Yasal</h4>
+      <ul class="space-y-2 text-sm">
+        <li><a href="{{ url_for('kvkk') }}" class="hover:text-white transition">KVKK</a></li>
+        <li><a href="{{ url_for('gizlilik') }}" class="hover:text-white transition">Gizlilik Politikası</a></li>
+        <li><a href="{{ url_for('kullanim') }}" class="hover:text-white transition">Kullanım Şartları</a></li>
+      </ul>
+
+    
+    </div>
+
+  </div>
+
+  <!-- Alt Bilgi -->
+  <div class="border-t border-slate-800 mt-12 pt-6 text-center text-xs text-slate-500 px-6">
+
+    <p class="mb-2">
+      © 2026 Hayvanların Sesi. Tüm hakları saklıdır.
+    </p>
+
+    <p>
+      Bu site resmi bir devlet kurumu değildir. İçerikler bilgilendirme amacıyla hazırlanmıştır ve
+      5199 Sayılı Hayvanları Koruma Kanunu ile resmi kurum kaynakları baz alınmıştır.
+    </p>
+
+  </div>
+</footer>
+</div>
+
+<script>
+// Reveal animation
+let scrolling = false;
+function reveal() {
+  const reveals = document.querySelectorAll(".reveal");
+  for (let i = 0; i < reveals.length; i++) {
+    const windowHeight = window.innerHeight;
+    const elementTop = reveals[i].getBoundingClientRect().top;
+    const elementVisible = 100;
+    if (elementTop < windowHeight - elementVisible) {
+      reveals[i].classList.add("active");
+    }
+  }
+}
+window.addEventListener("scroll", () => {
+  if (!scrolling) {
+    scrolling = true;
+    requestAnimationFrame(() => {
+      reveal();
+      scrolling = false;
+    });
+  }
+});
+window.addEventListener("DOMContentLoaded", reveal);
+
+// Dropdown
+const button = document.getElementById("dropdown-button");
+const menu = document.getElementById("dropdown-menu");
+button.addEventListener("click", (e) => {
+  e.stopPropagation();
+  menu.classList.toggle("hidden");
+});
+document.addEventListener("click", (e) => {
+  if (!menu.contains(e.target) && !button.contains(e.target)) {
+    menu.classList.add("hidden");
+  }
+});
+
+// Mobile menu
+const menuBtn = document.getElementById("mobile-menu-button");
+const mobileMenu = document.getElementById("mobile-menu");
+menuBtn.addEventListener("click", () => {
+  mobileMenu.classList.toggle("hidden");
+  mobileMenu.classList.toggle("flex");
+});
+</script>
+</body>
+</html>

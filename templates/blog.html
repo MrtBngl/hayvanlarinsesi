@@ -1,0 +1,119 @@
+{% extends "base.html" %}
+
+{% block title %}Haberler - Hayvanların Sesi{% endblock %}
+
+{% block content %}
+
+<!-- Page Header -->
+<div class="reveal mb-10">
+    <span class="inline-block px-3 py-1 bg-primary/10 text-primary text-xs font-semibold uppercase tracking-widest rounded-full mb-3">Blog ve Haberler</span>
+    <h1 class="reveal max-w-4xl text-4xl md:text-4xl font-black leading-tight tracking-tight mb-6">Sessizlerin Sesi Oluyoruz</h1>
+    <p class="text-slate-500 dark:text-slate-400 text-base max-w-xl">Hayvan refahının ön saflarından haberdar olun. Kurtarma operasyonlarından kritik yasa değişikliklerine kadar.</p>
+
+    {% if api_error %}
+    <div class="mt-4 flex items-center gap-2 text-sm text-amber-700 bg-amber-50 border border-amber-100 rounded-lg px-4 py-3 w-fit">
+        <span class="material-symbols-outlined text-base">info</span>
+        API bağlantısı sınırlı. Lütfen daha sonra tekrar deneyin.
+    </div>
+    {% endif %}
+</div>
+
+<!-- Featured Article -->
+{% if news and news|length > 0 %}
+<div class="reveal mb-10">
+    <a href="{{ news[0].link }}" target="_blank" class="group block bg-white dark:bg-slate-800 rounded-2xl overflow-hidden border border-slate-100 dark:border-slate-700 hover:shadow-md transition-shadow">
+        <div class="grid md:grid-cols-2">
+            <div class="h-56 md:h-auto bg-cover bg-center" style="background-image: url('{{ news[0].image_url }}'); min-height: 240px;"></div>
+            <div class="p-8 flex flex-col justify-center">
+                <div class="flex items-center gap-2 mb-3">
+                    <span class="px-2.5 py-1 bg-primary text-white text-xs font-semibold rounded-md">{{ news[0].category }}</span>
+                    <span class="text-slate-400 text-xs">{{ news[0].read_time }}</span>
+                </div>
+                <h2 class="text-xl md:text-2xl font-bold text-slate-900 dark:text-slate-100 mb-3 leading-snug group-hover:text-primary transition-colors">{{ news[0].title }}</h2>
+                <p class="text-slate-500 dark:text-slate-400 text-sm mb-5 leading-relaxed">{{ news[0].description }}</p>
+                <div class="flex items-center justify-between pt-4 border-t border-slate-100 dark:border-slate-700">
+                    <span class="text-xs text-slate-400">{{ news[0].source }} · {{ news[0].date }}</span>
+                    <span class="text-primary text-sm font-semibold group-hover:underline">Haberi Oku →</span>
+                </div>
+            </div>
+        </div>
+    </a>
+</div>
+{% endif %}
+
+<!-- News Grid -->
+{% if news and news|length > 1 %}
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
+    {% for article in news[1:16] %}
+    <article class="reveal bg-white dark:bg-slate-800 rounded-xl overflow-hidden border border-slate-100 dark:border-slate-700 hover:shadow-md hover:-translate-y-0.5 transition-all duration-200 flex flex-col">
+        <a href="{{ article.link }}" target="_blank" class="block">
+            <div class="relative aspect-[16/9] bg-cover bg-center" style="background-image: url('{{ article.image_url }}')">
+                <span class="absolute top-2 left-2 px-2.5 py-1 bg-primary text-white text-xs font-semibold rounded">{{ article.category }}</span>
+            </div>
+        </a>
+        <div class="p-5 flex flex-col grow">
+            <span class="text-xs text-slate-400 mb-2">{{ article.date }}</span>
+            <h3 class="text-base font-semibold text-slate-800 dark:text-slate-100 mb-2 leading-snug line-clamp-2">{{ article.title }}</h3>
+            <p class="text-sm text-slate-500 dark:text-slate-400 mb-4 grow line-clamp-3">{{ article.description }}</p>
+            <div class="flex items-center justify-between pt-3 border-t border-slate-100 dark:border-slate-700">
+                <span class="text-xs text-slate-400 truncate max-w-[120px]">{{ article.source }}</span>
+                <a href="{{ article.link }}" target="_blank" class="text-primary text-sm font-semibold hover:underline">Oku →</a>
+            </div>
+        </div>
+    </article>
+    {% endfor %}
+</div>
+{% endif %}
+
+<!-- Bottom Controls -->
+<div class="reveal mt-10 flex flex-col items-center gap-3">
+    <div class="flex items-center gap-3">
+        <button onclick="refreshPage()" class="flex items-center gap-2 px-5 py-2.5 bg-primary text-white rounded-lg text-sm font-semibold hover:bg-primary-light transition-colors">
+            <span class="material-symbols-outlined text-base" id="refresh-icon">refresh</span>
+            <span id="refresh-text">Yeni Haberler</span>
+        </button>
+        <span class="text-sm text-slate-400 border-l border-slate-200 pl-3">{{ news|length }} haber</span>
+    </div>
+</div>
+
+{% endblock %}
+
+{% block extra_js %}
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('active');
+                observer.unobserve(entry.target);
+            }
+        });
+    }, { threshold: 0.1 });
+    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+});
+
+function refreshPage() {
+    const btn = document.getElementById('refresh-text');
+    const icon = document.getElementById('refresh-icon');
+    btn.textContent = 'Yükleniyor...';
+    icon.style.animation = 'spin 1s linear infinite';
+    window.location.href = '/haberler?refresh=1';
+}
+// Dropdown
+const button = document.getElementById("dropdown-button");
+const menu = document.getElementById("dropdown-menu");
+button.addEventListener("click", (e) => {
+  e.stopPropagation();
+  menu.classList.toggle("hidden");
+});
+document.addEventListener("click", (e) => {
+  if (!menu.contains(e.target) && !button.contains(e.target)) {
+    menu.classList.add("hidden");
+  }
+});
+
+</script>
+<style>
+@keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+</style>
+{% endblock %}

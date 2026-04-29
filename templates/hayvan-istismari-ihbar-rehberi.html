@@ -1,0 +1,666 @@
+<!DOCTYPE html>
+<html lang="tr" class="scroll-smooth">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<meta name="description" content="Hayvanlara yönelik şiddet ve istismarı nasıl ihbar edebilirsiniz? CİMER, HAYDİ ve adli mercilere başvuru adımları ile ihbar rehberi."/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link rel="icon" type="image/svg+xml" href="static/img/favicon.svg" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "primary": "#2c5926",
+              "background-light": "#f6f7f6",
+              "background-dark": "#161d15",
+            },
+            fontFamily: {
+              "display": ["Inter"]
+            },
+            borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .gradient-text {
+            background: linear-gradient(135deg, #2c5926 0%, #4ade80 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        html { scroll-behavior: smooth; }
+        .dropdown-content { display: none; }    
+        .group:hover .dropdown-content { display: block; }
+        body { font-family: 'Inter', sans-serif; }
+        
+        /* Smooth scroll için ek stiller */
+        .scroll-mt-20 {
+            scroll-margin-top: 5rem;
+        }
+        .scroll-mt-24 {
+            scroll-margin-top: 6rem;
+        }
+        
+        /* Reveal (Smooth Scroll) Animasyonu */
+        .reveal {
+            opacity: 0;
+            transform: translateY(5px);
+            transition: all 1.4s ease;
+        }
+
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    </style>
+    <title>Hayvan İstismarı İhbar Rehberi | Nereden Başvurulur?</title>
+</head>
+<body class="bg-background-light dark:bg-background-dark font-display text-slate-900 dark:text-slate-100 transition-colors">
+<div class="relative flex h-auto min-h-screen w-full flex-col group/design-root overflow-x-hidden">
+<div class="layout-container flex h-full grow flex-col">
+<!-- Navigation -->
+<header class="sticky top-0 z-50 w-full border-b border-primary/10 bg-white/80 dark:bg-background-dark/80 backdrop-blur-md">
+    <div class="mx-auto flex max-w-7xl items-center justify-between px-6 py-4">
+        <div class="flex items-center gap-2">
+            <span class="material-symbols-outlined text-primary text-3xl"> <a href="{{ url_for('index') }}">pets</a></span>
+            <h1 class="text-xl font-extrabold tracking-tight text-primary"><a href="{{ url_for('index') }}">Hayvanların Sesi</a></h1>
+        </div>
+
+        <nav class="hidden md:flex items-center gap-8">
+            <a class="text-sm font-semibold hover:text-primary transition-colors" href="{{ url_for('index') }}">Ana Sayfa</a>
+            <a class="text-sm font-semibold hover:text-primary transition-colors" href="{{ url_for('haberler') }}">Haberler</a>
+
+            <div class="group relative">
+                <button id="dropdown-button" class="flex items-center gap-1 text-sm font-semibold hover:text-primary transition-colors text-slate-900 dark:text-slate-100">
+                    Bilgi Merkezi
+                    <span class="material-symbols-outlined text-sm">expand_more</span>
+                </button>
+                <div id="dropdown-menu" class="dropdown-content absolute top-full left-0 pt-4 w-64 hidden">
+                    <div class="bg-white dark:bg-slate-800 border rounded-xl shadow-xl overflow-hidden p-2 text-slate-900 dark:text-slate-100">
+                        <a href="{{ url_for('kanun') }}" class="flex items-center gap-2 px-4 py-3 text-sm hover:bg-slate-50 dark:hover:bg-slate-700 rounded-lg transition-colors">
+                            <span class="material-symbols-outlined text-lg">gavel</span> 5199 Sayılı Kanun
+                        </a>
+                        <a href="{{ url_for('mevzuat') }}" class="flex items-center gap-2 px-4 py-3 text-sm hover:bg-slate-50 dark:hover:bg-slate-700 rounded-lg transition-colors">
+                            <span class="material-symbols-outlined text-lg">description</span> Mevzuat Rehberi
+                        </a>
+                        <a href="{{ url_for('sss') }}" class="flex items-center gap-2 px-4 py-3 text-sm hover:bg-slate-50 dark:hover:bg-slate-700 rounded-lg transition-colors">
+                            <span class="material-symbols-outlined text-lg">help_center</span> Sıkça Sorulan Sorular
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <a class="text-sm font-semibold hover:text-primary transition-colors" href="{{ url_for('iletisim') }}">İletişim</a>
+        </nav>
+
+        <div class="flex items-center gap-4">
+    <a href="{{ url_for('ihbar') }}" class="hidden md:inline-flex items-center justify-center rounded-xl bg-red-800/80 px-4 py-1.5 text-sm font-semibold text-white/90 shadow-sm border border-white/5 transition-none">
+       <span class="material-symbols-outlined text-lg group-hover:rotate-12 transition-transform">report</span>
+      İhbar Rehberi
+    </a>
+
+            <button id="mobile-menu-button" class="md:hidden text-slate-900 dark:text-slate-100 p-1">
+                <span class="material-symbols-outlined text-3xl">menu</span>
+            </button>
+        </div>
+    </div>
+
+    
+
+    
+      <nav id="mobile-menu" class="hidden md:hidden flex flex-col items-start gap-4 px-4 pb-4 pt-4 bg-white dark:bg-slate-900 border-t">
+        <a href="{{ url_for('index') }}" class="text-base font-semibold hover:text-primary">Ana Sayfa</a>
+        <a href="{{ url_for('haberler') }}" class="text-base font-semibold hover:text-primary">Haberler</a>
+        <div class="flex flex-col items-start w-full">
+            <button id="mobile-info-button" class="flex items-center justify-between w-full text-base font-semibold hover:text-primary">
+                Bilgi Merkezi
+                <span class="material-symbols-outlined">expand_more</span>
+            </button>
+            <div id="mobile-info-dropdown" class="hidden flex flex-col items-start mt-2 gap-2 pl-2">
+                <a href="{{ url_for('kanun') }}" class="flex items-center text-sm hover:text-primary"><span class="material-symbols-outlined text-lg">gavel </span> 5199 Sayılı Kanun</a>
+                <a href="{{ url_for('mevzuat') }}" class="flex items-center text-sm hover:text-primary"><span class="material-symbols-outlined text-lg">description </span> Mevzuat Rehberi</a>
+                <a href="{{ url_for('sss') }}" class="flex items-center text-sm hover:text-primary"><span class="material-symbols-outlined text-lg">help_center </span> Sıkça Sorulan Sorular</a>
+            </div>
+        </div>
+        <a href="{{ url_for('iletisim') }}" class="text-base font-semibold hover:text-primary">İletişim</a>
+    </nav>
+</header>
+<main class="flex-grow">
+
+<main class="flex-1">
+<div class="max-w-5xl mx-auto px-6 py-12">
+<!-- Hero Section -->
+<div id="anasayfa" class="reveal relative rounded-2xl overflow-hidden mb-16 h-[22rem] sm:h-80 md:h-[28rem] flex items-end shadow-2xl shadow-primary/20 scroll-mt-24">
+    <div class="absolute inset-0 bg-cover bg-center scale-105 hover:scale-110 transition-transform duration-700" data-alt="A small puppy looking sadly through a fence" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuDfkWSwrKe2RIitY0UKMn73ZOyNJ3WiZLz1jLFRyin3mKJxo9NioU1yof4T1bu8Np0RMjQwYBjzo_Ve83qYKGYH-tKHuaXaZitFTo6pD2AdQVzOXxUFs1TcXG7uHs6cfFvz8Xh2BYskFIyqgqfoEEYKJYt8hFdk-vhEwUJ0cd4SoYwX_3dcoLo4pzD7Ds3UXWLTQuOtp4OtQWMylZsMZPITbZio2zzUxECZ8hpLfZssxG-SzMnr0Z2vUgp4Hg1H98aukBa32Azr_pU ');"></div>
+    <div class="absolute inset-0 bg-gradient-to-t from-black/95 via-black/60 to-transparent"></div>
+    
+    <div class="relative p-5 sm:p-8 md:p-12 w-full">
+        <div class="max-w-3xl">
+            <span class="inline-block px-3 py-1 sm:px-4 sm:py-1.5 bg-primary/90 text-white text-[10px] sm:text-xs font-bold tracking-widest uppercase rounded-full mb-3 sm:mb-4 backdrop-blur-sm">
+                Acil Durum Rehberi
+            </span>
+            
+            <h1 class="text-white text-4xl sm:text-4xl md:text-6xl font-black leading-[1.1] sm:leading-tight mb-3 sm:mb-4 tracking-tight">
+                Suçu Bildir,<br/>
+                <span class="text-primary">Yaşamı Koru</span>
+            </h1>
+            
+            <p class="text-slate-200 text-sm sm:text-lg md:text-xl max-w-2xl font-medium leading-relaxed sm:leading-relaxed">
+                Hayvanlara karşı işlenen suçlarda izlemeniz gereken yasal süreçler, adım adım bildirim kanalları ve haklarınızın korunması için kapsamlı rehber. Her ihbar, bir canın kurtuluşu olabilir.
+            </p>
+        </div>
+    </div>
+</div>
+
+<!-- Introduction -->
+<div id="giris" class="reveal relative mb-16 scroll-mt-24">
+<div class="absolute -left-4 top-0 bottom-0 w-1 bg-gradient-to-b from-primary to-primary/30 rounded-full"></div>
+<div class="bg-gradient-to-r from-primary/5 to-transparent p-8 rounded-r-2xl border-l-0">
+<p class="text-slate-700 dark:text-slate-300 text-lg md:text-xl leading-relaxed font-medium italic mb-4">
+                            "Hayvanlara yönelik şiddet, ihmal ve istismar artık Türk Ceza Kanunu kapsamında ağır cezaları gerektiren bir suçtur. Sessiz kalmak suça ortak olmaktır, ihmal etmek ise ikinci bir suçtur."
+                        </p>
+<p class="text-slate-600 dark:text-slate-400 leading-relaxed">
+                            Bu platform, karşılaştığınız her türlü hayvan hakları ihlalinde izlemeniz gereken yasal yolları, etkili bildirim kanallarını ve sürecin takibi için gerekli adımları içermektedir. Unutmayın: <strong class="text-primary">Doğru kanallar üzerinden yapılan her ihbar, bir canın kurtulmasına, bir suçun cezalandırılmasına ve toplumsal bilincin artmasına vesile olur.</strong> Yasal haklarınızı öğrenin, cesur olun ve sessiz kalmayın.
+                        </p>
+</div>
+</div>
+
+<!-- Warning Box -->
+<div id="uyari" class="reveal bg-amber-50 dark:bg-amber-900/20 border-l-4 border-amber-500 p-6 rounded-r-xl mb-16 flex gap-4 items-start scroll-mt-24">
+<span class="material-symbols-outlined text-amber-600 text-3xl flex-shrink-0">warning</span>
+<div>
+<h3 class="font-bold text-amber-900 dark:text-amber-100 mb-2">Önemli Uyarı</h3>
+<p class="text-amber-800 dark:text-amber-200 text-sm leading-relaxed">
+                        Hayvanlara zarar veren şahısların genellikle şiddet eğilimli kişiler olduğunu unutmayın. Olay müdahalesi yaparken kendi güvenliğinizi riske atmayın. Görüntü alırken dikkatli olun, şüpheliyle doğrudan temas kurmayın ve mutlaka resmi güvenlik güçlerinden yardım isteyin.
+                    </p>
+</div>
+</div>
+
+<!-- Step 1: HAYDİ -->
+<section class="reveal mb-16 scroll-mt-24" id="haydi">
+    <!-- Başlık - İlk Haliyle Aynı -->
+    <div class="flex items-center gap-4 mb-6">
+        <div class="flex items-center justify-center size-14 rounded-2xl bg-primary text-white font-black text-2xl shadow-lg shadow-primary/30">1</div>
+        <div>
+            <h2 class="text-3xl font-bold text-slate-900 dark:text-slate-100">HAYDİ Mobil Uygulaması</h2>
+            <p class="text-slate-500 dark:text-slate-400 text-sm">Hayvan Durum İzleme ve Bildirim Sistemi</p>
+        </div>
+    </div>
+
+    <!-- Ana Kart -->
+    <div class="bg-white dark:bg-slate-800/50 p-6 rounded-2xl border border-slate-200 dark:border-slate-700 shadow-xl shadow-slate-200/50 dark:shadow-none">
+        <div class="flex flex-col lg:flex-row gap-6 items-stretch">
+            
+            <!-- Sol İçerik -->
+            <div class="flex-1 flex flex-col">
+                
+                <!-- Açıklama -->
+                <div class="prose dark:prose-invert max-w-none mb-6">
+                    <p class="text-slate-700 dark:text-slate-300 leading-relaxed">
+                        İçişleri Bakanlığı tarafından hayata geçirilen <strong class="text-primary">HAYDİ (Hayvan Durum İzleme)</strong> uygulaması, hayvan hakları ihlallerini bildirmek için geliştirilmiş en hızlı, en etkili ve en güvenli resmi kanaldır. Bu uygulama sayesinde ihbarlarınız anında en yakın kolluk kuvvetlerine (Emniyet veya Jandarma) düşer ve hızlı müdahale sağlanır.
+                    </p>
+                </div>
+
+                <!-- Nasıl Kullanılır -->
+                <div class="bg-slate-50 dark:bg-slate-900/50 p-5 rounded-xl border border-slate-200 dark:border-slate-700 flex-1">
+                    <h4 class="font-bold text-slate-900 dark:text-slate-100 mb-4 flex items-center gap-2">
+                        <span class="material-symbols-outlined text-primary">checklist</span>
+                        Nasıl Kullanılır?
+                    </h4>
+                    
+                    <div class="space-y-4">
+                        <div class="flex gap-3">
+                            <span class="flex-shrink-0 w-7 h-7 rounded-full bg-primary/10 text-primary flex items-center justify-center font-bold text-sm">1</span>
+                            <div>
+                                <strong class="block text-slate-900 dark:text-slate-100 text-sm mb-0.5">Uygulamayı İndirin</strong>
+                                <span class="text-sm text-slate-600 dark:text-slate-400">App Store veya Google Play Store'dan "HAYDİ" uygulamasını indirin.</span>
+                            </div>
+                        </div>
+                        
+                        <div class="flex gap-3">
+                            <span class="flex-shrink-0 w-7 h-7 rounded-full bg-primary/10 text-primary flex items-center justify-center font-bold text-sm">2</span>
+                            <div>
+                                <strong class="block text-slate-900 dark:text-slate-100 text-sm mb-0.5">Kimlik Doğrulaması</strong>
+                                <span class="text-sm text-slate-600 dark:text-slate-400">TC Kimlik ve telefon numaranızla güvenli kayıt olun.</span>
+                            </div>
+                        </div>
+                        
+                        <div class="flex gap-3">
+                            <span class="flex-shrink-0 w-7 h-7 rounded-full bg-primary/10 text-primary flex items-center justify-center font-bold text-sm">3</span>
+                            <div>
+                                <strong class="block text-slate-900 dark:text-slate-100 text-sm mb-0.5">Anında Bildirim</strong>
+                                <span class="text-sm text-slate-600 dark:text-slate-400">Konum açın, fotoğraf ekleyin, açıklama yazın ve gönderin.</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Download Butonları - Adımların Altında -->
+                    <div class="flex flex-wrap gap-3 mt-5 pt-5 border-t border-slate-200 dark:border-slate-700">
+                        <a class="flex-1 min-w-[140px] bg-slate-900 text-white px-4 py-3 rounded-xl flex items-center justify-center gap-2 text-sm font-bold hover:bg-slate-800 transition-colors" href="https://apps.apple.com/tr/app/haydi/id1524498391">
+                            <span class=" text-xl fa-brands fa-apple"></span>
+                            <div class="flex flex-col items-start">
+                                <span class="text-[9px] font-normal opacity-70 leading-none">App Store</span>
+                                <span class="text-sm leading-none">İndir</span>
+                            </div>
+                        </a>
+                        <a class="flex-1 min-w-[140px] bg-slate-900 text-white px-4 py-3 rounded-xl flex items-center justify-center gap-2 text-sm font-bold hover:bg-slate-800 transition-colors" href="https://play.google.com/store/apps/details?id=tr.gov.egm.haydi&hl=tr">
+                            <span class=" text-xl fa-brands fa-google-play"></span>
+                            <div class="flex flex-col items-start">
+                                <span class="text-[9px] font-normal opacity-70 leading-none">Google Play</span>
+                                <span class="text-sm leading-none">İndir</span>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Sağ Panel -->
+            <div class="w-full lg:w-64 bg-primary/5 p-5 rounded-xl flex flex-col items-center justify-center text-center border border-primary/10">
+                <div class="w-12 h-12 bg-primary rounded-xl flex items-center justify-center mb-3 shadow-md">
+                    <span class="material-symbols-outlined text-2xl text-white">emergency_share</span>
+                </div>
+                <span class="text-xs font-bold text-primary uppercase tracking-wider mb-2">Hızlı Müdahale</span>
+                <p class="text-xs text-slate-600 dark:text-slate-400 leading-relaxed mb-3">
+                    İhbarlarınız otomatik olarak en yakın birime düşer.
+                </p>
+                <div class="bg-white dark:bg-slate-800 px-4 py-2 rounded-lg border border-primary/20 mb-3 w-full">
+                    <span class="text-lg font-bold text-slate-900 dark:text-slate-100">15-30 dk</span>
+                </div>
+                <div class="flex items-center gap-1 text-primary text-xs">
+                    <span class="material-symbols-outlined text-sm">schedule</span>
+                    <span class="font-semibold">7/24 Aktif</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Step 2: Evidence -->
+<section class="reveal mb-20 scroll-mt-24" id="kanit">
+<div class="flex items-center gap-4 mb-8">
+<div class="flex items-center justify-center size-14 rounded-2xl bg-primary text-white font-black text-2xl shadow-lg shadow-primary/30">2</div>
+<div>
+<h2 class="text-3xl font-bold text-slate-900 dark:text-slate-100">Kanıt Toplama ve Belgelendirme</h2>
+<p class="text-slate-500 dark:text-slate-400 text-sm">Hukuki süreçte en kritik adım</p>
+</div>
+</div>
+
+<div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+<div class="reveal bg-white dark:bg-slate-800/50 p-8 rounded-2xl border border-slate-200 dark:border-slate-700 shadow-lg hover:shadow-xl transition-shadow group">
+<div class="w-14 h-14 bg-primary/10 rounded-2xl flex items-center justify-center mb-6 group-hover:bg-primary group-hover:text-white transition-all">
+<span class="material-symbols-outlined text-primary text-3xl group-hover:text-white transition-colors" data-icon="photo_camera">photo_camera</span>
+</div>
+<h3 class="font-bold text-xl mb-4 text-slate-900 dark:text-slate-100">Görsel ve İşitsel Kanıtlar</h3>
+<p class="text-slate-600 dark:text-slate-400 leading-relaxed mb-4">
+                        Hukuki süreçte en güçlü delil, olayı belgeleyen görsel materyallerdir. <strong>Net, tarih ve saat damgalı, konum bilgisi içeren</strong> fotoğraflar ve videolar davanın seyrini tamamen değiştirebilir.
+                    </p>
+<ul class="space-y-2 text-sm text-slate-600 dark:text-slate-400">
+<li class="flex items-start gap-2">
+<span class="text-primary mt-0.5">•</span>
+<span>Hayvanın fiziksel durumunu (yaralar, zayıflık, zincir vb.) net çekin</span>
+</li>
+<li class="flex items-start gap-2">
+<span class="text-primary mt-0.5">•</span>
+<span>Şüphelinin yüzünü, eşkalini veya araç plakasını görüntüleyin</span>
+</li>
+<li class="flex items-start gap-2">
+<span class="text-primary mt-0.5">•</span>
+<span>Olay yerinin genel görünümünü (mekan, çevre koşulları) belgeleyin</span>
+</li>
+<li class="flex items-start gap-2">
+<span class="text-primary mt-0.5">•</span>
+<span>Mümkünse ses kaydı alın (tehdit, hakaret, itiraf niteliğinde sözler)</span>
+</li>
+</ul>
+</div>
+
+<div class="reveal bg-white dark:bg-slate-800/50 p-8 rounded-2xl border border-slate-200 dark:border-slate-700 shadow-lg hover:shadow-xl transition-shadow group">
+<div class="w-14 h-14 bg-primary/10 rounded-2xl flex items-center justify-center mb-6 group-hover:bg-primary group-hover:text-white transition-all">
+<span class="material-symbols-outlined text-primary text-3xl group-hover:text-white transition-colors" data-icon="pin_drop">pin_drop</span>
+</div>
+<h3 class="font-bold text-xl mb-4 text-slate-900 dark:text-slate-100">Konum, Zaman ve Detaylı Notlar</h3>
+<p class="text-slate-600 dark:text-slate-400 leading-relaxed mb-4">
+                        Görsel kanıtlar kadar önemli olan diğer unsurlar: <strong>tam adres, saat/dakika bilgisi ve olayın detaylı öyküsüdür.</strong> Telefonunuzun konum servisleri açıkken çekilen fotoğraflar EXIF verisi olarak bu bilgileri saklar.
+                    </p>
+<ul class="space-y-2 text-sm text-slate-600 dark:text-slate-400">
+<li class="flex items-start gap-2">
+<span class="text-primary mt-0.5">•</span>
+<span>Mahalle, sokak, bina numarası ve varsa iş yeri adını not edin</span>
+</li>
+<li class="flex items-start gap-2">
+<span class="text-primary mt-0.5">•</span>
+<span>Olayın gerçekleştiği tam saati kaydedin</span>
+</li>
+<li class="flex items-start gap-2">
+<span class="text-primary mt-0.5">•</span>
+<span>Tanık varsa iletişim bilgilerini alın (ad-soyad, telefon)</span>
+</li>
+<li class="flex items-start gap-2">
+<span class="text-primary mt-0.5">•</span>
+<span>Olayın nasıl gerçekleştiğini kronolojik olarak yazın</span>
+</li>
+</ul>
+</div>
+</div>
+
+<div class="reveal mt-6 bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 p-6 rounded-xl flex gap-4 items-start">
+<span class="material-symbols-outlined text-blue-600 text-2xl flex-shrink-0">info</span>
+<div>
+<h4 class="font-bold text-blue-900 dark:text-blue-100 mb-1">Teknik İpucu</h4>
+<p class="text-blue-800 dark:text-blue-200 text-sm leading-relaxed">
+                        iPhone'da "Canlı Fotoğraf" veya Android'de "Hareketli Fotoğraf" modunu açarsanız, statik görüntünün yanında 3 saniyelik video da kaydedilir. Bu, olayın dinamiklerini (hayvanın hareketi, şüphelinin davranışı) göstermede çok etkilidir.
+                    </p>
+</div>
+</div>
+</section>
+
+<!-- Step 3: Emergency Lines -->
+<section class="reveal mb-20 scroll-mt-24" id="acil">
+<div class="flex items-center gap-4 mb-8">
+<div class="flex items-center justify-center size-14 rounded-2xl bg-red-600 text-white font-black text-2xl shadow-lg shadow-red-600/30">3</div>
+<div>
+<h2 class="text-3xl font-bold text-slate-900 dark:text-slate-100">112 Acil Çağrı Merkezi</h2>
+<p class="text-slate-500 dark:text-slate-400 text-sm">Anında müdahale gerektiren durumlar için</p>
+</div>
+</div>
+
+<div class="bg-gradient-to-br from-red-600 to-red-700 text-white p-10 rounded-2xl shadow-2xl shadow-red-600/20 relative overflow-hidden">
+<div class="absolute right-0 top-0 opacity-10 transform translate-x-1/4 -translate-y-1/4">
+<span class="material-symbols-outlined text-[300px]" data-icon="call">call</span>
+</div>
+<div class="relative z-10">
+<div class="flex flex-col md:flex-row md:items-center gap-8 mb-8">
+<div class="flex-1">
+<p class="text-xl font-medium opacity-90 mb-4 leading-relaxed">
+                                Uygulama erişiminiz yoksa, internet bağlantınız kesilmişse veya <strong>hayvanın hayati tehlikesi varsa</strong> (işkence devam ediyorsa, ağır yaralıysa, ölüm tehlikesi varsa) doğrudan 112'yi arayın.
+                            </p>
+<div class="flex items-center gap-6 mb-6">
+<span class="text-7xl font-black tracking-widest drop-shadow-lg">112</span>
+<div class="h-16 w-px bg-white/30"></div>
+<div>
+<p class="text-sm uppercase font-bold tracking-wider mb-1">Polis veya Jandarma</p>
+<p class="text-white/80 text-sm">Olay yerine ekip sevk edilir</p>
+</div>
+</div>
+</div>
+</div>
+
+<div class="bg-white/10 backdrop-blur-sm rounded-xl p-6 border border-white/20">
+<h4 class="font-bold text-lg mb-4 flex items-center gap-2">
+<span class="material-symbols-outlined">record_voice_over</span>
+                            Arama Yaparken Söylemeniz Gerekenler:
+                        </h4>
+<div class="grid md:grid-cols-2 gap-4 text-sm">
+<div class="space-y-2">
+<p class="flex items-start gap-2">
+<span class="font-bold text-yellow-300">1.</span>
+<span>"<strong>5199 Sayılı Hayvanları Koruma Kanunu</strong> kapsamında hayvan hakları ihlali bildirimi yapıyorum."</span>
+</p>
+<p class="flex items-start gap-2">
+<span class="font-bold text-yellow-300">2.</span>
+<span>"Olay yeri: [Tam adres, mahalle, sokak, bina no]"</span>
+</p>
+</div>
+<div class="space-y-2">
+<p class="flex items-start gap-2">
+<span class="font-bold text-yellow-300">3.</span>
+<span>"Şüpheli hala olay yerinde mi? [Evet/Hayır ve tarif]"</span>
+</p>
+<p class="flex items-start gap-2">
+<span class="font-bold text-yellow-300">4.</span>
+<span>"Hayvanın durumu: [Yaralı/İşkence görüyor/Tehlikede]"</span>
+</p>
+</div>
+</div>
+</div>
+
+<p class="mt-6 text-sm text-white/80 italic border-t border-white/20 pt-4">
+<strong>Not:</strong> 112 operatörleri sürekli eğitim almaktadır ancak hayvan hakları ihlallerinin yasal boyutunu her operatör eşit bilmeyebilir. <strong>Sabırlı olun, kanun maddesini (5199) tekrar edin ve mutlaka olay yerine ekip isteyin.</strong>
+                    </p>
+</div>
+</div>
+</section>
+
+<!-- Step 4: Legal Follow-up -->
+<section class="reveal mb-20 scroll-mt-24" id="yasal">
+<div class="flex items-center gap-4 mb-8">
+<div class="flex items-center justify-center size-14 rounded-2xl bg-primary text-white font-black text-2xl shadow-lg shadow-primary/30">4</div>
+<div>
+<h2 class="text-3xl font-bold text-slate-900 dark:text-slate-100">Yasal Takip ve Resmi Şikayet</h2>
+<p class="text-slate-500 dark:text-slate-400 text-sm">Sürecin takipçisi olun, cezasız kalmamasını sağlayın</p>
+</div>
+</div>
+
+<div class="bg-white dark:bg-slate-800/50 border-t-4 border-primary p-8 md:p-10 rounded-b-2xl shadow-xl shadow-slate-200/50 dark:shadow-none">
+<div class="prose dark:prose-invert max-w-none mb-8">
+<p class="text-slate-600 dark:text-slate-400 text-lg leading-relaxed">
+                        Sadece telefonla ihbar etmek bazen yetersiz kalabilir. <strong>Suçun cezalandırılması ve sürecin takibi için mutlaka yazılı şikayet yoluna başvurun.</strong> Her bir başvuru kanalının farklı hukuki sonuçları vardır:
+                    </p>
+</div>
+
+<div class="grid md:grid-cols-3 gap-6">
+<div class="reveal bg-slate-50 dark:bg-slate-900/50 p-6 rounded-xl border border-slate-200 dark:border-slate-700 hover:border-primary/50 transition-colors group">
+<div class="bg-primary/10 w-12 h-12 rounded-xl flex items-center justify-center mb-4 group-hover:bg-primary group-hover:text-white transition-all">
+<span class="material-symbols-outlined text-primary text-2xl group-hover:text-white" data-icon="description">description</span>
+</div>
+<h4 class="font-bold text-lg text-slate-900 dark:text-slate-100 mb-3">Cumhuriyet Başsavcılığı</h4>
+<p class="text-sm text-slate-600 dark:text-slate-400 leading-relaxed mb-4">
+<strong>Ceza davası açılması için zorunludur.</strong> Elden vereceğiniz dilekçe ve kanıtlarla (fotoğraf, video, tanık ifadesi) suç duyurusunda bulunun. Savcılık soruşturma başlatır.
+                        </p>
+<div class="text-xs text-slate-500 dark:text-slate-500 bg-slate-100 dark:bg-slate-800 p-3 rounded-lg">
+<strong>Yasal Dayanak:</strong> TCK 151 (Hayvana Kasten Zarar Verme)
+                        </div>
+</div>
+
+<div class="reveal bg-slate-50 dark:bg-slate-900/50 p-6 rounded-xl border border-slate-200 dark:border-slate-700 hover:border-primary/50 transition-colors group">
+<div class="bg-primary/10 w-12 h-12 rounded-xl flex items-center justify-center mb-4 group-hover:bg-primary group-hover:text-white transition-all">
+<span class="material-symbols-outlined text-primary text-2xl group-hover:text-white" data-icon="mail">mail</span>
+</div>
+<h4 class="font-bold text-lg text-slate-900 dark:text-slate-100 mb-3">DKMP Müdürlüğü</h4>
+<p class="text-sm text-slate-600 dark:text-slate-400 leading-relaxed mb-4">
+<strong>İdari para cezası</strong> uygulanması için Doğa Koruma ve Milli Parklar Bölge Müdürlüğü'ne dilekçe verin. Bu cezalar anında uygulanır ve caydırıcıdır.
+                        </p>
+<div class="text-xs text-slate-500 dark:text-slate-500 bg-slate-100 dark:bg-slate-800 p-3 rounded-lg">
+<strong>Ceza Tutarı:</strong> 2024 yılında hayvan başına 5.000-50.000 TL arası
+                        </div>
+</div>
+
+<div class="reveal bg-slate-50 dark:bg-slate-900/50 p-6 rounded-xl border border-slate-200 dark:border-slate-700 hover:border-primary/50 transition-colors group">
+<div class="bg-primary/10 w-12 h-12 rounded-xl flex items-center justify-center mb-4 group-hover:bg-primary group-hover:text-white transition-all">
+<span class="material-symbols-outlined text-primary text-2xl group-hover:text-white" data-icon="gavel">gavel</span>
+</div>
+<h4 class="font-bold text-lg text-slate-900 dark:text-slate-100 mb-3">CİMER Başvurusu</h4>
+<p class="text-sm text-slate-600 dark:text-slate-400 leading-relaxed mb-4">
+                            Süreç yavaş ilerliyorsa, savcılık ihmal ediyorsa veya kurumlar görevini yapmıyorsa <strong>Cumhurbaşkanlığı İletişim Merkezi</strong>'ne (CİMER) başvurun. Üst merci denetimi sağlar.
+                        </p>
+<div class="text-xs text-slate-500 dark:text-slate-500 bg-slate-100 dark:bg-slate-800 p-3 rounded-lg">
+<strong>Web:</strong> cimer.gov.tr | <strong>Alo:</strong> 150
+                        </div>
+</div>
+</div>
+
+<div class="reveal mt-8 p-6 bg-amber-50 dark:bg-amber-900/20 rounded-xl border border-amber-200 dark:border-amber-800">
+<h4 class="font-bold text-amber-900 dark:text-amber-100 mb-3 flex items-center gap-2">
+<span class="material-symbols-outlined">lightbulb</span>
+                        Önemli Hatırlatma
+                    </h4>
+<p class="text-amber-800 dark:text-amber-200 text-sm leading-relaxed">
+<strong>Şikayetten vazgeçme (tevki)</strong> hakkınız yasal olarak vardır ancak <strong>kamu davası</strong> açılmışsa (ki hayvan hakları ihlallerinde genelde açılır) siz vazgeçseniz bile devlet dava sürdürür. Bu nedenle korkmadan şikayetçi olun, geri adım atmayın. Hayvanlar için sesiniz olun.
+                    </p>
+</div>
+</div>
+</section>
+
+<!-- Helpful Links / Downloadables -->
+<div id="dilekceler" class="reveal bg-gradient-to-r from-slate-900 to-slate-800 dark:from-slate-800 dark:to-slate-900 p-8 md:p-12 rounded-2xl flex flex-col md:flex-row items-center gap-8 text-white shadow-2xl scroll-mt-24">
+<div class="text-center md:text-left flex-1">
+<div class="w-16 h-16 bg-white/10 rounded-2xl flex items-center justify-center mb-4 backdrop-blur-sm">
+<span class="material-symbols-outlined text-4xl text-primary-400 text-primary">description</span>
+</div>
+<h3 class="text-2xl font-bold mb-3">Hazır Dilekçe Örnekleri</h3>
+<p class="text-slate-300 leading-relaxed mb-4">
+                        Savcılık, DKMP ve diğer kurumlara yapacağınız başvurular için hazır, hukuki terminolojiyle hazırlanmış dilekçe taslaklarını indirin. Boş alanları doldurmanız yeterli.
+                    </p>
+<div class="flex flex-wrap gap-2 text-xs">
+<span class="px-3 py-1 bg-white/10 rounded-full">Suç Duyurusu Dilekçesi</span>
+<span class="px-3 py-1 bg-white/10 rounded-full">İdari Şikayet Dilekçesi</span>
+<span class="px-3 py-1 bg-white/10 rounded-full">CİMER Başvuru Şablonu</span>
+</div>
+</div>
+<a href="{{ url_for('static', filename='pdf/hayvanlarinsesi_dilekce_sablon.pdf') }}" download="Dilekçe Şablonları.pdf">
+<button  class="flex items-center gap-3 bg-primary hover:bg-primary/90 text-white px-8 py-4 rounded-xl font-bold transition-all hover:scale-105 shadow-lg shadow-primary/30 whitespace-nowrap">
+<span class="material-symbols-outlined text-2xl">download</span>
+<div class="flex flex-col items-start">
+<span class="text-xs font-normal opacity-80">PDF Formatında</span>
+<span class="text-lg">Taslakları İndir</span>
+</div>
+</button>
+</a>
+</div>
+
+<!-- FAQ Section -->
+
+</div>
+</main>
+
+<!-- Footer -->
+<footer class="bg-slate-900 text-slate-400 py-14">
+  <div class="mx-auto max-w-7xl px-6 grid grid-cols-1 md:grid-cols-4 gap-10">
+
+    <!-- Site Tanıtımı -->
+    <div>
+      <div class="flex items-center gap-2 mb-4">
+        <span class="material-symbols-outlined text-primary text-3xl">pets</span>
+        <span class="text-xl font-black text-white">Hayvanların Sesi</span>
+      </div>
+
+      <p class="text-sm leading-relaxed">
+        Türkiye'de hayvan hakları konusunda güncel bilgiler,
+        yasal rehberler ve ihbar yollarını sunan bağımsız
+        bir bilgilendirme platformudur.
+      </p>
+    </div>
+
+    <!-- Hızlı Linkler -->
+    <div>
+      <h4 class="text-white font-semibold mb-4">İhbar Rehberi</h4>
+      <ul class="space-y-2 text-sm">
+        <li><a href="#haydi" class="hover:text-white transition">1. HAYDİ Uygulaması</a></li>
+        <li><a href="#kanit" class="hover:text-white transition">2. Kanıt Toplama</a></li>
+        <li><a href="#acil" class="hover:text-white transition">3. 112 Acil Çağrı</a></li>
+        <li><a href="#yasal" class="hover:text-white transition">4. Yasal Takip</a></li>
+        <li><a href="#dilekceler" class="hover:text-white transition">Dilekçe Örnekleri</a></li>
+      </ul>
+    </div>
+
+    <!-- Bilgi Merkezi -->
+    <div>
+      <h4 class="text-white font-semibold mb-4">Bilgi Merkezi</h4>
+      <ul class="space-y-2 text-sm">
+        <li><a href="{{ url_for('kanun') }}" class="hover:text-white transition">5199 Sayılı Kanun</a></li>
+        <li><a href="{{ url_for('mevzuat') }}" class="hover:text-white transition">Mevzuat Rehberi</a></li>
+        <li><a href="{{ url_for('sss') }}" class="hover:text-white transition">Sıkça Sorulan Sorular</a></li>
+      </ul>
+    </div>
+
+    <!-- Yasal -->
+    <div>
+      <h4 class="text-white font-semibold mb-4">Yasal</h4>
+      <ul class="space-y-2 text-sm">
+        <li><a href="{{ url_for('kvkk') }}" class="hover:text-white transition">KVKK</a></li>
+        <li><a href="{{ url_for('gizlilik') }}" class="hover:text-white transition">Gizlilik Politikası</a></li>
+        <li><a href="{{ url_for('kullanim') }}" class="hover:text-white transition">Kullanım Şartları</a></li>
+      </ul>
+
+    </div>
+
+  </div>
+
+  <!-- Alt Bilgi -->
+  <div class="border-t border-slate-800 mt-12 pt-6 text-center text-xs text-slate-500 px-6">
+
+    <p class="mb-2">
+      © 2026 Hayvanların Sesi. Tüm hakları saklıdır.
+    </p>
+
+    <p>
+      Bu site resmi bir devlet kurumu değildir. İçerikler bilgilendirme amacıyla hazırlanmıştır ve
+      5199 Sayılı Hayvanları Koruma Kanunu ile resmi kurum kaynakları baz alınmıştır.
+    </p>
+
+  </div>
+</footer>
+</div>
+<script>
+
+let scrolling = false;
+
+function reveal() {
+  const reveals = document.querySelectorAll(".reveal");
+
+  for (let i = 0; i < reveals.length; i++) {
+    const windowHeight = window.innerHeight;
+    const elementTop = reveals[i].getBoundingClientRect().top;
+    const elementVisible = 120;
+
+    if (elementTop < windowHeight - elementVisible) {
+      reveals[i].classList.add("active");
+    }
+  }
+}
+
+window.addEventListener("scroll", () => {
+  if (!scrolling) {
+    scrolling = true;
+    requestAnimationFrame(() => {
+      reveal();
+      scrolling = false;
+    });
+  }
+});
+
+// Sayfa yüklendiğinde ilk animasyonları tetiklemek için
+window.addEventListener("DOMContentLoaded", reveal);
+
+/*-----------------------------------------------------------*/  
+
+          const button = document.getElementById("dropdown-button");
+          const menu = document.getElementById("dropdown-menu");
+
+          button.addEventListener("click", (e) => {
+              e.stopPropagation();
+              menu.classList.toggle("hidden");
+          });
+
+          document.addEventListener("click", (e) => {
+              if (!menu.contains(e.target) && !button.contains(e.target)) {
+                  menu.classList.add("hidden");
+              }
+          });
+
+    const menuBtn = document.getElementById("mobile-menu-button");
+    const mobileMenu = document.getElementById("mobile-menu");
+
+    menuBtn.addEventListener("click", () => {
+    mobileMenu.classList.toggle("hidden");
+    });
+
+
+    const infoBtn = document.getElementById("mobile-info-button");
+    const infoDropdown = document.getElementById("mobile-info-dropdown");
+
+    infoBtn.addEventListener("click", () => {
+    infoDropdown.classList.toggle("hidden");
+});
+
+</script>
+</body></html>

@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="tr" class="scroll-smooth">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <meta name="description" content="Türkiye’de hayvan hakları ile ilgili en güncel haberler, gelişmeler ve öne çıkan olaylar. Hayvanların Sesi ile gündemi takip edin."/>
+    <title>{% block title %}Öne Çıkan Hayvan Haberleri | Hayvanların Sesi{% endblock %}</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link rel="icon" type="image/svg+xml" href="static/img/favicon.svg" />
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+    <script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#2c5926",
+                        "primary-light": "#3a7a32",
+                        "background-light": "#f8f9f7",
+                        "background-dark": "#141a13",
+                    },
+                    fontFamily: {
+                        "sans": ["DM Sans", "sans-serif"],
+                        "display": ["DM Serif Display", "serif"],
+                    },
+                },
+            },
+        }
+    </script>
+    <style>
+        * { box-sizing: border-box; }
+        body { font-family: 'DM Sans', sans-serif; }
+        .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 300, 'GRAD' 0, 'opsz' 24; vertical-align: middle; }
+        
+         .reveal {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.8s ease-out;
+        }
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        .dropdown-content { display: none; }    
+        .group:hover .dropdown-content { display: block; }
+        html { scroll-behavior: smooth; }
+        
+        .scroll-mt-safe {
+            scroll-margin-top: 6rem;
+        }
+        @media (min-width: 768px) {
+            .scroll-mt-safe {
+                scroll-margin-top: 7rem;
+            }
+        }
+        
+        .break-words-safe {
+            overflow-wrap: break-word;
+            word-wrap: break-word;
+            hyphens: auto;
+        }
+        
+        .hero-overlay {
+            background: linear-gradient(to bottom, rgba(0,0,0,0.3) 0%, rgba(0,0,0,0.6) 100%);
+        }
+        
+        .faq-answer {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease-out, padding 0.3s ease;
+        }
+        .faq-answer.open {
+            max-height: 500px;
+        }
+
+        html { scroll-behavior: smooth; }
+    </style>
+    {% block extra_css %}{% endblock %}
+</head>
+<body class="bg-background-light dark:bg-background-dark text-slate-800 dark:text-slate-100">
+
+<!-- Header -->
+<header class="sticky top-0 z-50 w-full border-b border-primary/10 bg-white/80 dark:bg-background-dark/80 backdrop-blur-md">
+    <div class="mx-auto flex max-w-7xl items-center justify-between px-6 py-4">
+        <div class="flex items-center gap-2">
+            <span class="material-symbols-outlined text-primary text-3xl"> <a href="{{ url_for('index') }}">pets</a></span>
+            <h1 class="text-xl font-extrabold tracking-tight text-primary"><a href="{{ url_for('index') }}">Hayvanların Sesi</a></h1>
+        </div>
+
+        <nav class="hidden md:flex items-center gap-8">
+            <a class="text-sm font-semibold hover:text-primary transition-colors" href="{{ url_for('index') }}">Ana Sayfa</a>
+            <a class="text-sm font-semibold hover:text-primary transition-colors border-b-2" href="{{ url_for('haberler') }}">Haberler</a>
+
+            <div class="group relative">
+                <button id="dropdown-button" class="flex items-center gap-1 text-sm font-semibold hover:text-primary transition-colors text-slate-900 dark:text-slate-100">
+                    Bilgi Merkezi
+                    <span class="material-symbols-outlined text-sm">expand_more</span>
+                </button>
+                <div id="dropdown-menu" class="dropdown-content absolute top-full left-0 pt-4 w-64 hidden">
+                    <div class="bg-white dark:bg-slate-800 border rounded-xl shadow-xl overflow-hidden p-2 text-slate-900 dark:text-slate-100">
+                        <a href="{{ url_for('kanun') }}" class="flex items-center gap-2 px-4 py-3 text-sm hover:bg-slate-50 dark:hover:bg-slate-700 rounded-lg transition-colors">
+                            <span class="material-symbols-outlined text-lg">gavel</span> 5199 Sayılı Kanun
+                        </a>
+                        <a href="{{ url_for('mevzuat') }}" class="flex items-center gap-2 px-4 py-3 text-sm hover:bg-slate-50 dark:hover:bg-slate-700 rounded-lg transition-colors">
+                            <span class="material-symbols-outlined text-lg">description</span> Mevzuat Rehberi
+                        </a>
+                        <a href="{{ url_for('sss') }}" class="flex items-center gap-2 px-4 py-3 text-sm hover:bg-slate-50 dark:hover:bg-slate-700 rounded-lg transition-colors">
+                            <span class="material-symbols-outlined text-lg">help_center</span> Sıkça Sorulan Sorular
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <a class="text-sm font-semibold hover:text-primary transition-colors" href="{{ url_for('iletisim') }}">İletişim</a>
+        </nav>
+
+        <div class="flex items-center gap-4">
+        <a href="{{ url_for('ihbar') }}" 
+            class="hidden md:flex items-center gap-2 bg-red-600 text-white px-4 py-1.5 rounded-xl text-sm font-bold shadow-lg shadow-red-900/20 hover:bg-red-700 hover:shadow-red-900/30 transition-all active:scale-95 group">
+              
+              <span class="material-symbols-outlined text-lg group-hover:rotate-12 transition-transform">report</span>
+              <span>İhbar Rehberi</span>
+        </a>
+
+            <button id="mobile-menu-button" class="md:hidden text-slate-900 dark:text-slate-100 p-1">
+                <span class="material-symbols-outlined text-3xl">menu</span>
+            </button>
+        </div>
+    </div>
+
+<div class="md:hidden px-6 pb-4 -mt-1">
+    <a href="{{ url_for('ihbar') }}" 
+       class="flex items-center justify-between w-full bg-red-50 dark:bg-red-950/20 text-red-600 dark:text-red-400 px-4 py-3 rounded-xl border border-red-100 dark:border-red-900/30 active:bg-red-100 transition-all shadow-sm">
+        <div class="flex items-center gap-3">
+            <span class="material-symbols-outlined font-bold">report</span>
+            <div class="flex flex-col">
+                <span class="text-xs uppercase font-black tracking-wider opacity-80">Acil Durum</span>
+                <span class="text-sm font-bold">İhbar Rehberi & Yasal Haklar</span>
+            </div>
+        </div>
+        <span class="material-symbols-outlined text-red-400">chevron_right</span>
+    </a>
+</div>
+    
+    <nav id="mobile-menu" class="hidden md:hidden flex-col items-start gap-4 px-4 pb-4 pt-4 bg-white dark:bg-slate-900 border-t">
+    <a href="{{ url_for('index') }}" class="text-base font-semibold hover:text-primary">Ana Sayfa</a>
+    <a href="{{ url_for('haberler') }}" class="text-base font-semibold hover:text-primary">Haberler</a>
+    <div class="flex flex-col items-start w-full">
+        <button id="mobile-info-button" class="flex items-center justify-between w-full text-base font-semibold hover:text-primary">
+            Bilgi Merkezi
+            <span class="material-symbols-outlined">expand_more</span>
+        </button>
+        <div id="mobile-info-dropdown" class="hidden flex-col items-start mt-2 gap-2 pl-4 w-full">
+            <a href="{{ url_for('kanun') }}" class="flex items-center gap-2 text-sm hover:text-primary"><span class="material-symbols-outlined text-lg">gavel</span> 5199 Sayılı Kanun</a>
+            <a href="{{ url_for('mevzuat') }}" class="flex items-center gap-2 text-sm hover:text-primary"><span class="material-symbols-outlined text-lg">description</span> Mevzuat Rehberi</a>
+            <a href="{{ url_for('sss') }}" class="flex items-center gap-2 text-sm hover:text-primary"><span class="material-symbols-outlined text-lg">help_center</span> Sıkça Sorulan Sorular</a>
+        </div>
+    </div>
+    <a href="{{ url_for('iletisim') }}" class="text-base font-semibold hover:text-primary w-full">İletişim</a>
+</nav>
+</header>
+
+    <!-- MAIN -->
+    <main class="max-w-6xl mx-auto px-6 py-10 min-h-screen">
+        {% block content %}{% endblock %}
+    </main>
+
+<!-- Footer -->
+<footer class="bg-slate-900 text-slate-400 py-14">
+  <div class="mx-auto max-w-7xl px-6 grid grid-cols-1 md:grid-cols-4 gap-10">
+
+    <div>
+      <div class="flex items-center gap-2 mb-4">
+        <span class="material-symbols-outlined text-primary text-3xl">pets</span>
+        <span class="text-xl font-black text-white">Hayvanların Sesi</span>
+      </div>
+      <p class="text-sm leading-relaxed">
+        Türkiye'de hayvan hakları konusunda güncel bilgiler, yasal rehberler ve ihbar yollarını sunan bağımsız bir bilgilendirme platformudur.
+      </p>
+    </div>
+
+    <div>
+      <h4 class="text-white font-semibold mb-4">Site Haritası</h4>
+      <ul class="space-y-2 text-sm">
+        <li><a href="{{ url_for('index') }}" class="hover:text-white transition">Ana Sayfa</a></li>
+        <li><a href="{{ url_for('haberler') }}" class="hover:text-white transition">Haberler</a></li>
+        <li><a href="{{ url_for('iletisim') }}" class="hover:text-white transition">İletişim</a></li>
+      </ul>
+    </div>
+
+    <div>
+      <h4 class="text-white font-semibold mb-4">Bilgi Merkezi</h4>
+      <ul class="space-y-2 text-sm">
+        <li><a href="{{ url_for('kanun') }}" class="hover:text-white transition">5199 Sayılı Kanun</a></li>
+        <li><a href="{{ url_for('mevzuat') }}" class="hover:text-white transition">Mevzuat Rehberi</a></li>
+        <li><a href="{{ url_for('sss') }}" class="hover:text-white transition">Sık Sorulan Sorular</a></li>
+      </ul>
+    </div>
+
+    <div>
+      <h4 class="text-white font-semibold mb-4">Yasal</h4>
+      <ul class="space-y-2 text-sm">
+        <li><a href="{{ url_for('kvkk') }}" class="hover:text-white transition">KVKK</a></li>
+        <li><a href="{{ url_for('gizlilik') }}" class="hover:text-white transition">Gizlilik Politikası</a></li>
+        <li><a href="{{ url_for('kullanim') }}" class="hover:text-white transition">Kullanım Şartları</a></li>
+      </ul>
+    </div>
+
+  </div>
+
+  <div class="border-t border-slate-800 mt-12 pt-6 text-center text-xs text-slate-500 px-6">
+    <p class="mb-2">© 2026 Hayvanların Sesi. Tüm hakları saklıdır.</p>
+    <p>Bu site resmi bir devlet kurumu değildir. İçerikler bilgilendirme amacıyla hazırlanmıştır.</p>
+  </div>
+</footer>
+
+    <script>
+        // Dropdown
+        function toggleDropdown() {
+            const menu = document.getElementById('dropdown-menu');
+            const chevron = document.getElementById('dropdown-chevron');
+            menu.classList.toggle('open');
+            chevron.textContent = menu.classList.contains('open') ? 'expand_less' : 'expand_more';
+        }
+        document.addEventListener('click', function(e) {
+            const dropdown = document.querySelector('.dropdown');
+            if (dropdown && !dropdown.contains(e.target)) {
+                document.getElementById('dropdown-menu').classList.remove('open');
+                document.getElementById('dropdown-chevron').textContent = 'expand_more';
+            }
+        });
+
+        // Mobile menu
+        function toggleMobile() {
+            document.getElementById('mobile-menu').classList.toggle('hidden');
+        }
+        function toggleMobileInfo() {
+            document.getElementById('mobile-info').classList.toggle('hidden');
+        }
+
+        // Reveal
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('active'); observer.unobserve(e.target); }});
+        }, { threshold: 0.1 });
+        document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+    </script>
+    {% block extra_js %}{% endblock %}
+</body>
+</html>

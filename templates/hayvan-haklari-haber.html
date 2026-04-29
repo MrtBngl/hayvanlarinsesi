@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<meta name="description" content="Türkiye'den ve dünyadan güncel hayvan hakları haberleri, yeni yasa tasarıları ve sokak hayvanlarına dair son gelişmeler."/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link rel="icon" type="image/svg+xml" href="static/img/favicon.svg" />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#2c5926",
+                        "background-light": "#f6f7f6",
+                        "background-dark": "#161d15",
+                    },
+                    fontFamily: {
+                        "display": ["Inter", "sans-serif"]
+                    },
+                    borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        
+        /* Modernized Reveal Animation */
+        .reveal {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.8s ease-out;
+        }
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        html { scroll-behavior: smooth; }
+        .dropdown-content { display: none; }    
+        .group:hover .dropdown-content { display: block; }
+        body { font-family: 'Inter', sans-serif; }
+    </style>
+    <title>Hayvan Haberleri | Hayvan Hakları ve Güncel Olaylar</title>
+</head>
+<body class="bg-background-light dark:bg-background-dark font-display text-slate-900 dark:text-slate-100">
+<div class="relative flex min-h-screen w-full flex-col">
+<div class="layout-container flex h-full grow flex-col">
+<!-- Navigation -->
+<header class="sticky top-0 z-50 w-full border-b border-primary/10 bg-white/80 dark:bg-background-dark/80 backdrop-blur-md">
+<div class="mx-auto flex max-w-7xl items-center justify-between px-6 py-4">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-primary text-3xl"> <a href="homev.html">pets</a></span>
+<h1 class="text-xl font-extrabold tracking-tight text-primary"><a href="homev.html">Hayvanların Sesi</a></h1>
+</div>
+<nav class="hidden md:flex items-center gap-8"><a class="text-sm font-semibold hover:text-primary transition-colors" href="homev.html">Ana Sayfa</a>
+<a class="text-sm font-semibold hover:text-primary transition-colors border-b-2" href="blog.html">Haberler</a>
+<div class="group relative" x-data="{ open: false }">
+  <button id="dropdown-button" 
+          class="flex items-center gap-1 text-sm font-semibold hover:text-primary transition-colors">
+    Bilgi Merkezi
+    <span class="material-symbols-outlined">expand_more</span>
+    <span class="material-symbols-outlined text-sm">expand_more</span>
+  </button>
+
+  <div id="dropdown-menu" class="dropdown-content absolute top-full left-0 pt-4 w-64 hidden">
+    <div class="bg-white dark:bg-slate-800 border  rounded-xl shadow-xl overflow-hidden p-2">
+      <a href="Info-menu/5199kanun.html" class="flex items-center gap-2 px-4 py-3 text-sm text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-700 rounded-lg transition-colors">
+        <span class="material-symbols-outlined text-lg">gavel</span>
+        5199 Sayılı Kanun
+      </a>
+      <a href="Info-menu/mevzuat-rehberi.html" class="flex items-center gap-2 px-4 py-3 text-sm text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-700 rounded-lg transition-colors">
+        <span class="material-symbols-outlined text-lg">description</span>
+        Mevzuat Rehberi
+      </a>
+      <a href="Info-menu/sikca-sorulan-sorular.html" class="flex items-center gap-2 px-4 py-3 text-sm text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-700 rounded-lg transition-colors">
+        <span class="material-symbols-outlined text-lg">help_center</span>
+        Sıkça Sorulan Sorular
+      </a>
+    </div>
+  </div>
+</div>
+<a class="text-sm font-semibold hover:text-primary transition-colors" href="contact.html">İletişim</a></nav>
+<div class="flex items-center gap-4">
+  
+  <a href="#"
+class="hidden md:flex items-center gap-2 bg-primary text-white px-4 py-2 rounded-lg text-sm font-semibold shadow-lg shadow-primary/30 hover:bg-primary/80 hover:shadow-xl hover:shadow-primary/50 transition-all">
+
+<span class="material-symbols-outlined text-sm">report</span>
+İhbar Rehberi
+
+</a>
+<button  id="mobile-menu-button" class="md:hidden text-slate-900 dark:text-slate-100">
+<span class="material-symbols-outlined">menu</span>
+</button>
+</div>
+</div>
+<!-- Mobile Menu -->
+  <nav id="mobile-menu" class="hidden md:hidden flex flex-col items-start gap-4 px-4 pb-4 pt-4 bg-white dark:bg-slate-900 border-t">
+        <a href="homev.html" class="text-base font-semibold hover:text-primary">Ana Sayfa</a>
+        <a href="blog.html" class="text-base font-semibold hover:text-primary">Haberler</a>
+        <div class="flex flex-col items-start w-full">
+            <button id="mobile-info-button" class="flex items-center justify-between w-full text-base font-semibold hover:text-primary">
+                Bilgi Merkezi
+            </button>
+            <div id="mobile-info-dropdown" class="hidden flex flex-col items-start mt-2 gap-2 pl-2">
+                <a href="Info-menu/5199kanun.html" class="flex items-center text-sm hover:text-primary"><span class="material-symbols-outlined text-lg">gavel </span> 5199 Sayılı Kanun</a>
+                <a href="Info-menu/mevzuat.html" class="flex items-center text-sm hover:text-primary"><span class="material-symbols-outlined text-lg">description </span> Mevzuat Rehberi</a>
+                <a href="Info-menu/sss.html" class="flex items-center text-sm hover:text-primary"><span class="material-symbols-outlined text-lg">help_center </span> Sıkça Sorulan Sorular</a>
+            </div>
+        </div>
+        <a href="contact.html" class="text-base font-semibold hover:text-primary">İletişim</a>
+    </nav>
+</header>
+<!-- Secondary Nav / Categories -->
+
+<main class="max-w-7xl mx-auto w-full px-6 lg:px-20 py-10">
+<!-- Hero Section -->
+<div class="reveal mb-12">
+<div class=" flex flex-col gap-4">
+<span class="inline-block px-3 py-1 bg-primary/10 text-primary text-xs font-bold uppercase tracking-widest rounded-full w-fit">Blog ve Haberler</span>
+<h1 class="text-slate-900 dark:text-slate-100 text-4xl lg:text-5xl font-black leading-tight tracking-tight">Sessizlerin Sesi Oluyoruz</h1>
+<p class="text-slate-600 dark:text-slate-400 text-lg max-w-2xl">Hayvan refahının ön saflarından haberdar olun. Cesur kurtarma operasyonlarından başkentteki kritik yasa değişikliklerine kadar her şey burada.</p>
+</div>
+</div>
+<!-- Featured Article -->
+<div class="reveal mb-16">
+<div class="relative group overflow-hidden rounded-xl bg-white dark:bg-slate-800 shadow-sm border border-primary/5 grid md:grid-cols-2 gap-0">
+<div class="h-64 md:h-auto bg-cover bg-center" data-alt="A rescued dog looking hopefully into the camera" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuDH1Otu2M_5JALOGJE44h4xWzpZ4Dga-t7HvhqT1Aw4c7UJqrG6koXsGrsQZ873OfdWFi34ceGhXzzvHSaTdgL0XVJlOonqbDR0yUd5lKW4Yg17VCtTodIo-VE0dCtsXo2npCZ9oHvdo41UX4HHYj0i_p-B_XP7-0InOlSA8nICpkauA5SUyTDfvIz3WkLyeeyN2bgpcZCwhKdI0kUen6RHOYolzJutieU7KSlceLkIkDwHM6RJkolzXPuX1pdRa0gq2HK7p5e-KbU')"></div>
+<div class="p-8 flex flex-col justify-center">
+<div class="flex gap-2 mb-4">
+<span class="text-primary text-xs font-bold uppercase">Kurtarma Hikayesi</span>
+<span class="text-slate-400 text-xs">• 5 dk okuma</span>
+</div>
+<h2 class="text-2xl font-bold mb-4 group-hover:text-primary transition-colors">Umut Projesi: Kaçak Tesislerden 200'den Fazla Hayvan Kurtarıldı</h2>
+<p class="text-slate-600 dark:text-slate-400 mb-6">Üç ilde eş zamanlı yürütülen operasyonda, büyük bir ihmal şebekesi ortaya çıkarıldı. İyileşme süreci ve nasıl yardım edebileceğiniz hakkında bilgi alın.</p>
+<a class="flex items-center gap-2 text-primary font-bold hover:gap-3 transition-all" href="#">Hikayenin Tamamını Oku <span class="material-symbols-outlined">arrow_forward</span></a>
+</div>
+</div>
+</div>
+<!-- Articles Grid -->
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+<!-- Article Card 1 -->
+<article class="reveal flex flex-col bg-white dark:bg-slate-800 rounded-xl overflow-hidden border border-primary/5 hover:shadow-md transition-shadow">
+<div class="aspect-video bg-cover bg-center" data-alt="Close up of a wild eagle in flight" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuAAzzIqjiwzY4DGVhyF3FDhehHHfXk_eoVGF_fdNq23Q5j_2gvz9yFjV_95bmzfFYcluhmzPzPR9byvRrQeKv1UCILkszVTh0wQgQqWtzS_ub8N0RFgrSYya2EjpAWerRg4wJhPvyIEDjU331BPZNbIRd2tvzx0z7PLKuktoBrshPuFFNnuf4V57DklWRzrAphP7DAu1KCtFQqK_dQ0ZbTfAQpd_6EZm0M11LsrW0xm8O_BHvKi-f10gXuFm6kaOwIGWmUz7KBR99Q')"></div>
+<div class="p-6 flex flex-col grow">
+<div class="flex justify-between items-center mb-3">
+<span class="text-primary text-xs font-bold uppercase bg-primary/10 px-2 py-0.5 rounded">Yaban Hayatı</span>
+<span class="text-slate-400 text-xs">Oct 24, 2023</span>
+</div>
+<h3 class="text-xl font-bold mb-3 leading-snug">Büyük Kartal Kurtarma Operasyonu: Doğaya Dönüş Yolculuğu</h3>
+<p class="text-slate-600 dark:text-slate-400 text-sm mb-6 grow">Kaçak avcıların tuzağına düşen bir kaya kartalının altı aylık rehabilitasyon süreci ve duygusal serbest bırakılma anı.</p>
+<button class="w-full py-2.5 bg-primary/5 text-primary font-bold rounded-lg hover:bg-primary hover:text-white transition-colors flex items-center justify-center gap-2">Devamını Oku <span class="material-symbols-outlined text-sm">open_in_new</span></button>
+</div>
+</article>
+<!-- Article Card 2 -->
+<article class="reveal flex flex-col bg-white dark:bg-slate-800 rounded-xl overflow-hidden border border-primary/5 hover:shadow-md transition-shadow">
+<div class="aspect-video bg-cover bg-center" data-alt="Gavel on a wooden desk with a law book" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuACSHTgVu2WK2dGsvbQlTiNI9SO1hkAAvgUzdB0Z5wpB8HJbl8b08Ti7fH9nGKIIToi_yaUaaf1z_HfAPCtu3jxibbpey-_Gpc8p5fRy_GXdRPA38cSD-Jfai95A9ZFGOedKYCuNNYHnKBuNm64EoBqBed9NAHZVWDr0Nuf9emvk5PZ2aUkLH4fnEXQbAcoTroOmKgsgYJa6a3kJFzhPYADb4-9LgwrW7kQ5831kNJa92Kbv4GOIu7qpY6xWXD15B2RCAgVEiGm9f8')"></div>
+<div class="p-6 flex flex-col grow">
+<div class="flex justify-between items-center mb-3">
+<span class="text-primary text-xs font-bold uppercase bg-primary/10 px-2 py-0.5 rounded">Yasal Düzenleme</span>
+<span class="text-slate-400 text-xs">Oct 22, 2023</span>
+</div>
+<h3 class="text-xl font-bold mb-3 leading-snug">Sokak Hayvanları Yasası Hakkında Güncel Bilgiler</h3>
+<p class="text-slate-600 dark:text-slate-400 text-sm mb-6 grow">Meclis'ten geçen yeni düzenleme, evcil ve sokak hayvanlarının korunması için daha ağır cezalar öngörüyor.</p>
+<button class="w-full py-2.5 bg-primary/5 text-primary font-bold rounded-lg hover:bg-primary hover:text-white transition-colors flex items-center justify-center gap-2">Devamını Oku <span class="material-symbols-outlined text-sm">open_in_new</span></button>
+</div>
+</article>
+<!-- Article Card 3 -->
+<article class="reveal flex flex-col bg-white dark:bg-slate-800 rounded-xl overflow-hidden border border-primary/5 hover:shadow-md transition-shadow">
+<div class="aspect-video bg-cover bg-center" data-alt="Shelter volunteer playing with puppies" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuBp759j-rfbKyDaS3ysjCliP7fW-oaV3LtjOV4AAFYrNJd3LZPWpTGEZkQgST5sRdQi_9pnZrf1PXA1b1gaBvi-pM9bWXQw-2wBRPyYzjK10_h7rXq9to_VxSZECzIZHWvy56CFTi7d8C6cAySEraTiDHN7GV9ykey9r6yxJAxa3Ov7ootKw7bZ1YWRfezxwZa1OTXPutoB-Zi4HytYCI_UgPRHk8eTrLV3fiekA7ndSxa85LCBY-3Rb4coW2QEa8kFsEIisMKFuxw')"></div>
+<div class="p-6 flex flex-col grow">
+<div class="flex justify-between items-center mb-3">
+<span class="text-primary text-xs font-bold uppercase bg-primary/10 px-2 py-0.5 rounded">Toplum</span>
+<span class="text-slate-400 text-xs">Oct 19, 2023</span>
+</div>
+<h3 class="text-xl font-bold mb-3 leading-snug">İstanbul'da Yeni Barınak Projesi: Sıfır Ötenazi Hedefi</h3>
+<p class="text-slate-600 dark:text-slate-400 text-sm mb-6 grow">Büyükşehir Belediyesi'nin yeni projesi ile barınaklar modern yaşam alanlarına dönüşüyor ve sahiplendirme artıyor.</p>
+<button class="w-full py-2.5 bg-primary/5 text-primary font-bold rounded-lg hover:bg-primary hover:text-white transition-colors flex items-center justify-center gap-2">Devamını Oku <span class="material-symbols-outlined text-sm">open_in_new</span></button>
+</div>
+</article>
+<!-- Article Card 4 -->
+<article class="reveal flex flex-col bg-white dark:bg-slate-800 rounded-xl overflow-hidden border border-primary/5 hover:shadow-md transition-shadow">
+<div class="aspect-video bg-cover bg-center" data-alt="African elephant in the savanna" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuCSmPOMOaNTmvs6e_mxKk0xtVyaheGjEA-d2GOTHJwWFd5c2MtjXTos3P3neNBFG4YNgz1S4pRlC_eO4aLyPojQZ_XDyYs2Wyd_zDlnZtPug-PwQD2Os1XsqAj0wI-_ZaJ8--XeibqLv67dv5uJ9lr5rxWqcW9HfS4sm_bMyWO_FN0sA1EEtxLHgWpZrcFvzP-HY4162dgxnM5n-VMlPNcu-qUBYKp3x43nBJHEp0-oeQg3dQAfrI_fAYVdDksNVvN_8zSVqM7H8GY')"></div>
+<div class="p-6 flex flex-col grow">
+<div class="flex justify-between items-center mb-3">
+<span class="text-primary text-xs font-bold uppercase bg-primary/10 px-2 py-0.5 rounded">Küresel</span>
+<span class="text-slate-400 text-xs">Oct 15, 2023</span>
+</div>
+<h3 class="text-xl font-bold mb-3 leading-snug">Nesli Tükenmekte Olan Türler İçin Yeni Koruma Alanları</h3>
+<p class="text-slate-600 dark:text-slate-400 text-sm mb-6 grow">Uluslararası zirvede alınan kararla, tehlike altındaki türlerin yaşam alanları dünya çapında koruma altına alınıyor.</p>
+<button class="w-full py-2.5 bg-primary/5 text-primary font-bold rounded-lg hover:bg-primary hover:text-white transition-colors flex items-center justify-center gap-2">Devamını Oku <span class="material-symbols-outlined text-sm">open_in_new</span></button>
+</div>
+</article>
+<!-- Article Card 5 -->
+<article class="reveal flex flex-col bg-white dark:bg-slate-800 rounded-xl overflow-hidden border border-primary/5 hover:shadow-md transition-shadow">
+<div class="aspect-video bg-cover bg-center" data-alt="A curious cat sitting by a window" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuDOENY-wnJtQg2d6M79-5cVmcHFXwUZ7F8DBTaoQyVXCfhAQOYNfV5uT4qZKve2Cl6ovYhniTYv5BT-CDNm9e0vQTK92gilkpxSk_YkG5z3jA5_ODmAicFABZov-WYZKpvJaIgwn4jkQI4sjvrYsO_vQCQcajwO1gFuEXupd5jW9D7oUf1Slg3owfkA13ZRqryv7FkHozuwmuAR4Hv42RYa1fvSu4RlKUFG4Zqq0TPIZkSZ3Nq-Ob1v2Hsk3UTz0y-40OT-zXboPvA')"></div>
+<div class="p-6 flex flex-col grow">
+<div class="flex justify-between items-center mb-3">
+<span class="text-primary text-xs font-bold uppercase bg-primary/10 px-2 py-0.5 rounded">Eğitim</span>
+<span class="text-slate-400 text-xs">Oct 12, 2023</span>
+</div>
+<h3 class="text-xl font-bold mb-3 leading-snug">Ev Kedilerinde Refah: Mutlu Patiler İçin Zenginleştirme İpuçları</h3>
+<p class="text-slate-600 dark:text-slate-400 text-sm mb-6 grow">Dışarıdaki kuşları korurken evdeki dostlarımızın zihinsel ve fiziksel sağlığını nasıl aktif tutabiliriz?</p>
+<button class="w-full py-2.5 bg-primary/5 text-primary font-bold rounded-lg hover:bg-primary hover:text-white transition-colors flex items-center justify-center gap-2">Devamını Oku <span class="material-symbols-outlined text-sm">open_in_new</span></button>
+</div>
+</article>
+<!-- Article Card 6 -->
+<article class="reveal flex flex-col bg-white dark:bg-slate-800 rounded-xl overflow-hidden border border-primary/5 hover:shadow-md transition-shadow">
+<div class="aspect-video bg-cover bg-center" data-alt="Volunteer wearing a green vest talking to children" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuC4nLLtFsODwq0whhlWUJcN4OazVFknU_-k2ea1Z4KrKbNqjZa6mcMlmsvO2Uum6teagmun1nWfaFALJezklpFQxhtY4FW2zhBYL4KNAlAVYy8M_fyfnNq_njaBbpmgw08DLme6xOBLdyLip3q0ZQlltnB4paoUkyrNgYPO-ftQ3WSgFonCuMqqdZYFufrdDjp1I0Yli_FM1kA2EQal79yo1RQVNad3L5Mcq5d6OmcTXbqUjfWzOCOtS2lnpPwQew6xrwEVJ4C-rZA')"></div>
+<div class="p-6 flex flex-col grow">
+<div class="flex justify-between items-center mb-3">
+<span class="text-primary text-xs font-bold uppercase bg-primary/10 px-2 py-0.5 rounded">Eylem</span>
+<span class="text-slate-400 text-xs">Oct 08, 2023</span>
+</div>
+<h3 class="text-xl font-bold mb-3 leading-snug">Savunuculuk 101: Yerel Temsilcilerle Nasıl İletişim Kurulur?</h3>
+<p class="text-slate-600 dark:text-slate-400 text-sm mb-6 grow">Belediye meclislerinde hayvan refahı mevzuatı için lobi yapmak isteyen vatandaşlar için pratik bir rehber.</p>
+<button class="w-full py-2.5 bg-primary/5 text-primary font-bold rounded-lg hover:bg-primary hover:text-white transition-colors flex items-center justify-center gap-2">Devamını Oku <span class="material-symbols-outlined text-sm">open_in_new</span></button>
+</div>
+</article>
+</div>
+</main>
+<!-- Footer -->
+<footer class="bg-slate-900 text-slate-400 py-14">
+  <div class="mx-auto max-w-7xl px-6 grid grid-cols-1 md:grid-cols-4 gap-10">
+
+    <!-- Site Tanıtımı -->
+    <div>
+      <div class="flex items-center gap-2 mb-4">
+        <span class="material-symbols-outlined text-primary text-3xl">pets</span>
+        <span class="text-xl font-black text-white">Hayvanların Sesi</span>
+      </div>
+
+      <p class="text-sm leading-relaxed">
+        Türkiye'de hayvan hakları konusunda güncel bilgiler,
+        yasal rehberler ve ihbar yollarını sunan bağımsız
+        bir bilgilendirme platformudur.
+      </p>
+    </div>
+
+    <!-- Hızlı Linkler -->
+    <div>
+      <h4 class="text-white font-semibold mb-4">Site Haritası</h4>
+      <ul class="space-y-2 text-sm">
+        <li><a href="homev.html" class="hover:text-white transition">Ana Sayfa</a></li>
+        <li><a href="blog.html" class="hover:text-white transition">Haberler</a></li>
+        <li><a href="mevzuat.html" class="hover:text-white transition">Mevzuat</a></li>
+        <li><a href="contact.html" class="hover:text-white transition">İletişim</a></li>
+      </ul>
+    </div>
+
+    <!-- Bilgi Merkezi -->
+    <div>
+      <h4 class="text-white font-semibold mb-4">Bilgi Merkezi</h4>
+      <ul class="space-y-2 text-sm">
+        <li><a href="Info-menu/5199kanun.html" class="hover:text-white transition">5199 Sayılı Kanun</a></li>
+        <li><a href="Info-menu/hayvana-siddet-ihbari.html" class="hover:text-white transition">Hayvana Şiddet İhbarı</a></li>
+        <li><a href="Info-menu/sss.html" class="hover:text-white transition">Sık Sorulan Sorular</a></li>
+      </ul>
+    </div>
+
+    <!-- Yasal -->
+    <div>
+      <h4 class="text-white font-semibold mb-4">Yasal</h4>
+      <ul class="space-y-2 text-sm">
+        <li><a href="kvkk.html" class="hover:text-white transition">KVKK</a></li>
+        <li><a href="gizlilik.html" class="hover:text-white transition">Gizlilik Politikası</a></li>
+        <li><a href="kullanım.html" class="hover:text-white transition">Kullanım Şartları</a></li>
+      </ul>
+
+      
+    </div>
+
+  </div>
+
+  <!-- Alt Bilgi -->
+  <div class="border-t border-slate-800 mt-12 pt-6 text-center text-xs text-slate-500 px-6">
+
+    <p class="mb-2">
+      © 2026 Hayvanların Sesi. Tüm hakları saklıdır.
+    </p>
+
+    <p>
+      Bu site resmi bir devlet kurumu değildir. İçerikler bilgilendirme amacıyla hazırlanmıştır ve
+      5199 Sayılı Hayvanları Koruma Kanunu ile resmi kurum kaynakları baz alınmıştır.
+    </p>
+
+  </div>
+</footer>
+</div>
+<script>
+// Modern Intersection Observer ile reveal animasyonu
+const observerOptions = {
+    root: null,
+    rootMargin: '0px',
+    threshold: 0.1
+};
+
+const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+        if (entry.isIntersecting) {
+            entry.target.classList.add('active');
+            observer.unobserve(entry.target);
+        }
+    });
+}, observerOptions);
+
+document.querySelectorAll('.reveal').forEach(el => {
+    observer.observe(el);
+});
+
+const button = document.getElementById("dropdown-button");
+const menu = document.getElementById("dropdown-menu");
+
+if(button && menu) {
+    button.addEventListener("click", (e) => {
+        e.stopPropagation();
+        menu.classList.toggle("hidden");
+    });
+
+    document.addEventListener("click", (e) => {
+        if (!menu.contains(e.target) && !button.contains(e.target)) {
+            menu.classList.add("hidden");
+        }
+    });
+}
+
+const menuBtn = document.getElementById("mobile-menu-button");
+const mobileMenu = document.getElementById("mobile-menu");
+
+if(menuBtn && mobileMenu) {
+    menuBtn.addEventListener("click", () => {
+        mobileMenu.classList.toggle("hidden");
+    });
+}
+
+const infoBtn = document.getElementById("mobile-info-button");
+const infoDropdown = document.getElementById("mobile-info-dropdown");
+
+if(infoBtn && infoDropdown) {
+    infoBtn.addEventListener("click", () => {
+        infoDropdown.classList.toggle("hidden");
+    });
+}
+</script>
+</body></html>
